@@ -1,0 +1,84 @@
+module pacman_top ( 
+    input clk, 
+    input rst,
+    input btn,
+    
+    input [9:0] switches,
+	output [9:0] leds,
+
+    // vga outputs
+    output hsync, 
+    output vsync,
+    output reg [3:0] red,
+    output reg [3:0] green,
+    output reg [3:0] blue
+);
+
+	assign leds = switches;
+    
+    wire vgaclk;
+    wire [9:0] hc_out, 
+    wire [9:0] vc_out,
+
+    reg [9:0] xpos; 
+    reg [9:0] ypos;
+    reg [15:0] address;
+    
+    wire [7:0] color;
+    wire [7:0] vga_data;
+    
+    // wire [2:0] input_red = switches[9:7];
+    // wire [2:0] input_green = switches[6:4];
+    // wire [1:0] input_blue = switches[3:2];
+
+    // wire [2:0] input_red = color [7:5];
+    // wire [2:0] input_green = color [4:2];
+    // wire [1:0] input_blue = color [1:0];
+
+    wire [2:0] input_red = vga_data [7:5];
+    wire [2:0] input_green = vga_data [4:2];
+    wire [1:0] input_blue = vga_data [1:0];
+
+    clk_vga TICK(clk, vgaclk);
+    vga TOCK(vgaclk, input_red, input_green, input_blue, rst, hc_out, vc_out, hsync, vsync, red, green, blue);
+    vga_ram PONG(vgaclk, address, hc_out, vc_out, color, vga_data);
+    graphics BOO(xpos, ypos, switches, vgaclk, rst, btn, color, address);
+
+    // 
+    // BLOCKING & ROTATION
+    // localparam XMAX  = 160;  // horizontal pixels
+    // localparam YMAX  = 320;  // vertical pixels
+    localparam XMAX = 240;      // horizontal pixels (480/2)
+    localparam YMAX = 320;      // vertical pixels (640/2)
+    localparam YOFFSET = 24;    // vertical RAM offset (3 tiles * 8)
+    localparam ADDRESS_MAX = 65535;
+
+    always_comb begin
+        if (hc_in < 640 && vc_in < 480) begin
+            // xpos = XMAX - 1 - vc_in / 3;
+            xpos = XMAX - 1 - vc_in / 2;
+            ypos = hc_in / 2;
+        end else if (vc_in < 480) begin
+            // xpos = XMAX - 1 - vc_in / 3;
+            xpos = XMAX - 1 - vc_in / 2;
+            ypos = YMAX - 1;
+        end else begin 
+            xpos = 0;
+            ypos = 0;
+        end
+    end
+
+    //  
+    // RAM ADDRESS CALCULATION
+    // only loads tiles 3-36 into ping-pong RAM due to space constraints 
+    always_comb begin
+        if (ypos > (YOFFSET-1) && ypos < (264+YOFFSET)) begin
+            address = xpos*264 + (ypos-YOFFSET);
+        end else begin
+            address = ADDRESS_MAX;
+        end
+    end
+
+endmodule
+
+// vga_graphics -> vga_ram -> vga

@@ -1,0 +1,150 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+!s11f vlog 2021.2 2021.04, Apr 14 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/simulation/modelsim
+T_opt
+!s110 1712435198
+Vl@15VE7SgH7AYgG]4;PZj2
+04 16 4 work graphics_maze_tb fast 0
+=1-9c6b00346243-6611affe-279-dc40
+!s124 OEM10U2 
+o-quiet -auto_acc_if_foreign -work work +acc
+Z2 tCvgOpt 0
+n@_opt
+OL;O;2021.2;73
+R1
+vclk_vga
+Z3 !s110 1712696226
+!i10b 1
+!s100 DhBi4Z@HSddnn;19fCY7B3
+ILELzTcV7iHGWHAc_hUl;V2
+R1
+w1712343080
+8C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v
+FC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v
+!i122 1
+L0 40 110
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 OL;L;2021.2;73
+r1
+!s85 0
+31
+Z6 !s108 1712696226.000000
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v|
+!i113 0
+Z7 o-vlog01compat -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z8 !s92 -vlog01compat -work work {+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vclk_vga_altpll
+R3
+!i10b 1
+!s100 FgDS@0L9a=<CJ=W?TanD51
+IKGio`SHfmhmz^L:HjaefP1
+R1
+w1712343187
+8C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v
+FC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v
+!i122 2
+L0 30 63
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db|C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v|
+!i113 0
+R7
+!s92 -vlog01compat -work work {+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vgraphics
+Z9 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R3
+!i10b 1
+!s100 :a]kM5bK44_lz^d`L0ia63
+IQNG`cl=6;JWV?2khG101D1
+S1
+R1
+w1712695897
+8C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv
+FC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv
+!i122 3
+L0 1 132
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv|
+!i113 0
+Z10 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 !s92 -sv -work work {+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vram_ip
+R3
+!i10b 1
+!s100 UdAzUDdD3Zh<kcG`R[URe1
+IB6@5ObN<]]j5eA159BdMD0
+R1
+w1712382890
+8C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v
+FC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v
+!i122 0
+L0 40 65
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v|
+!i113 0
+R7
+R8
+R2
+vvga_ram
+R9
+R3
+!i10b 1
+!s100 @o401Y>@KEA7E`QV5AboU0
+I7>3KXZTQMiKQ6[Nc0^VJ92
+S1
+R1
+w1712626951
+8C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv
+FC:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv
+!i122 4
+L0 1 51
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv|
+!i113 0
+R10
+R11
+R2
