@@ -1,35 +1,26 @@
 module maze (
+    input clk,
+    input rst,
+
     input [9:0] xpos, 
     input [9:0] ypos, 
 
     input [9:0] pacman_xloc,
     input [9:0] pacman_yloc,    // testing module connections
 
-    input clk,
-    input rst,
+    input pellet_animation,
 
-    output reg [7:0] color
+    output reg [1:0] pacman_tile_info,     // communicates with game contoller
+    output reg power_pellet,
+
+    output reg [7:0] color      // communicates with graphics
 );
 
+// COLORS
 localparam WHT  = 8'b11111111;
 localparam CRM  = 8'b11111110;
 localparam BLU  = 8'b00000011;
 localparam BLK  = 8'b00000000; 
-
-// outer walls
-// localparam EMPTY = 4'b0000;
-// localparam CORDR = 4'b0001;
-// localparam STRLD = 4'b0010;
-// localparam STRRD = 4'b0011;
-// localparam CORDL = 4'b0100;
-// localparam STRUR = 4'b0101;
-// localparam STRUL = 4'b0110;
-// localparam STRDR = 4'b0111;
-// localparam STRDL = 4'b1000;
-// localparam CORUR = 4'b1001;
-// localparam STRLU = 4'b1010;
-// localparam STRRU = 4'b1011;
-// localparam CORUL = 4'b1100;
 
 // ROTATIONS
 localparam NM = 2'b00;      // NorMal
@@ -48,26 +39,11 @@ localparam ICR1 = 3'b110;   // Inner CoRner 1 (inner top-left corner, outer edge
 localparam ISTR = 3'b111;   // Inner STRaight (inner top straight)
 
 // HOUSE WALL TYPES
-// localparam BLNK = 3'b000;   // BLaNK
 localparam CORN = 3'b001;   // CORNer
 localparam STRT = 3'b010;   // STRaighT
 localparam DORL = 3'b011;   // DOoR Left
 localparam DORR = 3'b100;   // DOoR Right
 localparam DOOR = 3'b101;   // DOOR
-
-// reg [63:0] outer_walls [0:3] = '{
-//     64'b00001111 00110000 01000000 01000111 10001000 10010000 10010000 10010000,    // outer top-left corner, inner top-left corner
-//     64'b11111111 00000000 00000000 11100000 00010000 00001000 00001000 00001000,    // outer top straight, inner bottom-left corner
-//     64'b10010000 10010000 10010000 10001000 10000111 10000000 10000000 10000000,    // outer left straight, inner top-right corner
-//     64'b11111111 00000000 00000000 11111111 00000000 00000000 00000000 00000000     // outer top straight, inner top straight
-// };
-
-// reg [0:63] outer_walls [0:3] = '{
-//     64'b0000111100110000010000000100011110001000100100001001000010010000,   // outer top-left corner, inner top-left corner
-//     64'b1111111100000000000000001110000000010000000010000000100000001000,   // outer top straight, inner bottom-left corner
-//     64'b1001000010010000100100001000100010000111100000001000000010000000,   // outer left straight, inner top-right corner
-//     64'b1111111100000000000000001111111100000000000000000000000000000000    // outer top straight, inner top straight
-// };
 
 reg [63:0] maze_walls [0:7] = '{
     64'h0000000000000000,   // blank
@@ -92,7 +68,6 @@ reg [63:0] house_walls [0:5] = '{
 // 
 // MAZE DEFINITION
 // 20W x 33H = 660 total tiles
-// 
 reg [4:0] maze [0:989] = '{
 //  0           1           2           3           4           5           6           7           8           9           10          11          12          13          14          15          16          17          18          19          20          21          22          23          24          25          26          27          28          29
     {OCOR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSC0,NM},  {OSC1,CW},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OCOR,CW},      // 0
@@ -133,11 +108,10 @@ reg [4:0] maze [0:989] = '{
 localparam XTILES = 30; // horizontal width in tiles 
 localparam YTILES = 33; // vertical height in tiles
 localparam YOFFSET = 3; // tiles of vertical offset (from top border)
-wire [7:0] xtile = xpos >> 3;
-wire [7:0] ytile = ypos >> 3;
+wire [6:0] xtile = xpos >> 3;
+wire [6:0] ytile = ypos >> 3;
+
 reg [4:0] wall;
-// wire [4:0] wall = maze [ytile * 20 + xtile];
-// wire [4:0] wall = maze [xtile];
 reg [1:0] wall_rot; 
 reg [0:63] wall_sprite;
 
@@ -190,88 +164,94 @@ end
 
 wire [6:0] pacman_xtile = pacman_xloc >> 3;
 wire [6:0] pacman_ytile = (pacman_yloc >> 3) - YOFFSET;
-reg pellets [0:989];
+localparam WALL = 2'b00;    // wall (not walkable)
+localparam WKNP = 2'b01;    // walkable, no pellet
+localparam WKRP = 2'b10;    // walkable, pellet
+localparam WKGH = 2'b11;    // walkable (ghost house)
 
 // TODO: load this into ROM, and have it read every time pellets need to be reset
-initial begin
-    pellets = '{
-//  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 0
-    0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 1
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 2
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 3
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 4
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 5
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 6
-    0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 7
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 8
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 9
-    0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  // 10
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 11
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 12
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 13
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 14
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 15
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 16
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 17
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 18
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 19
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 20
-    0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 21
-    0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 22
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 23
-    0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 24
-    0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  // 25
-    0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  // 26
-    0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  // 27
-    0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  // 28
-    0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  // 29
-    0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  // 30
-    0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 31
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0   // 32 
+// ROM has 1 cycle delay w/ read address
+reg [1:0] pellets [0:989] = '{
+//  0       1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 0
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 1
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 2
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 3
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 4
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 5
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 6
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 7
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 8
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 9
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 10
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WKGH,   WKGH,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WKNP,   WKNP,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WKNP,   WKNP,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 22
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 23
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 24
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 25
+    WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 26
+    WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 27
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 28
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 29
+    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 30
+    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 31
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL    // 32    
 };
-end
 
 always @(posedge clk) begin
-    if (!rst) begin
-        pellets = '{
-    //  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  // 0
-        0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 1
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 2
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 3
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 4
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 5
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 6
-        0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 7
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 8
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 9
-        0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  // 10
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 11
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 12
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 13
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 14
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 15
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 16
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 17
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 18
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 19
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 20
-        0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  // 21
-        0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 22
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 23
-        0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  // 24
-        0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  // 25
-        0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  // 26
-        0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  // 27
-        0,  1,  1,  1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  // 28
-        0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  // 29
-        0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  // 30
-        0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  // 31
-        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0   // 32
+    pacman_tile_info <= pellets [pacman_ytile * 30 + pacman_xtile];
+    if (!rst) begin     // reset pellet map
+        pellets <= '{
+    //  0       1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 0
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 1
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 2
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 3
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 4
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 5
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 6
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 7
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 8
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 9
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 10
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WKGH,   WKGH,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WKNP,   WKNP,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WKNP,   WKNP,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 22
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 23
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 24
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 25
+        WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 26
+        WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 27
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 28
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 29
+        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 30
+        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 31
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL    // 32    
     };
+
     end else begin
-        pellets [pacman_ytile * 30 + pacman_xtile] = 0;   
+        if (pellets [pacman_ytile * 30 + pacman_xtile] == WKRP) begin
+            pellets [pacman_ytile * 30 + pacman_xtile] <= WKNP;
+        end
     end
 end
 
@@ -282,13 +262,20 @@ localparam POWER2_Y = 7;    // 7th tile from bottom
 wire [0:63] pellet_small = 64'h0000001818000000;
 wire [0:63] pellet_large = 64'h3c7effffffff7e3c;
 
-wire [0:63] pellet_sprite; 
+reg [0:63] pellet_sprite; 
 reg [7:0] pellet_color;
 always_comb begin
+    // locations of power pellets
     if (((ytile == POWER1_Y + YOFFSET) && (xtile == POWER_X)) || ((ytile == POWER1_Y + YOFFSET) && (xtile == XTILES - POWER_X-1)) || ((ytile == YTILES + YOFFSET - POWER2_Y-1) && (xtile == POWER_X)) || ((ytile == YTILES + YOFFSET - POWER2_Y-1) && (xtile == XTILES - POWER_X - 1)) ) begin
-        pellet_sprite = pellet_large;
+        if (pellet_animation) begin
+            pellet_sprite = pellet_large;
+        end else begin
+            pellet_sprite = 64'h0;
+        end
+        power_pellet = 1'b1;
     end else begin
         pellet_sprite = pellet_small;
+        power_pellet = 1'b0;
     end
 
     if (ytile > (YOFFSET-1) && ytile < (40-YOFFSET)) begin

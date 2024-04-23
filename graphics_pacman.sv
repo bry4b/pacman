@@ -1,9 +1,9 @@
 module graphics_pacman (
-    input [9:0] xpos,           // current x position read by vga
-    input [9:0] ypos,           // current y position read by vga
+    input [8:0] xpos,           // current x position read by vga
+    input [8:0] ypos,           // current y position read by vga
 
-    input [9:0] xloc,           // x coordinate of center of pacman location (7,7 in bitfield)
-    input [9:0] yloc,           // y coordinate of center of pacman location (7,7 in bitfield)
+    input [8:0] xloc,           // x coordinate of center of pacman location (7,7 in bitfield)
+    input [8:0] yloc,           // y coordinate of center of pacman location (7,7 in bitfield)
 
     input [1:0] pacman_dir,     // RighT, UP, DowN, LefT
     input pacman_alive,         // alive, dead
@@ -23,9 +23,9 @@ localparam CW = 2'b10;      // ClockWise
 localparam FL = 2'b11;      // FLipped (180)
 
 reg [0:224] pacman_frames [0:2] = '{
-    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1ff,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h1ff,3'o0},{12'h07c,3'o0},{12'h000,3'o0},},
-    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1ff,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h7fe,3'o0},{12'h7f0,3'o0},{12'h780,3'o0},{12'h7f0,3'o0},{12'h7fe,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h1ff,3'o0},{12'h07c,3'o0},{12'h000,3'o0},},
-    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1fc,3'o0},{12'h3f8,3'o0},{12'h3f0,3'o0},{12'h7e0,3'o0},{12'h7c0,3'o0},{12'h780,3'o0},{12'h7c0,3'o0},{12'h7e0,3'o0},{12'h3f0,3'o0},{12'h3f8,3'o0},{12'h1fc,3'o0},{12'h07c,3'o0},{12'h000,3'o0},}
+    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1ff,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h7ff,3'o6},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h1ff,3'o0},{12'h07c,3'o0},{12'h000,3'o0}},
+    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1ff,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h7fe,3'o0},{12'h7f0,3'o0},{12'h780,3'o0},{12'h7f0,3'o0},{12'h7fe,3'o0},{12'h3ff,3'o4},{12'h3ff,3'o4},{12'h1ff,3'o0},{12'h07c,3'o0},{12'h000,3'o0}},
+    {{12'h000,3'o0},{12'h07c,3'o0},{12'h1fc,3'o0},{12'h3f8,3'o0},{12'h3f0,3'o0},{12'h7e0,3'o0},{12'h7c0,3'o0},{12'h780,3'o0},{12'h7c0,3'o0},{12'h7e0,3'o0},{12'h3f0,3'o0},{12'h3f8,3'o0},{12'h1fc,3'o0},{12'h07c,3'o0},{12'h000,3'o0}}
 };
 
 wire [3:0] xpixel = xpos-xloc+7;

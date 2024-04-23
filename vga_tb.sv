@@ -8,49 +8,62 @@ module vga_tb (
     output reg [3:0] green, 
     output reg [3:0] blue
 );
-
     reg rst;
     reg btn;
-    reg [9:0] switches = 10'b1000101100; 
-    reg [9:0] hc_out; 
-    reg [9:0] vc_out;
+    reg [9:0] switches = 10'b0; 
+    reg [9:0] hc; 
+    reg [9:0] vc;
 
-    wire [15:0] address;
-    wire [7:0] color;
-    wire [7:0] vga_data;
+    wire [15:0] address_old;
+    wire [7:0] color_old;
+    wire [15:0] address_new;
+    wire [7:0] color_new;
+    wire [7:0] vga_data_old;
+    wire [7:0] vga_data_new;
 
-    wire [2:0] input_red = color [7:5];
-    wire [2:0] input_green = color [4:2];
-    wire [1:0] input_blue = color [1:0];
+    // wire [2:0] input_red = color [7:5];
+    // wire [2:0] input_green = color [4:2];
+    // wire [1:0] input_blue = color [1:0];
+
+    reg writeEnable_old;
+    reg writeEnable_new;
+    reg [8:0] pacman_xloc;
+    reg [8:0] pacman_yloc;
+
 
     // wire [2:0] input_red = vga_data [7:5];
     // wire [2:0] input_green = vga_data [4:2];
     // wire [1:0] input_blue = vga_data [1:0];
 
     // vga VGA(clk, input_red, input_green, input_blue, rst, hc_out, vc_out, hsync, vsync, red, green, blue);
-    // vga_ram RAM(clk, address, hc_out, vc_out, color, vga_data);
 
-    graphics UUT(hc_out, vc_out, switches, btn, color, address);
+    vga_ram RAM(clk, address_old, hc, vc, color_old,  writeEnable_old, vga_data_old);
+    graphics OLD(clk, btn, rst, hc, vc, switches, pacman_xloc, pacman_yloc, 8'h00, color_old, address_old);
+    // vga_ram RAM_UUT(clk, address_new, hc, vc, color_new, writeEnable_new, vga_data_new);
+    graphics_new UUT(clk, btn, rst, hc, vc, switches, pacman_xloc, pacman_yloc, 8'h00, vga_data_new);
 
     initial begin
         clk = 0;
-        hc_out = 0;
-        vc_out = 0;
-        #420000 switches = 10'b0100001100;
-		  #420000 switches = 10'b1100001000;
-		  #420000 $stop;
+        btn = 1;
+        rst = 1;
+        // writeEnable = 0;
+        pacman_xloc = 'd120;
+        pacman_yloc = 'd228;
+        hc = 0;
+        vc = 0;
+        #1000000 $stop;
     end
 
     always begin
         #1 clk = ~clk;
-        if (hc_out < 800 - 1) begin
-            hc_out <= hc_out + 1'b1;
-        end else if (vc_out < 525 - 1) begin
-            vc_out <= vc_out + 1'b1;
-            hc_out <= 0;
+        if (hc < 800 - 1) begin
+            hc <= hc + 1'b1;
+        end else if (vc < 525 - 1) begin
+            vc <= vc + 1'b1;
+            hc <= 0;
         end else begin
-            hc_out <= 0;
-            vc_out <= 0;
+            hc <= 0;
+            vc <= 0;
         end
     end
 

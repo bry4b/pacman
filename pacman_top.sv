@@ -49,17 +49,20 @@ module pacman_top (
     wire [2:0] input_green = vga_data [4:2];
     wire [1:0] input_blue = vga_data [1:0];
 
-    wire [9:0] pacman_xloc = 'd119 + (switches[9:7] << 2);
-    wire [9:0] pacman_yloc = 'd228 + (switches[6:4] << 2);
+    wire [9:0] pacman_xloc = 10'd120 + (switches[9:7] << 3);
+    wire [9:0] pacman_yloc = 10'd228 + (switches[6:4] << 3);
 
+    wire writeEnable;   // HIGH when writing to ram1
+
+    wire tile_has_pellet;
 
     clk_vga TICK(clk, vgaclk);
     vga TOCK(vgaclk, input_red, input_green, input_blue, rst, hc, vc, hsync, vsync, red, green, blue);
 
-    vga_ram PONG(vgaclk, address, hc, vc, color, vga_data);
-    graphics BOO(vgaclk, rst, btn, xpos, ypos, switches, pacman_xloc, pacman_yloc, maze_color, color);
+    vga_ram PONG(vgaclk, address, hc, vc, color, writeEnable, vga_data);
+    graphics BOO(vgaclk, rst, btn, hc, vc, switches, pacman_xloc, pacman_yloc, maze_color, color, address);
     
-    maze MAZEPIN(xpos, ypos, pacman_xloc, pacman_yloc, clk, rst, maze_color);
+    maze MAZEPIN(clk, rst, xpos, ypos, pacman_xloc, pacman_yloc, btn, tile_has_pellet, maze_color);
 
     // 
     // COORDINATE BLOCKING & ROTATION
@@ -67,8 +70,7 @@ module pacman_top (
     // localparam YMAX  = 320;  // vertical pixels
     localparam XMAX = 240;      // horizontal pixels (480/2)
     localparam YMAX = 320;      // vertical pixels (640/2)
-    localparam YOFFSET = 24;    // vertical RAM offset (3 tiles * 8)
-    localparam ADDRESS_MAX = 65535;
+
     always_comb begin
         if (hc < 640 && vc < 480) begin
             // xpos = XMAX - 1 - vc_in / 3;
@@ -81,17 +83,6 @@ module pacman_top (
         end else begin 
             xpos = 0;
             ypos = 0;
-        end
-    end
-
-    //  
-    // RAM ADDRESS CALCULATION
-    // only loads tiles 3-36 into ping-pong RAM due to space constraints 
-    always_comb begin
-        if (ypos > (YOFFSET-1) && ypos < (264+YOFFSET)) begin
-            address = xpos*264 + (ypos-YOFFSET);
-        end else begin
-            address = ADDRESS_MAX;
         end
     end
 

@@ -3,16 +3,21 @@ module graphics (
     input rst, 
     input btn,
 
-    input [9:0] xpos, 
-    input [9:0] ypos,
+    input [9:0] hc, 
+    input [9:0] vc,
 
     input [9:0] switches, // testing outputs
     input [9:0] pacman_xloc,
     input [9:0] pacman_yloc,    // testing module connections
 
     input [7:0] maze_color,
-    output reg [7:0] color
+    
+    output reg [7:0] color,
+    output reg [15:0] address
 );
+
+reg [8:0] xpos;
+reg [8:0] ypos;
 
 // 
 // COLOR DEFINITIONS
@@ -133,6 +138,40 @@ always_comb begin
         color = maze_color;
     end else begin
         color = BLK;
+    end
+end
+
+// 
+// COORDINATE BLOCKING & ROTATION
+// localparam XMAX  = 160;  // horizontal pixels
+// localparam YMAX  = 320;  // vertical pixels
+localparam XMAX = 240;      // horizontal pixels (480/2)
+localparam YMAX = 320;      // vertical pixels (640/2)
+
+always_comb begin
+    if (hc < 640 && vc < 480) begin
+        // xpos = XMAX - 1 - vc_in / 3;
+        xpos = XMAX - 1 - (vc >> 1);
+        ypos = hc / 2;
+    end else if (vc < 480) begin
+        // xpos = XMAX - 1 - vc_in / 3;
+        xpos = XMAX - 1 - (vc >> 2);
+        ypos = YMAX - 1;
+    end else begin 
+        xpos = 0;
+        ypos = 0;
+    end
+end
+//  
+// RAM ADDRESS CALCULATION
+// only loads tiles 3-36 into ping-pong RAM due to space constraints 
+localparam YOFFSET = 24;    // vertical RAM offset (3 tiles * 8)
+localparam ADDRESS_MAX = 65535;
+always_comb begin
+    if (ypos > (YOFFSET-1) && ypos < (264+YOFFSET)) begin
+        address = xpos*264 + (ypos-YOFFSET);
+    end else begin
+        address = ADDRESS_MAX;
     end
 end
 

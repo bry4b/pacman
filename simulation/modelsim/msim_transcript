@@ -27,72 +27,157 @@
 # Copying C:/intelFPGA_lite/21.1/questa_fse/win64/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
-# vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v 
-# -- Compiling module ram_ip
+# Start time: 11:14:03 on Apr 23,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv 
+# -- Compiling module maze_tb
 # 
 # Top level modules:
-# 	ram_ip
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
+# 	maze_tb
+# End time: 11:14:03 on Apr 23,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v 
-# -- Compiling module clk_vga
-# 
-# Top level modules:
-# 	clk_vga
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman/db {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v 
-# -- Compiling module clk_vga_altpll
-# 
-# Top level modules:
-# 	clk_vga_altpll
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv 
-# -- Compiling module graphics
-# 
-# Top level modules:
-# 	graphics
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv 
-# -- Compiling module vga_ram
-# 
-# Top level modules:
-# 	vga_ram
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:57:06 on Apr 09,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv 
-# -- Compiling module vga
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(64): (vlog-7061) Variable 'hc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(48).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(65): (vlog-7061) Variable 'vc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(49).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(68): (vlog-7061) Variable 'hc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(48).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(70): (vlog-7061) Variable 'vc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(49).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(71): (vlog-7061) Variable 'hc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(48).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(73): (vlog-7061) Variable 'hc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(48).
-# ** Error (suppressible): C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(74): (vlog-7061) Variable 'vc' driven in an always_ff block, may not be driven by any other process. See C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv(49).
-# End time: 13:57:06 on Apr 09,2024, Elapsed time: 0:00:00
-# Errors: 7, Warnings: 0
+# Start time: 11:14:03 on Apr 23,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
+# -- Compiling module maze
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(242): (vlog-2110) Illegal reference to net "tile_info".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(299): (vlog-2110) Illegal reference to net "pellet_sprite".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(301): (vlog-2110) Illegal reference to net "pellet_sprite".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(304): (vlog-2110) Illegal reference to net "pellet_sprite".
+# End time: 11:14:03 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 4, Warnings: 0
 # ** Error: C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
-# Error in macro ./pacman_top_run_msim_rtl_verilog.do line 13
+# Error in macro ./pacman_top_run_msim_rtl_verilog.do line 9
 # C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
 #     while executing
-# "vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv}"
+# "vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maz..."
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:15:18 on Apr 23,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
+# -- Compiling module maze
+# 
+# Top level modules:
+# 	maze
+# End time: 11:15:18 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim -voptargs=+acc work.maze_tb
+# vsim -voptargs="+acc" work.maze_tb 
+# Start time: 11:15:27 on Apr 23,2024
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading sv_std.std
+# Loading work.maze_tb(fast)
+# Loading work.maze(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'pellet_animation'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
+#    Time: 0 ns  Iteration: 0  Instance: /maze_tb/UUT File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv Line: 14
+add wave -position insertpoint  \
+sim:/maze_tb/clk \
+sim:/maze_tb/rst \
+sim:/maze_tb/xpos \
+sim:/maze_tb/ypos \
+sim:/maze_tb/pac_x \
+sim:/maze_tb/pac_y \
+sim:/maze_tb/tile_info \
+sim:/maze_tb/color
+run 1000ns
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading work.maze_tb(fast)
+# Loading work.maze(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'pellet_animation'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
+#    Time: 0 ns  Iteration: 0  Instance: /maze_tb/UUT File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv Line: 14
+force -deposit sim:/maze_tb/pac_y 10'd9 0
+force -freeze sim:/maze_tb/pac_y 10'd18 0
+force -freeze sim:/maze_tb/pac_y 10'd100 0
+force -deposit sim:/maze_tb/pac_x 10'd100 0
+run 100ns
+force -freeze sim:/maze_tb/pac_x 10'd16 0
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:19:58 on Apr 23,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
+# -- Compiling module maze
+# 
+# Top level modules:
+# 	maze
+# End time: 11:19:58 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.maze_tb(fast)
+# Loading work.maze(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'pellet_animation'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
+#    Time: 0 ns  Iteration: 0  Instance: /maze_tb/UUT File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv Line: 14
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:20:23 on Apr 23,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
+# -- Compiling module maze
+# 
+# Top level modules:
+# 	maze
+# End time: 11:20:23 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:20:27 on Apr 23,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv 
+# -- Compiling module maze_tb
+# 
+# Top level modules:
+# 	maze_tb
+# End time: 11:20:27 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:20:53 on Apr 23,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv 
+# -- Compiling module maze_tb
+# 
+# Top level modules:
+# 	maze_tb
+# End time: 11:20:53 on Apr 23,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+quit -sim
+# End time: 11:21:02 on Apr 23,2024, Elapsed time: 0:05:35
+# Errors: 0, Warnings: 1
+vsim -voptargs=+acc work.maze_tb
+# vsim -voptargs="+acc" work.maze_tb 
+# Start time: 11:21:05 on Apr 23,2024
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.maze_tb(fast)
+# Loading work.maze(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'pellet_animation'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
+#    Time: 0 ns  Iteration: 0  Instance: /maze_tb/UUT File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv Line: 14
+add wave -position insertpoint  \
+sim:/maze_tb/clk \
+sim:/maze_tb/rst \
+sim:/maze_tb/xpos \
+sim:/maze_tb/ypos \
+sim:/maze_tb/pac_x \
+sim:/maze_tb/pac_y \
+sim:/maze_tb/tile_info \
+sim:/maze_tb/color
+run 100
+force -freeze sim:/maze_tb/pac_y 10'd160 0
+force -deposit sim:/maze_tb/pac_x 10'd16 0
+force -deposit sim:/maze_tb/pac_y 10'd160 0
+run 100
+force -deposit sim:/maze_tb/pac_y 10'd64 0
+run 100
+force -deposit sim:/maze_tb/pac_x 10'd8 0
+run 100
+# Causality operation skipped due to absence of debug database file
+force -freeze sim:/maze_tb/pac_y 10'd40 0
+force -deposit sim:/maze_tb/pac_y 10'h028 0
+run 100
+# End time: 11:44:17 on Apr 23,2024, Elapsed time: 0:23:12
+# Errors: 0, Warnings: 1

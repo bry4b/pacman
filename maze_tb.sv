@@ -1,23 +1,25 @@
 `timescale 1ns/1ns
 
-module graphics_maze_tb (
+module maze_tb (
     output reg clk,
+    output reg rst,
     output reg [9:0] xpos,
     output reg [9:0] ypos,
-    output reg [5:0] xpellet,
-    output reg [5:0] ypellet,
+    output reg [9:0] pac_x,
+    output reg [9:0] pac_y,
+    output reg [1:0] tile_info, 
     output [7:0] color
 );
 
-graphics_maze UUT(xpos, ypos, xpellet, ypellet, clk, 1, color);
+maze UUT(clk, rst, xpos, ypos, pac_x, pac_y, 1, tile_info, color);
 
 initial begin
     clk = 0;
+    rst = 1;
     xpos = 0;
     ypos = 0;
-    xpellet = 0;
-    ypellet = 0;
-
+    pac_x = 'd8;
+    pac_y = 'd40;
 end
 
 always @(posedge clk) begin

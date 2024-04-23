@@ -1,0 +1,7 @@
+
+State Machine - |vga_top|graphics_new:BOO|sprite_num
+Name sprite_num.000 sprite_num.010 sprite_num.100 sprite_num.011 
+sprite_num.010 0 0 0 0 
+sprite_num.000 1 1 0 0 
+sprite_num.011 0 1 0 1 
+sprite_num.100 0 1 1 0 

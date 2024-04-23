@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(10M50DAF484) Path("C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/output_files/") File("pacman_top.pof") MfrSpec(OpMask(1) Child_OpMask(2 1 1));
+		Device PartName(10M50DAF484) Path("C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/output_files/") File("pacman_top.pof") MfrSpec(OpMask(1) Child_OpMask(2 1 1));
 
 ChainEnd;
 

@@ -5,15 +5,6 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
-vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/ram_ip.v}
-vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/clk_vga.v}
-vlog -vlog01compat -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman/db {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/db/clk_vga_altpll.v}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga_ram.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/vga.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/pacman_top.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics_ghost_LUT.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics_ghost.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/graphics_pacman.sv}
-vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav/pacman/maze.sv}
+vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv}
+vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
 
