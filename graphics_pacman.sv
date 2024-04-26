@@ -28,8 +28,6 @@ reg [0:224] pacman_frames [0:2] = '{
     {{12'h000,3'o0},{12'h07c,3'o0},{12'h1fc,3'o0},{12'h3f8,3'o0},{12'h3f0,3'o0},{12'h7e0,3'o0},{12'h7c0,3'o0},{12'h780,3'o0},{12'h7c0,3'o0},{12'h7e0,3'o0},{12'h3f0,3'o0},{12'h3f8,3'o0},{12'h1fc,3'o0},{12'h07c,3'o0},{12'h000,3'o0}}
 };
 
-wire [3:0] xpixel = xpos-xloc+7;
-wire [3:0] ypixel = ypos-yloc+7;
 wire [0:224] pacman_sprite = pacman_frames[animation_cycle];
 reg pixel;
 
@@ -37,19 +35,19 @@ always_comb begin
     if ( ( (xloc < 7 || xloc-7 <= xpos) && xpos <= xloc+7) && ( (yloc < 7 || yloc-7 <= ypos) && ypos <= yloc+7) ) begin
         case (pacman_dir)
             NM: begin
-                pixel = pacman_sprite ['d15 * ypixel + xpixel];
+                pixel = pacman_sprite ['d15 * (ypos-yloc+7) + (xpos-xloc+7)];
             end
 
             CC: begin
-                pixel = pacman_sprite ['d14 + 15 * xpixel - ypixel];
+                pixel = pacman_sprite ['d14 + 15 * (xpos-xloc+7) - (ypos-yloc+7)];
             end
 
             CW: begin
-                pixel = pacman_sprite ['d210 - 15 * xpixel + ypixel];
+                pixel = pacman_sprite ['d210 - 15 * (xpos-xloc+7) + (ypos-yloc+7)];
             end
 
             FL: begin
-                pixel = pacman_sprite ['d224 - 15 * ypixel - xpixel];
+                pixel = pacman_sprite ['d224 - 15 * (ypos-yloc+7) - (xpos-xloc+7)];
             end
         endcase
         if (pixel) begin

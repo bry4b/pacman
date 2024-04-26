@@ -60,7 +60,7 @@ module vga(
 		 *       a) the reset condition, and
 		 *       b) the conditions that cause hc and vc to go back to 0
 		 */ // done i think
-		if (!rst) begin
+		if (rst) begin
 			hc <= 0;
 			vc <= 0;
 		end else begin

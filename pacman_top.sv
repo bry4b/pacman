@@ -27,42 +27,81 @@ module pacman_top (
     // 
     // MAZE
     wire [7:0] maze_color;
-    wire [5:0] xpellet;
-    wire [5:0] ypellet;
-    assign xpellet = switches[9:7] << 1;
-    assign ypellet = switches[6:3];
 
     // 
     // VGA DRIVER
     wire vgaclk;
     wire [9:0] hc; 
     wire [9:0] vc;
-    // wire [2:0] input_red = switches[9:7];
-    // wire [2:0] input_green = switches[6:4];
-    // wire [1:0] input_blue = switches[3:2];
-
-    // wire [2:0] input_red = color [7:5];
-    // wire [2:0] input_green = color [4:2];
-    // wire [1:0] input_blue = color [1:0];
 
     wire [2:0] input_red = vga_data [7:5];
     wire [2:0] input_green = vga_data [4:2];
     wire [1:0] input_blue = vga_data [1:0];
 
-    wire [9:0] pacman_xloc = 10'd120 + (switches[9:7] << 3);
-    wire [9:0] pacman_yloc = 10'd228 + (switches[6:4] << 3);
+    //
+    // GAME
+    wire gameclk;
+
+    // 
+    // CHARACTERS
+    wire [9:0] pacman_xloc;
+    wire [9:0] pacman_yloc;
+    wire [1:0] pacman_dir; 
+    wire [1:0] pacman_animation;
+    wire pacman_alive;
+
+    wire [9:0] blinky_xloc; 
+    wire [9:0] blinky_yloc;
+    wire [1:0] blinky_dir; 
+    wire [1:0] blinky_mode;
+
+    wire [9:0] pinky_xloc; 
+    wire [9:0] pinky_yloc;
+    wire [1:0] pinky_dir; 
+    wire [1:0] pinky_mode;
+
+    wire ghost_animation;
+
+    wire [6:0] pacman_xtile;
+    wire [6:0] pacman_ytile;
+
+    wire [6:0] blinky_xtile_next;
+    wire [6:0] blinky_ytile_next;
+    wire [6:0] pinky_xtile_next;
+    wire [6:0] pinky_ytile_next;
+
+    wire [1:0] pacman_tile_info [0:3]; 
+    wire pacman_pellet;
+    wire power_pellet;
+    wire [1:0] blinky_tile_info [0:3]; 
+    wire [1:0] pinky_tile_info [0:3]; 
 
     wire writeEnable;   // HIGH when writing to ram1
 
-    wire tile_has_pellet;
+    // TESTING GAME STATE WITH SWTICHES
+    // assign pacman_xloc = 10'd119 + (switches[9:7] << 3);
+    // assign pacman_yloc = 10'd227 + (switches[6:4] << 3);
+    assign pacman_xloc = (pacman_xtile << 2'd3) + 2'd3;
+    assign pacman_yloc = ((pacman_ytile + 2'd3) << 2'd3) + 2'd3;
+    assign pacman_xtile = 'd15 + (switches[9:7]);
+    assign pacman_ytile = 'd25 + (switches[6:4]);
+    assign pacman_dir = switches [1:0]; 
+    assign pacman_animation = switches[3:2]; 
+    assign pacman_alive = 2'b00;
+
+    assign ghost_animation = ~btn;
 
     clk_vga TICK(clk, vgaclk);
-    vga TOCK(vgaclk, input_red, input_green, input_blue, rst, hc, vc, hsync, vsync, red, green, blue);
+    vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
 
     vga_ram PONG(vgaclk, address, hc, vc, color, writeEnable, vga_data);
-    graphics BOO(vgaclk, rst, btn, hc, vc, switches, pacman_xloc, pacman_yloc, maze_color, color, address);
+    graphics BOO(vgaclk, ~rst, hc, vc, pacman_xloc, pacman_yloc, pacman_dir, pacman_animation, pacman_alive, blinky_xloc, blinky_yloc, blinky_dir, blinky_mode, pinky_xloc, pinky_yloc, pinky_dir, pinky_mode, ghost_animation, maze_color, color, address);
+
+    clockDivider TOCK(clk, 'd60, 1'b0, gameclk);
     
-    maze MAZEPIN(clk, rst, xpos, ypos, pacman_xloc, pacman_yloc, btn, tile_has_pellet, maze_color);
+    maze MAZEPIN(gameclk, ~rst, xpos, ypos, pacman_xtile, pacman_ytile, blinky_xtile_next, blinky_ytile_next, pinky_xtile_next, pinky_ytile_next, btn, pacman_tile_info, pacman_pellet, power_pellet, blinky_tile_info, pinky_tile_info, maze_color);
+    game_ghost BLINKY(gameclk, ~rst, ~btn, 2'b00, pacman_xtile, pacman_ytile, pacman_dir, power_pellet, blinky_tile_info, blinky_xtile_next, blinky_ytile_next, blinky_xloc, blinky_yloc, blinky_dir, blinky_mode);
+    game_ghost PINKY(gameclk, ~rst, ~btn, 2'b01, pacman_xtile, pacman_ytile, pacman_dir, power_pellet, pinky_tile_info, pinky_xtile_next, pinky_ytile_next, pinky_xloc, pinky_yloc, pinky_dir, pinky_mode);
 
     // 
     // COORDINATE BLOCKING & ROTATION

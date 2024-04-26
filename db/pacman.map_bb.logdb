@@ -1,1 +1,13 @@
 v1
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult6|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult3|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult5|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult4|mult_tds:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult1|mult_tds:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:PINKY|lpm_mult:Mult0|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult6|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult3|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult5|mult_1es:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult4|mult_tds:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult1|mult_tds:auto_generated|mac_out2,
+DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,game_ghost:BLINKY|lpm_mult:Mult0|mult_1es:auto_generated|mac_out2,

@@ -3,23 +3,35 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 5.084
-TNS   : 0.000
+Slack : -19.058
+TNS   : -2366.213
+
+Type  : Slow 1200mV 85C Model Setup 'clockDivider:TOCK|outClock'
+Slack : -17.390
+TNS   : -1373.170
 
 Type  : Slow 1200mV 85C Model Setup 'clk'
-Slack : 17.037
-TNS   : 0.000
+Slack : -1.845
+TNS   : -1.845
 
-Type  : Slow 1200mV 85C Model Hold 'clk'
+Type  : Slow 1200mV 85C Model Hold 'clockDivider:TOCK|outClock'
 Slack : 0.341
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.414
+Slack : 0.413
 TNS   : 0.000
 
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : 0.645
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Slack : -1.403
+TNS   : -239.913
+
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
-Slack : 9.645
+Slack : 9.638
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'
@@ -27,23 +39,35 @@ Slack : 19.663
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 6.592
-TNS   : 0.000
+Slack : -17.123
+TNS   : -2121.844
+
+Type  : Slow 1200mV 0C Model Setup 'clockDivider:TOCK|outClock'
+Slack : -15.823
+TNS   : -1251.391
 
 Type  : Slow 1200mV 0C Model Setup 'clk'
-Slack : 17.229
-TNS   : 0.000
+Slack : -1.645
+TNS   : -1.645
 
-Type  : Slow 1200mV 0C Model Hold 'clk'
+Type  : Slow 1200mV 0C Model Hold 'clockDivider:TOCK|outClock'
 Slack : 0.306
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.335
+Slack : 0.333
 TNS   : 0.000
 
+Type  : Slow 1200mV 0C Model Hold 'clk'
+Slack : 0.596
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Slack : -1.403
+TNS   : -239.913
+
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : 9.655
+Slack : 9.647
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'
@@ -51,23 +75,35 @@ Slack : 19.683
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 13.246
-TNS   : 0.000
+Slack : -7.672
+TNS   : -941.621
+
+Type  : Fast 1200mV 0C Model Setup 'clockDivider:TOCK|outClock'
+Slack : -6.791
+TNS   : -498.185
 
 Type  : Fast 1200mV 0C Model Setup 'clk'
-Slack : 18.645
-TNS   : 0.000
+Slack : -0.674
+TNS   : -0.674
 
-Type  : Fast 1200mV 0C Model Hold 'clk'
+Type  : Fast 1200mV 0C Model Hold 'clockDivider:TOCK|outClock'
 Slack : 0.148
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.208
+Slack : 0.207
 TNS   : 0.000
 
+Type  : Fast 1200mV 0C Model Hold 'clk'
+Slack : 0.249
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Slack : -1.000
+TNS   : -171.000
+
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : 9.332
+Slack : 9.330
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'

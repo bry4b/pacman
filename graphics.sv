@@ -1,14 +1,30 @@
 module graphics (
     input clk, 
     input rst, 
-    input btn,
 
     input [9:0] hc, 
     input [9:0] vc,
 
-    input [9:0] switches, // testing outputs
+    // input [9:0] switches, // testing outputs
+
+    // testing module connections
     input [9:0] pacman_xloc,
-    input [9:0] pacman_yloc,    // testing module connections
+    input [9:0] pacman_yloc,    
+    input [1:0] pacman_dir, 
+    input [1:0] pacman_animation,
+    input pacman_alive,
+
+    input [9:0] blinky_xloc, 
+    input [9:0] blinky_yloc,
+    input [1:0] blinky_dir, 
+    input [1:0] blinky_mode,
+
+    input [9:0] pinky_xloc, 
+    input [9:0] pinky_yloc,
+    input [1:0] pinky_dir, 
+    input [1:0] pinky_mode,
+
+    input ghost_animation,
 
     input [7:0] maze_color,
     
@@ -39,18 +55,18 @@ localparam BLK  = 8'b00000000;
 
 //
 // GHOST INSTANTIATION
-wire [9:0] blinky_xloc;
-wire [9:0] blinky_yloc;
-wire [1:0] blinky_dir;
-wire [1:0] blinky_mode;
+// wire [9:0] blinky_xloc;
+// wire [9:0] blinky_yloc;
+// wire [1:0] blinky_dir;
+// wire [1:0] blinky_mode;
 wire [9:0] blinky_address;
 wire [2:0] blinky_pixel;
 wire [7:0] blinky_color;
 
-wire [9:0] pinky_xloc;
-wire [9:0] pinky_yloc;
-wire [1:0] pinky_dir;
-wire [1:0] pinky_mode;
+// wire [9:0] pinky_xloc;
+// wire [9:0] pinky_yloc;
+// wire [1:0] pinky_dir;
+// wire [1:0] pinky_mode;
 wire [9:0] pinky_address;
 wire [2:0] pinky_pixel;
 wire [7:0] pinky_color;
@@ -71,7 +87,7 @@ wire [9:0] clyde_address;
 wire [2:0] clyde_pixel;
 wire [7:0] clyde_color;
 
-wire ghost_animation;
+// wire ghost_animation;
 
 graphics_ghost_LUT GLUT (blinky_address, pinky_address, inky_address, clyde_address, blinky_pixel, pinky_pixel, inky_pixel, clyde_pixel);
 graphics_ghost BLINKY   (xpos, ypos, blinky_xloc,   blinky_yloc,    2'b00, blinky_dir,  blinky_mode,   ghost_animation, blinky_pixel,  blinky_address, blinky_color);
@@ -81,40 +97,34 @@ graphics_ghost CLYDE    (xpos, ypos, clyde_xloc,    clyde_yloc,     2'b11, clyde
 
 // 
 // PACMAN INSTANTIATION
-// wire [9:0] pacman_xloc = 'd119 + (switches[9:7] << 2);
-// wire [9:0] pacman_yloc = 'd228 + (switches[6:4] << 2);
-wire [1:0] pacman_dir = switches[1:0];
-wire pacman_alive = 2'b00;
-wire [1:0] pacman_animation = switches[3:2];
 wire [7:0] pacman_color;
-
 graphics_pacman PACMAN  (xpos, ypos, pacman_xloc,   pacman_yloc,    pacman_dir,     pacman_alive,   pacman_animation,   pacman_color);
 
 // 
 // GHOST STATES (HARDCODED)
 // assign blinky_xloc = switches[9:6] << 3;
 // assign blinky_yloc = switches[5:3] << 3;
-assign blinky_xloc = 'd119;
-assign blinky_yloc = 'd132;
-assign blinky_dir = switches[2:1];
-assign blinky_mode [1] = switches[0];
+// assign blinky_xloc = 'd119;
+// assign blinky_yloc = 'd132;
+// assign blinky_dir = switches[2:1];
+// assign blinky_mode [1] = switches[0];
 
-assign pinky_xloc = 'd103;
-assign pinky_yloc = 'd154;
-assign pinky_dir = switches[2:1];
-assign pinky_mode [1] = switches[0];
+// assign pinky_xloc   = 'd103;
+// assign pinky_yloc   = 'd154;
+// assign pinky_dir    = 2'b00;
+// assign pinky_mode   = 2'b00;
 
-assign inky_xloc = 'd119;
-assign inky_yloc = 'd154;
-assign inky_dir = switches[2:1];
-assign inky_mode [1] = switches[0];
+assign inky_xloc    = 'd119;
+assign inky_yloc    = 'd155;
+assign inky_dir     = 2'b00;
+assign inky_mode    = 2'b00;
 
-assign clyde_xloc = 'd135;
-assign clyde_yloc = 'd154;
-assign clyde_dir = switches[2:1];
-assign clyde_mode [1] = switches[0];
+assign clyde_xloc   = 'd135;
+assign clyde_yloc   = 'd155;
+assign clyde_dir    = 2'b00;
+assign clyde_mode   = 2'b00;
 
-assign ghost_animation = ~btn;
+// assign ghost_animation = btn;
 
 //
 // LOGIC FOR SPRITE HIERARCHY
