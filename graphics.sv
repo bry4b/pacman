@@ -24,6 +24,16 @@ module graphics (
     input [1:0] pinky_dir, 
     input [1:0] pinky_mode,
 
+    input [9:0] inky_xloc, 
+    input [9:0] inky_yloc,
+    input [1:0] inky_dir, 
+    input [1:0] inky_mode,
+
+    input [9:0] clyde_xloc, 
+    input [9:0] clyde_yloc,
+    input [1:0] clyde_dir, 
+    input [1:0] clyde_mode,
+
     input ghost_animation,
 
     input [7:0] maze_color,
@@ -71,18 +81,18 @@ wire [9:0] pinky_address;
 wire [2:0] pinky_pixel;
 wire [7:0] pinky_color;
 
-wire [9:0] inky_xloc;
-wire [9:0] inky_yloc;
-wire [1:0] inky_dir;
-wire [1:0] inky_mode;
+// wire [9:0] inky_xloc;
+// wire [9:0] inky_yloc;
+// wire [1:0] inky_dir;
+// wire [1:0] inky_mode;
 wire [9:0] inky_address;
 wire [2:0] inky_pixel;
 wire [7:0] inky_color;
 
-wire [9:0] clyde_xloc;
-wire [9:0] clyde_yloc;
-wire [1:0] clyde_dir;
-wire [1:0] clyde_mode;
+// wire [9:0] clyde_xloc;
+// wire [9:0] clyde_yloc;
+// wire [1:0] clyde_dir;
+// wire [1:0] clyde_mode;
 wire [9:0] clyde_address;
 wire [2:0] clyde_pixel;
 wire [7:0] clyde_color;
@@ -99,32 +109,6 @@ graphics_ghost CLYDE    (xpos, ypos, clyde_xloc,    clyde_yloc,     2'b11, clyde
 // PACMAN INSTANTIATION
 wire [7:0] pacman_color;
 graphics_pacman PACMAN  (xpos, ypos, pacman_xloc,   pacman_yloc,    pacman_dir,     pacman_alive,   pacman_animation,   pacman_color);
-
-// 
-// GHOST STATES (HARDCODED)
-// assign blinky_xloc = switches[9:6] << 3;
-// assign blinky_yloc = switches[5:3] << 3;
-// assign blinky_xloc = 'd119;
-// assign blinky_yloc = 'd132;
-// assign blinky_dir = switches[2:1];
-// assign blinky_mode [1] = switches[0];
-
-// assign pinky_xloc   = 'd103;
-// assign pinky_yloc   = 'd154;
-// assign pinky_dir    = 2'b00;
-// assign pinky_mode   = 2'b00;
-
-assign inky_xloc    = 'd119;
-assign inky_yloc    = 'd155;
-assign inky_dir     = 2'b00;
-assign inky_mode    = 2'b00;
-
-assign clyde_xloc   = 'd135;
-assign clyde_yloc   = 'd155;
-assign clyde_dir    = 2'b00;
-assign clyde_mode   = 2'b00;
-
-// assign ghost_animation = btn;
 
 //
 // LOGIC FOR SPRITE HIERARCHY

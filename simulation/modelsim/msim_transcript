@@ -29,159 +29,211 @@
 # 
 # vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:17:21 on Apr 25,2024
+# Start time: 10:32:59 on Apr 30,2024
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv 
 # -- Compiling module game_tb
 # 
 # Top level modules:
 # 	game_tb
-# End time: 20:17:21 on Apr 25,2024, Elapsed time: 0:00:00
+# End time: 10:32:59 on Apr 30,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:17:21 on Apr 25,2024
+# Start time: 10:32:59 on Apr 30,2024
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
 # -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	game_ghost
-# End time: 20:17:21 on Apr 25,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# End time: 10:32:59 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
 # vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:17:21 on Apr 25,2024
+# Start time: 10:32:59 on Apr 30,2024
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
-# -- Compiling module maze
-# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(220): (vlog-2730) Undefined variable: 'POWER1_Y'.
-# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(220): (vlog-2730) Undefined variable: 'POWER1_X'.
-# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(220): (vlog-2730) Undefined variable: 'POWER2_X'.
-# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(220): (vlog-2730) Undefined variable: 'POWER2_Y'.
-# End time: 20:17:21 on Apr 25,2024, Elapsed time: 0:00:00
-# Errors: 4, Warnings: 0
-# ** Error: C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
-# Error in macro ./pacman_top_run_msim_rtl_verilog.do line 10
-# C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
-#     while executing
-# "vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maz..."
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:18:16 on Apr 25,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
 # -- Compiling module maze
 # 
 # Top level modules:
 # 	maze
-# End time: 20:18:16 on Apr 25,2024, Elapsed time: 0:00:00
+# End time: 10:32:59 on Apr 30,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
+# 
 vsim -voptargs=+acc work.game_tb
 # vsim -voptargs="+acc" work.game_tb 
-# Start time: 20:18:21 on Apr 25,2024
+# Start time: 10:33:15 on Apr 30,2024
 # ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading sv_std.std
 # Loading work.game_tb(fast)
 # Loading work.maze(fast)
 # Loading work.game_ghost(fast)
 add wave -position insertpoint  \
-sim:/game_tb/UUT_BLINKY/clk \
-sim:/game_tb/UUT_BLINKY/pacman_xtile \
-sim:/game_tb/UUT_BLINKY/pacman_ytile \
-sim:/game_tb/UUT_BLINKY/pacman_dir \
-sim:/game_tb/UUT_BLINKY/power_pellet \
-sim:/game_tb/UUT_BLINKY/tile_info \
-sim:/game_tb/UUT_BLINKY/xtile_next \
-sim:/game_tb/UUT_BLINKY/ytile_next \
-sim:/game_tb/UUT_BLINKY/xloc \
-sim:/game_tb/UUT_BLINKY/yloc \
-sim:/game_tb/UUT_BLINKY/dir \
-sim:/game_tb/UUT_BLINKY/mode \
-sim:/game_tb/UUT_BLINKY/state \
-sim:/game_tb/UUT_BLINKY/state_d \
-sim:/game_tb/UUT_BLINKY/xtile_curr \
-sim:/game_tb/UUT_BLINKY/ytile_curr \
-sim:/game_tb/UUT_BLINKY/xtile_prev \
-sim:/game_tb/UUT_BLINKY/ytile_prev \
-sim:/game_tb/UUT_BLINKY/dir_exit \
-sim:/game_tb/UUT_BLINKY/dir_plan \
-sim:/game_tb/UUT_BLINKY/target_xtile \
-sim:/game_tb/UUT_BLINKY/target_ytile \
-sim:/game_tb/UUT_BLINKY/distance_rt \
-sim:/game_tb/UUT_BLINKY/distance_up \
-sim:/game_tb/UUT_BLINKY/distance_dn \
-sim:/game_tb/UUT_BLINKY/distance_lt
+sim:/game_tb/UUT/clk \
+sim:/game_tb/UUT/pacman_xtile \
+sim:/game_tb/UUT/pacman_ytile \
+sim:/game_tb/UUT/pacman_dir \
+sim:/game_tb/UUT/tile_info \
+sim:/game_tb/UUT/blinky_xloc \
+sim:/game_tb/UUT/blinky_yloc \
+sim:/game_tb/UUT/xtile_next \
+sim:/game_tb/UUT/ytile_next \
+sim:/game_tb/UUT/xloc \
+sim:/game_tb/UUT/yloc \
+sim:/game_tb/UUT/dir \
+sim:/game_tb/UUT/state \
+sim:/game_tb/UUT/state_d \
+sim:/game_tb/UUT/xtile \
+sim:/game_tb/UUT/ytile \
+sim:/game_tb/UUT/target_xtile \
+sim:/game_tb/UUT/target_ytile \
+sim:/game_tb/UUT/distance_rt \
+sim:/game_tb/UUT/distance_up \
+sim:/game_tb/UUT/distance_dn \
+sim:/game_tb/UUT/distance_lt \
+sim:/game_tb/UUT/dir_exit \
+sim:/game_tb/UUT/dir_plan \
+sim:/game_tb/UUT/dir_prev \
+sim:/game_tb/UUT/blinky_xtile \
+sim:/game_tb/UUT/blinky_ytile
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
 run 100ns
-force -freeze sim:/game_tb/UUT_BLINKY/state_d 3'h1 0
-run 1us
-run 1us
-run 1us
-run 200ns
 vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 22:23:34 on Apr 25,2024
+# Start time: 10:39:41 on Apr 30,2024
 # vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
 # -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	game_ghost
-# End time: 22:23:34 on Apr 25,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-add wave -position insertpoint  \
-sim:/game_tb/UUT_BLINKY/personality
-restart
+# End time: 10:39:41 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading sv_std.std
 # Loading work.game_tb(fast)
 # Loading work.maze(fast)
 # Loading work.game_ghost(fast)
-force -freeze sim:/game_tb/UUT_BLINKY/personality 2'b01 0
-run 100ns
-force -freeze sim:/game_tb/UUT_BLINKY/state_d 3'h1 0
-run 100ns
-run 100ns
-run 200ns
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
+run 1us
+# Causality operation skipped due to absence of debug database file
+force -deposit sim:/game_tb/UUT/blinky_ytile 7'd19 0
+run 1us
 vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 22:33:52 on Apr 25,2024
+# Start time: 11:20:03 on Apr 30,2024
 # vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
 # -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	game_ghost
-# End time: 22:33:52 on Apr 25,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# End time: 11:20:03 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
 restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading sv_std.std
 # Loading work.game_tb(fast)
 # Loading work.maze(fast)
 # Loading work.game_ghost(fast)
-force -freeze sim:/game_tb/UUT_BLINKY/personality 2'b01 0
-run 100ns
-force -freeze sim:/game_tb/UUT_BLINKY/state_d 3'h1 0
-run 100ns
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
 run 1us
 vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 22:43:56 on Apr 25,2024
+# Start time: 11:27:07 on Apr 30,2024
 # vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
 # -- Compiling module game_ghost
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(216): 'LT' already exists; must not be redefined as a named block
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(221): 'DN' already exists; must not be redefined as a named block
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(177): 'LT' already exists; must not be redefined as a named block
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(182): 'DN' already exists; must not be redefined as a named block
+# End time: 11:27:07 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 4, Warnings: 0
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:28:39 on Apr 30,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
+# -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # 
 # Top level modules:
 # 	game_ghost
-# End time: 22:43:56 on Apr 25,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# End time: 11:28:39 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
 restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
 # ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
 # Loading sv_std.std
 # Loading work.game_tb(fast)
 # Loading work.maze(fast)
 # Loading work.game_ghost(fast)
-force -freeze sim:/game_tb/UUT_BLINKY/personality 2'b01 0
-run 100ns
-force -freeze sim:/game_tb/UUT_BLINKY/state_d 3'h1 0
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
 run 1us
-# End time: 23:14:34 on Apr 25,2024, Elapsed time: 2:56:13
-# Errors: 0, Warnings: 0
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:32:18 on Apr 30,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
+# -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
+# 
+# Top level modules:
+# 	game_ghost
+# End time: 11:32:18 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
+# ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.game_tb(fast)
+# Loading work.maze(fast)
+# Loading work.game_ghost(fast)
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
+run 1us
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 11:33:37 on Apr 30,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv 
+# -- Compiling module game_ghost
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vlog-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
+# 
+# Top level modules:
+# 	game_ghost
+# End time: 11:33:37 on Apr 30,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 1
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv(143): (vopt-2182) 'timer_reg_d' might be read before written in always_comb or always @* block.
+# ** Note: (vopt-143) Recognized 2 FSMs in module "game_ghost(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.game_tb(fast)
+# Loading work.maze(fast)
+# Loading work.game_ghost(fast)
+run 10ns
+force -freeze sim:/game_tb/UUT/state_d 3'h1 0
+run 1us
+# End time: 13:15:35 on Apr 30,2024, Elapsed time: 2:42:20
+# Errors: 0, Warnings: 1

@@ -1,4 +1,11 @@
-//TODO: write code to determine next location, direction changes, etc. (so like the actual outputs of the module LOL)
+//TODO: 
+// write code to determine next location, direction changes, etc. (so like the actual outputs of the module LOL)
+//      this is done for ALL GHOSTS!!!! rahhhh
+// write scatter state targeting
+//      this is done
+// write timers for states
+//      this is done
+// write frightened state random turning
 
 module game_ghost (
     input clk, 
@@ -11,8 +18,11 @@ module game_ghost (
     input [6:0] pacman_ytile, 
     input [1:0] pacman_dir,
 
-    input power_pellet,         // HIGH when a power pellet gets eaten
+    input power_pellet,             // HIGH when a power pellet gets eaten
     input [1:0] tile_info [0:3], 
+
+    input [9:0] blinky_xloc,        // only for inky :/
+    input [9:0] blinky_yloc,        // only for ionky :/
 
     output reg [6:0] xtile_next,
     output reg [6:0] ytile_next,
@@ -24,6 +34,13 @@ module game_ghost (
     output reg [1:0] mode
 );
 
+// ghost personality definitions
+localparam BLINKY   = 2'b00;
+localparam PINKY    = 2'b01;
+localparam INKY     = 2'b10;
+localparam CLYDE    = 2'b11;
+
+// ghost state definitions
 localparam STATE_START = 3'b000;
 localparam STATE_CHASE = 3'b001;
 localparam STATE_SCTTR = 3'b010;
@@ -35,8 +52,9 @@ reg [2:0] state;
 reg [2:0] state_d;
 reg [2:0] state_prev;
 
-localparam CHASE_TIME = 'd7 * 'd60;     // chase time
-localparam SCTTR_TIME = 'd20 * 'd60;    // scatter time
+// state timers 
+localparam CHASE_TIME = 'd20 * 'd60;    // chase time
+localparam SCTTR_TIME = 'd7 * 'd60;     // scatter time
 localparam FRGHT_TIME = 'd10 * 'd60;    // frightened time
 
 reg [10:0] timer_reg;
@@ -44,19 +62,13 @@ reg [10:0] timer_reg_d;
 reg [9:0] timer_frt;
 reg [9:0] timer_frt_d;
 
-reg [1:0] dir_d;
-reg [1:0] mode_d;
-
-localparam YOFFSET = 2'd3;
-
-wire [6:0] xtile_curr = xloc >> 3; 
-wire [6:0] ytile_curr = (yloc >> 3) - YOFFSET;
-
 // ghost mode definitions
 localparam NORM = 2'b00;
 localparam FRGT = 2'b01;
 localparam SCOR = 2'b10;
 localparam DEAD = 2'b11;
+
+reg [1:0] mode_d;
 
 // ghost direction definitions
 localparam RT   = 2'b00;
@@ -64,14 +76,17 @@ localparam UP   = 2'b01;
 localparam DN   = 2'b10;
 localparam LT   = 2'b11;
 
+reg [1:0] dir_d;
+
 // maze information
 localparam WALL = 2'b00;    // wall (not walkable)
-localparam WKNP = 2'b01;    // walkable, no pellet
-localparam WKRP = 2'b10;    // walkable, pellet
-localparam WKGH = 2'b11;    // walkable (ghost house)
+localparam PTNP = 2'b01;    // path, no pellet
+localparam PTYP = 2'b10;    // path, yes pellet
+localparam PTGH = 2'b11;    // path, ghost house
 
-localparam XTILES = 30;     // horizontal width in tiles 
-localparam YTILES = 33;     // vertical height in tiles
+localparam YOFFSET = 2'd3;  // Y offset for tiles = 3
+localparam XTILES = 6'd30;  // horizontal width in tiles 
+localparam YTILES = 6'd33;  // vertical height in tiles
 
 reg [9:0] start_xloc; 
 reg [9:0] start_yloc;
@@ -79,12 +94,11 @@ reg [9:0] start_yloc;
 reg [9:0] xloc_d;
 reg [9:0] yloc_d;
 
-reg [6:0] xtile_prev;
-reg [6:0] ytile_prev;
+reg [6:0] xtile;
+reg [6:0] ytile;
 
-reg [1:0] dir_exit;
-reg [1:0] dir_exit_d;
-reg [1:0] dir_plan;
+wire [6:0] xtile_d = xloc_d >> 2'd3;   
+wire [6:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
 
 reg [6:0] target_xtile;
 reg [6:0] target_ytile;
@@ -94,38 +108,44 @@ reg [12:0] distance_up;
 reg [12:0] distance_dn;
 reg [12:0] distance_lt;
 
+reg [1:0] dir_exit;         // direction that ghost should exit current tile from
+reg [1:0] dir_plan;         // direction that ghost should exit next tile from
+reg [1:0] dir_prev;         // direction that ghost exited last tile from
+
 initial begin
     state = STATE_START;
     state_prev = STATE_START;
     dir_exit = RT;
+    dir_prev = RT;
 end
 
-// UPDATE STATE, DIRECTION, SPRITE MODE
+// UPDATE STATE, DIRECTION, SPRITE MODE, TIMERS
 always @(posedge clk) begin
     state <= state_d;
     dir <= dir_d;
     mode <= mode_d;
+
+    timer_reg <= timer_reg_d;
+    timer_frt <= timer_frt_d;
 
     if (state_d != state) begin
         state_prev <= state;
     end
 end
 
-// STATE TRANSITIONS, DIRECTIONS, SPRITE MODES
+// STATE TRANSITIONS, DIRECTION CHANGES, SPRITE DISPLAY MODES
 always_comb begin
     case (state)
         STATE_START: begin
             if (start) begin
-                // state_d = STATE_SCTTR;
-                state_d = STATE_CHASE;
-                timer_reg_d = 1'b0;
+                state_d = STATE_SCTTR;
+                // state_d = STATE_CHASE;
             end else if (timer_reg_d > 'd300) begin
                 state_d = STATE_CHASE;
-                timer_reg_d = 1'b0;
             end else begin
                 state_d = STATE_START;
-                timer_reg_d = timer_reg + 1'b1;
             end
+            timer_reg_d = 1'b0;
             timer_frt_d = 1'b0;
             mode_d = NORM;
 
@@ -141,28 +161,36 @@ always_comb begin
             if (power_pellet) begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
-                timer_frt_d = 1'b0;
                 dir_d = ~dir;
             end else if (timer_reg > CHASE_TIME) begin
                 state_d = STATE_SCTTR;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
                 dir_d = ~dir;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
                 dir_d = dir;
             end else begin
                 state_d = STATE_CHASE;
                 timer_reg_d = timer_reg + 1'b1;
-                timer_frt_d = 1'b0;
-                if (xloc_d % 8 == 3 && yloc_d % 8 == 3) begin
-                    dir_d = dir_exit;
-                end else begin
-                    dir_d = dir;
-                end
+                case (dir_exit) 
+                    RT, LT: begin
+                        if (yloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                    UP, DN: begin
+                        if (xloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                endcase
             end
+            timer_frt_d = 1'b0;
             mode_d = NORM;
         end
 
@@ -170,33 +198,41 @@ always_comb begin
             if (power_pellet) begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
-                timer_frt_d = 1'b0;
                 dir_d = ~dir;
             end else if (timer_reg > SCTTR_TIME) begin
                 state_d = STATE_CHASE;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
                 dir_d = ~dir;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
                 dir_d = dir;
             end else begin
                 state_d = STATE_SCTTR;
                 timer_reg_d = timer_reg + 1'b1;
-                timer_frt_d = 1'b0;
-                if (xloc_d % 8 == 3 && yloc_d % 8 == 3) begin
-                    dir_d = dir_exit;
-                end else begin
-                    dir_d = dir;
-                end
+                case (dir_exit) 
+                    RT, LT: begin
+                        if (yloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                    UP, DN: begin
+                        if (xloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                endcase
             end
+            timer_frt_d = 1'b0;
             mode_d = NORM;
         end
 
         STATE_FRGHT: begin
-            if (pacman_xtile == xtile_curr && pacman_ytile == ytile_curr) begin
+            if (pacman_xtile == xtile && pacman_ytile == ytile) begin
                 state_d = STATE_SCORE;
                 timer_reg_d = 1'b0;
                 timer_frt_d = 1'b0;
@@ -264,52 +300,60 @@ always_comb begin
     endcase
 end
 
-// UPDATE LOCATION REGISTERS
+// UPDATE TILE LOCATION AND EXIT DIRECTION
 always @(posedge clk) begin
     xloc <= xloc_d;
     yloc <= yloc_d;
     
     if (state == STATE_START) begin
-        xtile_prev <= start_xloc >> 3;
-        ytile_prev <= (start_yloc >> 3) - 3;
-        dir_exit <= RT;
-        xtile_next <= xtile_curr;
-        ytile_next <= ytile_curr;
+        xtile <= start_xloc >> 2'd3;
+        ytile <= (start_yloc >> 2'd3) - 2'd3;
+        case (personality)
+            BLINKY: dir_exit <= RT;
+            PINKY: dir_exit <= RT;
+            INKY: dir_exit <= UP;
+            CLYDE: dir_exit <= LT;
+        endcase
     end else begin
-        xtile_prev <= xtile_curr;
-        ytile_prev <= ytile_curr;
-        // enters new tile, choose next tile
-        // determine distance between possible next tiles and target tile
-        if (xtile_prev != xtile_curr || ytile_prev != ytile_curr) begin
+        xtile <= xtile_d;
+        ytile <= ytile_d;
+        if ( (state_d == STATE_CHASE && state == STATE_SCTTR) || (state_d == STATE_SCTTR && state == STATE_CHASE) || (state_d == STATE_FRGHT && state == STATE_CHASE) || (state_d == STATE_FRGHT && state == STATE_SCTTR) ) begin
+            dir_exit <= ~dir_prev;
+        end else if (xtile != xtile_d || ytile != ytile_d) begin
+            dir_prev <= dir_exit;
             dir_exit <= dir_plan;
-
-            case (dir_plan)
-                RT: begin
-                    xtile_next = xtile_curr + 1'b1;
-                    ytile_next = ytile_curr;
-                end
-
-                UP: begin
-                    xtile_next = xtile_curr;
-                    ytile_next = ytile_curr - 1'b1;
-                end
-
-                DN: begin
-                    xtile_next = xtile_curr;
-                    ytile_next = ytile_curr + 1'b1;
-                end
-
-                LT: begin
-                    xtile_next = xtile_curr - 1'b1;
-                    ytile_next = ytile_curr;
-                end
-            endcase
         end
     end
 end
 
-// CHOOSING NEXT TILE & DIRECTION
+// DETERMINE NEXT TILE & PLANNED DIRECTION
 always_comb begin
+    if (state == STATE_START) begin
+        xtile_next = xtile; 
+        ytile_next = ytile;
+    end else begin
+        case (dir_exit)
+            RT: begin
+                xtile_next = xtile + 1'b1;
+                ytile_next = ytile;
+            end
+
+            UP: begin
+                xtile_next = xtile;
+                ytile_next = ytile - 1'b1;
+            end
+
+            DN: begin
+                xtile_next = xtile;
+                ytile_next = ytile + 1'b1;
+            end
+
+            LT: begin
+                xtile_next = xtile - 1'b1;
+                ytile_next = ytile;
+            end
+        endcase
+    end
     // if (state == STATE_FRGHT) begin
     //     if (tile_info[0] && dir_exit != ~RT) begin
     //         distance_rt = $urandom_range(30);
@@ -331,32 +375,33 @@ always_comb begin
     //     end else begin
     //         distance_lt = 'd1989;
     //     end
-    // end else begin
-        if (tile_info[0] != WALL && dir_exit != ~RT && (tile_info[0] != WKGH || (xtile_curr > 11 && xtile_curr < 18 && ytile_curr > 14 && ytile_curr < 18)) ) begin
+    // end else if (state == STATE_CHASE) begin
+        if (tile_info[0] != WALL && dir_exit != ~RT && (tile_info[0] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
             distance_rt = (target_xtile-(xtile_next+1'b1))*(target_xtile-(xtile_next+1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
         end else begin
             distance_rt = 'd1989;
         end 
-        if (tile_info[1] != WALL && dir_exit != ~UP && (tile_info[1] != WKGH || (xtile_curr > 11 && xtile_curr < 18 && ytile_curr > 14 && ytile_curr < 18)) && !( (xtile_next == 13 && ytile_next == 13) || (xtile_next == 16 && ytile_next == 13) || (xtile_next == 13 && ytile_next == 25) || (xtile_next == 16 && ytile_next == 25) ) ) begin
+        if (tile_info[1] != WALL && dir_exit != ~UP && (tile_info[1] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) && !( (xtile_next == 13 && ytile_next == 13) || (xtile_next == 16 && ytile_next == 13) || (xtile_next == 13 && ytile_next == 25) || (xtile_next == 16 && ytile_next == 25) ) ) begin
             distance_up = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next-1'b1))*(target_ytile-(ytile_next-1'b1));
         end else begin
             distance_up = 'd1989;
         end
-        if (tile_info[2] != WALL && dir_exit != ~DN && (tile_info[2] != WKGH || (xtile_curr > 11 && xtile_curr < 18 && ytile_curr > 14 && ytile_curr < 18)) ) begin
+        if (tile_info[2] != WALL && dir_exit != ~DN && (tile_info[2] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
             distance_dn = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next+1'b1))*(target_ytile-(ytile_next+1'b1));
         end else begin
             distance_dn = 'd1989;
         end
-        if (tile_info[3] != WALL && dir_exit != ~LT && (tile_info[3] != WKGH || (xtile_curr > 11 && xtile_curr < 18 && ytile_curr > 14 && ytile_curr < 18)) ) begin
+        if (tile_info[3] != WALL && dir_exit != ~LT && (tile_info[3] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
             distance_lt = (target_xtile-(xtile_next-1'b1))*(target_xtile-(xtile_next-1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
         end else begin
             distance_lt = 'd1989;
         end
     // end
 
-    if (xtile_curr > 11 && xtile_curr < 18 && ytile_curr > 14 && ytile_curr < 18) begin     // within ghost house
-        if (xtile_next < 15) dir_plan = RT;
+    if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin     // within ghost house
+        if (xtile_next < 14) dir_plan = RT;
         else if (xtile_next > 15) dir_plan = LT;
+        // else if (ytile_next == 13) dir_plan = RT;
         else dir_plan = UP;
     end else if (distance_up <= distance_rt && distance_up <= distance_dn && distance_up <= distance_lt) begin
         dir_plan = UP;
@@ -369,10 +414,190 @@ always_comb begin
     end
 end
 
+// START LOCATIONS
+always_comb begin
+    case (personality)
+        BLINKY: begin
+            start_xloc = 'd119;
+            start_yloc = 'd131;
+        end
+
+        PINKY: begin
+            start_xloc = 'd103;
+            start_yloc = 'd155;
+        end
+
+        INKY: begin
+            start_xloc = 'd119;
+            start_yloc = 'd155;
+        end
+
+        CLYDE: begin
+            start_xloc = 'd135;
+            start_yloc = 'd155;
+        end
+    endcase
+end
+
+wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;   
+wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
+
+// TARGETING SOFTWARE © 
+always_comb begin
+    if (state == STATE_SCTTR) begin
+        case (personality)
+            BLINKY: begin    
+                target_xtile = 'd29;
+                target_ytile = 'd0;
+            end
+
+            PINKY: begin    
+                target_xtile = 'd0;
+                target_ytile = 'd0;
+            end
+
+            INKY: begin    
+                target_xtile = 'd29;
+                target_ytile = 'd32;
+            end
+
+            CLYDE: begin   
+                target_xtile = 'd0;
+                target_ytile = 'd32;
+            end
+        endcase
+    end else begin // if (state == STATE_CHASE) 
+        case (personality)
+            BLINKY: begin    
+                target_xtile = pacman_xtile;
+                target_ytile = pacman_ytile;
+            end
+
+            PINKY: begin    
+                case (pacman_dir) 
+                    RT: begin
+                        if (pacman_xtile < XTILES - 3'd4) begin
+                            target_xtile = pacman_xtile + 3'd4;
+                        end else begin
+                            target_xtile = XTILES-1'b1;
+                        end
+                        target_ytile = pacman_ytile;
+                    end
+                    UP: begin
+                        target_xtile = pacman_xtile;
+                        if (pacman_ytile > 3'd4) begin
+                            target_ytile = pacman_ytile - 3'd4;
+                        end else begin
+                            target_ytile = 1'b0;
+                        end
+                    end
+                    DN: begin
+                        target_xtile = pacman_xtile;
+                        if (pacman_ytile < YTILES - 3'd4) begin
+                            target_ytile = pacman_ytile + 3'd4;
+                        end else begin
+                            target_ytile = YTILES-1'b1;
+                        end 
+                    end
+                    LT: begin
+                        if (pacman_xtile > 3'd4) begin
+                            target_xtile = pacman_xtile - 3'd4;
+                        end else begin
+                            target_xtile = 0;
+                        end 
+                        target_ytile = pacman_ytile;
+                    end
+                endcase
+            end
+
+            INKY: begin
+                case (pacman_dir) 
+                    RT: begin
+                        if (pacman_xtile+2'd2 + pacman_xtile+2'd2 - blinky_xtile >= XTILES) begin
+                            target_xtile = XTILES-1'b1;
+                        end else if (pacman_xtile+2'd2 + pacman_xtile+2'd2 - blinky_xtile < 0) begin
+                            target_xtile = 1'b0;
+                        end else begin
+                            target_xtile = pacman_xtile+2'd2 + pacman_xtile+2'd2 - blinky_xtile;
+                        end
+                        if (pacman_ytile + pacman_ytile-blinky_ytile >= YTILES) begin
+                            target_ytile = YTILES-1'b1;
+                        end else if (pacman_ytile + pacman_ytile-blinky_ytile < 0) begin
+                            target_ytile = 1'b0;
+                        end else begin
+                            target_ytile = pacman_ytile + pacman_ytile-blinky_ytile;
+                        end
+                    end
+                    UP: begin
+                        if (pacman_xtile + (pacman_xtile - blinky_xtile) >= XTILES) begin
+                            target_xtile = XTILES-1'b1;
+                        end else if (pacman_xtile  + (pacman_xtile-blinky_xtile) < 0) begin
+                            target_xtile = 1'b0;
+                        end else begin
+                            target_xtile = pacman_xtile + (pacman_xtile-blinky_xtile);
+                        end
+                        if (pacman_ytile-2'd2 + (pacman_ytile-2'd2 - blinky_ytile) >= YTILES) begin
+                            target_ytile = YTILES-1'b1;
+                        end else if (pacman_ytile-2'd2 + (pacman_ytile-2'd2 - blinky_ytile) < 0) begin
+                            target_ytile = 1'b0;
+                        end else begin
+                            target_ytile = pacman_ytile-2'd2 + (pacman_ytile-2'd2 - blinky_ytile);
+                        end
+                    end
+                    DN: begin
+                        if (pacman_xtile + (pacman_xtile - blinky_xtile) >= XTILES) begin
+                            target_xtile = XTILES-1'b1;
+                        end else if (pacman_xtile  + (pacman_xtile-blinky_xtile) < 0) begin
+                            target_xtile = 1'b0;
+                        end else begin
+                            target_xtile = pacman_xtile + (pacman_xtile-blinky_xtile);
+                        end
+                        if (pacman_ytile+2'd2 + (pacman_ytile+2'd2 - blinky_ytile) >= YTILES) begin
+                            target_ytile = YTILES-1'b1;
+                        end else if (pacman_ytile+2'd2 + (pacman_ytile+2'd2 - blinky_ytile) < 0) begin
+                            target_ytile = 1'b0;
+                        end else begin
+                            target_ytile = pacman_ytile+2'd2 + (pacman_ytile+2'd2 - blinky_ytile);
+                        end
+                    end
+                    LT: begin
+                        if (pacman_xtile-2'd2 + (pacman_xtile-2'd2 - blinky_xtile) >= XTILES) begin
+                            target_xtile = XTILES-1'b1;
+                        end else if (pacman_xtile-2'd2 + (pacman_xtile-2'd2 - blinky_xtile) < 0) begin
+                            target_xtile = 1'b0;
+                        end else begin
+                            target_xtile = pacman_xtile-2'd2 + (pacman_xtile-2'd2 - blinky_xtile);
+                        end
+                        if (pacman_ytile + (pacman_ytile-blinky_ytile) >= YTILES) begin
+                            target_ytile = YTILES-1'b1;
+                        end else if (pacman_ytile + (pacman_ytile-blinky_ytile) < 0) begin
+                            target_ytile = 1'b0;
+                        end else begin
+                            target_ytile = pacman_ytile + (pacman_ytile-blinky_ytile);
+                        end
+                    end
+                endcase
+            end
+
+            CLYDE: begin    
+                if ((pacman_xtile-xtile)*(pacman_xtile-xtile) + (pacman_ytile-ytile)*(pacman_ytile-ytile) > 64) begin
+                    target_xtile = pacman_xtile;
+                    target_ytile = pacman_ytile;
+                end else begin
+                    target_xtile = 'd0;
+                    target_ytile = 'd32;
+                end
+            end
+        endcase
+    end
+end 
+
+// INCREMENT LOCATION
 always_comb begin
     if (state == STATE_START) begin
         xloc_d = start_xloc;
         yloc_d = start_yloc;
+
     end else begin
         case (dir)
             RT: begin
@@ -396,74 +621,6 @@ always_comb begin
             end
         endcase
     end
-end
-
-// GHOST PERSONALITY & TARGETING 
-always_comb begin
-    case (personality)
-        2'b00: begin    // blinky
-            start_xloc = 'd119;
-            start_yloc = 'd131;
-            target_xtile = pacman_xtile;
-            target_ytile = pacman_ytile;
-        end
-
-        2'b01: begin    // pinky
-            start_xloc = 'd103;
-            start_yloc = 'd155;
-            case (pacman_dir) 
-                RT: begin
-                    if (pacman_xtile < XTILES - 3'd4) begin
-                        target_xtile = pacman_xtile + 3'd4;
-                    end else begin
-                        target_xtile = XTILES-1;
-                    end
-                    target_ytile = pacman_ytile;
-                end
-
-                UP: begin
-                    target_xtile = pacman_xtile;
-                    if (pacman_ytile > 3'd4) begin
-                        target_ytile = pacman_ytile - 3'd4;
-                    end else begin
-                        target_ytile = 1'b0;
-                    end
-                end
-
-                DN: begin
-                    target_xtile = pacman_xtile;
-                    if (pacman_ytile < YTILES - 3'd4) begin
-                        target_ytile = pacman_ytile + 3'd4;
-                    end else begin
-                        target_ytile = YTILES-1;
-                    end 
-                end
-
-                LT: begin
-                    if (pacman_xtile > 3'd4) begin
-                        target_xtile = pacman_xtile - 3'd4;
-                    end else begin
-                        target_xtile = 0;
-                    end 
-                    target_ytile = pacman_ytile;
-                end
-            endcase
-        end
-
-        2'b10: begin    // inky
-            start_xloc = 'd115;
-            start_yloc = 'd155;
-            target_xtile = pacman_xtile;
-            target_ytile = pacman_ytile;
-        end
-
-        2'b11: begin    // clyde
-            start_xloc = 'd131;
-            start_yloc = 'd155;
-            target_xtile = pacman_xtile;
-            target_ytile = pacman_ytile;
-        end
-    endcase
 end
 
 endmodule

@@ -1,4 +1,3 @@
-Warning (10268): Verilog HDL information at game_ghost.sv(268): always construct contains both blocking and non-blocking assignments File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 268
-Info (10281): Verilog HDL Declaration information at maze.sv(125): object "wall" differs only in case from object "WALL" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 125
+Info (10281): Verilog HDL Declaration information at maze.sv(131): object "wall" differs only in case from object "WALL" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 131
 Warning (10273): Verilog HDL warning at vga_ram.sv(75): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 75
 Warning (10273): Verilog HDL warning at vga_ram.sv(84): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 84

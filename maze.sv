@@ -6,7 +6,7 @@ module maze (
     input [9:0] ypos, 
 
     input [6:0] pacman_xtile,
-    input [6:0] pacman_ytile,    // testing module connections
+    input [6:0] pacman_ytile,
 
     input [6:0] blinky_xtile,
     input [6:0] blinky_ytile,
@@ -14,15 +14,21 @@ module maze (
     input [6:0] pinky_xtile,
     input [6:0] pinky_ytile,
 
+    input [6:0] inky_xtile,
+    input [6:0] inky_ytile,
+
+    input [6:0] clyde_xtile,
+    input [6:0] clyde_ytile,
+
     input pellet_animation,
 
-    // communicates with game contoller
-    output reg [1:0] pacman_tile_info [0:3],    
-    output reg pac_pellet,
+    output reg pacman_pellet,
     output reg power_pellet,
-
-    output reg [1:0] blinky_tile_info [0:3],      // RT, UP, DN, LT walkability 
+    output reg [1:0] pacman_tile_info [0:3],    // RT, UP, DN, LT walkability 
+    output reg [1:0] blinky_tile_info [0:3],      
     output reg [1:0] pinky_tile_info [0:3],
+    output reg [1:0] inky_tile_info [0:3],
+    output reg [1:0] clyde_tile_info [0:3],
 
     output reg [7:0] color      // communicates with graphics
 );
@@ -95,7 +101,7 @@ reg [4:0] maze [0:989] = '{
     {OCOR,CC},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {ICR0,CW},  {BLNK,NM},  {ISTR,CC},  {ICR1,CC},  {ISTR,NM},  {ISTR,NM},  {ICR0,CW},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {ICR0,NM},  {ISTR,NM},  {ISTR,NM},  {ICR1,FL},  {ISTR,CW},  {BLNK,NM},  {ICR0,NM},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OCOR,FL},      // 11
     {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {OSTR,CC},  {BLNK,NM},  {ISTR,CC},  {ICR1,NM},  {ISTR,FL},  {ISTR,FL},  {ICR0,FL},  {BLNK,NM},  {ICR0,CC},  {ICR0,FL},  {BLNK,NM},  {ICR0,CC},  {ISTR,FL},  {ISTR,FL},  {ICR1,CW},  {ISTR,CW},  {BLNK,NM},  {OSTR,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},      // 12
     {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {OSTR,CC},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {OSTR,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},      // 13
-    {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {OSTR,CC},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {CORN,NM},  {STRT,NM},  {DORL,NM},  {DOOR,NM},  {DOOR,NM},  {DORR,NM},  {STRT,NM},  {CORN,CW},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {OSTR,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},      // 14
+    {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {OSTR,CC},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {CORN,NM},  {DORL,NM},  {DOOR,NM},  {DOOR,NM},  {DOOR,NM},  {DOOR,NM},  {DORR,NM},  {CORN,CW},  {BLNK,NM},  {ISTR,CC},  {ISTR,CW},  {BLNK,NM},  {OSTR,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},      // 14
     {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {ICR0,FL},  {BLNK,NM},  {ICR0,CC},  {ICR0,FL},  {BLNK,NM},  {STRT,CC},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {STRT,CW},  {BLNK,NM},  {ICR0,CC},  {ICR0,FL},  {BLNK,NM},  {ICR0,CC},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},  {OSTR,NM},      // 15
     {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {STRT,CC},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {STRT,CW},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},      // 16
     {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {ICR0,CW},  {BLNK,NM},  {ICR0,NM},  {ICR0,CW},  {BLNK,NM},  {STRT,CC},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {BLNK,NM},  {STRT,CW},  {BLNK,NM},  {ICR0,NM},  {ICR0,CW},  {BLNK,NM},  {ICR0,NM},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},  {OSTR,FL},      // 17
@@ -164,7 +170,8 @@ always_comb begin
         end
     endcase
 
-    if (pixel && ytile == (15+YOFFSET-1) && xtile > 13 && xtile < 16) begin
+    // if (pixel && ytile == (15+YOFFSET-1) && xtile > 13 && xtile < 16) begin
+    if (pixel && ytile == (15+YOFFSET-1) && xtile > 12 && xtile < 17) begin
         wall_color = WHT;
     end else if (pixel) begin
         wall_color = BLU;
@@ -176,46 +183,46 @@ end
 // wire [6:0] pacman_xtile = pacman_xloc >> 3;
 // wire [6:0] pacman_ytile = (pacman_yloc >> 3) - YOFFSET;
 localparam WALL = 2'b00;    // wall (not walkable)
-localparam WKNP = 2'b01;    // walkable, no pellet
-localparam WKRP = 2'b10;    // walkable, pellet
-localparam WKGH = 2'b11;    // walkable (ghost house)
+localparam PTNP = 2'b01;    // path, no pellet
+localparam PTYP = 2'b10;    // path, yes pellet
+localparam PTGH = 2'b11;    // path, ghost house
 
 // TODO: load this into ROM, and have it read every time pellets need to be reset
 // ROM has 1 cycle delay w/ read address
 reg [1:0] pellets [0:989] = '{
 //  0       1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      
     WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 0
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 1
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 2
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 3
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 4
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 5
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 6
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 7
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 8
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 9
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 10
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WKGH,   WKGH,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WKNP,   WKNP,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WKNP,   WKNP,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
-    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 22
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 23
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 24
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKNP,   WKNP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 25
-    WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 26
-    WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 27
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 28
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 29
-    WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 30
-    WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 31
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 1
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 2
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 3
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 4
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 5
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 6
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 7
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 8
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 9
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 10
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   PTGH,   PTGH,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   PTNP,   PTNP,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   PTNP,   PTNP,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
+    WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 22
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 23
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 24
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTNP,   PTNP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 25
+    WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   // 26
+    WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   // 27
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 28
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 29
+    WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 30
+    WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 31
     WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL    // 32    
 };
 
@@ -225,49 +232,49 @@ localparam POWER1_Y = 4;    // 4th tile from top
 localparam POWER2_Y = 25;    // 7th tile from bottom
 
 always @(posedge clk) begin
-    pac_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == WKRP);
-    power_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == WKRP) && ( ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER2_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER2_X)) );
+    pacman_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP);
+    power_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP) && ( ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER2_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER2_X)) );
     if (rst) begin     // reset pellet map
         pellets <= '{
     //  0       1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      
         WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 0
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 1
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 2
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 3
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 4
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 5
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 6
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 7
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 8
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 9
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 10
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WKGH,   WKGH,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WKNP,   WKNP,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WKNP,   WKNP,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WKGH,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
-        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKNP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 22
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 23
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 24
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKNP,   WKNP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 25
-        WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 26
-        WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   // 27
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 28
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 29
-        WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   WALL,   WKRP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WKRP,   WALL,   // 30
-        WALL,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WKRP,   WALL,   // 31
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 1
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 2
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 3
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 4
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 5
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 6
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 7
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 8
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 9
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 10
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 11
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 12
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 13
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   PTGH,   PTGH,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 14
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 15
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   PTNP,   PTNP,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   PTNP,   PTNP,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 16
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   PTGH,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 17
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 18
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 19
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 20
+        WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTNP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTNP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 21
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 22
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 23
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 24
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTNP,   PTNP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 25
+        WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   // 26
+        WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   // 27
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 28
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 29
+        WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   WALL,   PTYP,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   PTYP,   WALL,   // 30
+        WALL,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   PTYP,   WALL,   // 31
         WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL    // 32    
     };
 
     end else begin
-        if (pellets [pacman_ytile * 30 + pacman_xtile] == WKRP) begin
-            pellets [pacman_ytile * 30 + pacman_xtile] <= WKNP;
+        if (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP) begin
+            pellets [pacman_ytile * 30 + pacman_xtile] <= PTNP;
         end
     end
 end
@@ -290,7 +297,7 @@ always_comb begin
     end
 
     if (ytile > (YOFFSET-1) && ytile < (40-YOFFSET)) begin
-        if (pellets[(ytile-YOFFSET) * XTILES + xtile] == WKRP) begin
+        if (pellets[(ytile-YOFFSET) * XTILES + xtile] == PTYP) begin
             if (pellet_sprite [ypixel*8 + xpixel]) begin
                 pellet_color = CRM;
             end else begin
@@ -314,8 +321,10 @@ always_comb begin
     end
 end
 
+assign pacman_tile_info = '{pellets [pacman_ytile * 30 + pacman_xtile+1'b1], pellets [(pacman_ytile-1'b1) * 30 + pacman_xtile], pellets [(pacman_ytile+1'b1) * 30 + pacman_xtile], pellets [pacman_ytile * 30 + pacman_xtile-1'b1]};
 assign blinky_tile_info = '{pellets [blinky_ytile * 30 + blinky_xtile+1'b1], pellets [(blinky_ytile-1'b1) * 30 + blinky_xtile], pellets [(blinky_ytile+1'b1) * 30 + blinky_xtile], pellets [blinky_ytile * 30 + blinky_xtile-1'b1]};
-assign pinky_tile_info = '{pellets [pinky_ytile * 30 + pinky_xtile+1'b1], pellets [(pinky_ytile-1'b1) * 30 + pinky_xtile], pellets [(pinky_ytile+1'b1) * 30 + pinky_xtile], pellets [pinky_ytile * 30 + pinky_xtile-1'b1]};
-
+assign pinky_tile_info  = '{pellets [pinky_ytile * 30 + pinky_xtile+1'b1], pellets [(pinky_ytile-1'b1) * 30 + pinky_xtile], pellets [(pinky_ytile+1'b1) * 30 + pinky_xtile], pellets [pinky_ytile * 30 + pinky_xtile-1'b1]};
+assign inky_tile_info   = '{pellets [inky_ytile * 30 + inky_xtile+1'b1], pellets [(inky_ytile-1'b1) * 30 + inky_xtile], pellets [(inky_ytile+1'b1) * 30 + inky_xtile], pellets [inky_ytile * 30 + inky_xtile-1'b1]};
+assign clyde_tile_info  = '{pellets [clyde_ytile * 30 + clyde_xtile+1'b1], pellets [(clyde_ytile-1'b1) * 30 + clyde_xtile], pellets [(clyde_ytile+1'b1) * 30 + clyde_xtile], pellets [clyde_ytile * 30 + clyde_xtile-1'b1]};
 
 endmodule

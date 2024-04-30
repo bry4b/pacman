@@ -1,4 +1,40 @@
 
+State Machine - |pacman_top|game_ghost:CLYDE|state_prev
+Name state_prev.STATE_RSPWN state_prev.STATE_SCORE state_prev.STATE_FRGHT state_prev.STATE_SCTTR state_prev.STATE_CHASE state_prev.STATE_START 
+state_prev.STATE_START 0 0 0 0 0 0 
+state_prev.STATE_CHASE 0 0 0 0 1 1 
+state_prev.STATE_SCTTR 0 0 0 1 0 1 
+state_prev.STATE_FRGHT 0 0 1 0 0 1 
+state_prev.STATE_SCORE 0 1 0 0 0 1 
+state_prev.STATE_RSPWN 1 0 0 0 0 1 
+
+State Machine - |pacman_top|game_ghost:CLYDE|state
+Name state.STATE_RSPWN state.STATE_SCORE state.STATE_FRGHT state.STATE_SCTTR state.STATE_CHASE state.STATE_START 
+state.STATE_START 0 0 0 0 0 0 
+state.STATE_CHASE 0 0 0 0 1 1 
+state.STATE_SCTTR 0 0 0 1 0 1 
+state.STATE_FRGHT 0 0 1 0 0 1 
+state.STATE_SCORE 0 1 0 0 0 1 
+state.STATE_RSPWN 1 0 0 0 0 1 
+
+State Machine - |pacman_top|game_ghost:INKY|state_prev
+Name state_prev.STATE_RSPWN state_prev.STATE_SCORE state_prev.STATE_FRGHT state_prev.STATE_SCTTR state_prev.STATE_CHASE state_prev.STATE_START 
+state_prev.STATE_START 0 0 0 0 0 0 
+state_prev.STATE_CHASE 0 0 0 0 1 1 
+state_prev.STATE_SCTTR 0 0 0 1 0 1 
+state_prev.STATE_FRGHT 0 0 1 0 0 1 
+state_prev.STATE_SCORE 0 1 0 0 0 1 
+state_prev.STATE_RSPWN 1 0 0 0 0 1 
+
+State Machine - |pacman_top|game_ghost:INKY|state
+Name state.STATE_RSPWN state.STATE_SCORE state.STATE_FRGHT state.STATE_SCTTR state.STATE_CHASE state.STATE_START 
+state.STATE_START 0 0 0 0 0 0 
+state.STATE_CHASE 0 0 0 0 1 1 
+state.STATE_SCTTR 0 0 0 1 0 1 
+state.STATE_FRGHT 0 0 1 0 0 1 
+state.STATE_SCORE 0 1 0 0 0 1 
+state.STATE_RSPWN 1 0 0 0 0 1 
+
 State Machine - |pacman_top|game_ghost:PINKY|state_prev
 Name state_prev.STATE_RSPWN state_prev.STATE_SCORE state_prev.STATE_FRGHT state_prev.STATE_SCTTR state_prev.STATE_CHASE state_prev.STATE_START 
 state_prev.STATE_START 0 0 0 0 0 0 
