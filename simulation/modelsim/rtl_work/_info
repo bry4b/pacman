@@ -94,6 +94,10 @@ R0
 R0
 R0
 R0
+R0
+R0
+R0
+R0
 !s11f vlog 2021.2 2021.04, Apr 14 2021
 13
 !s112 1.1
@@ -114,86 +118,85 @@ n@_opt
 Z4 OL;O;2021.2;73
 R1
 T_opt1
-!s110 1714592300
-VP>3MG>03g@@Qn55LcDS=?1
-04 7 4 work game_tb fast 0
-=1-9c6b00346243-66329a2c-2d3-19b9c
+!s110 1714706075
+Vn19IO6ljAn:FVjLLDiJQ03
+04 9 4 work pacman_tb fast 0
+=5-9c6b00346243-6634569b-17b-2851c
 !s124 OEM10U3 
 R2
 R3
 n@_opt1
 R4
-vgame_ghost
-Z5 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z6 !s110 1714592102
-!i10b 1
-!s100 gdRnBZJ>OkGf@1iWnCFGB3
-IoD;i49cg;@kCW^jH_G3=M0
-S1
-Z7 dC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/simulation/modelsim
-w1714541985
-8C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv
-FC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv
-!i122 1
-L0 10 730
-Z8 VDg1SIo80bB@j0V0VzS_@n1
-Z9 OL;L;2021.2;73
-r1
-!s85 0
-31
-Z10 !s108 1714592102.000000
-!s107 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv|
-!i113 0
-Z11 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-Z12 !s92 -sv -work work {+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R3
-vgame_tb
-R5
-!s110 1714592277
-!i10b 1
-!s100 Ffnz28?hzi]_4:c`>B`FR2
-I2MDG94:;kPJUk]DZ<6QFT3
-S1
-R7
-w1714592273
-8C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv
-FC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv
-!i122 3
-L0 3 99
-R8
-R9
-r1
-!s85 0
-31
-!s108 1714592277.000000
-!s107 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv|
-!s90 -reportprogress|300|-work|work|C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv|
-!i113 0
-o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R3
 vmaze
-R5
-R6
+Z5 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+!s110 1714704384
 !i10b 1
-!s100 ;MIB>W:JQ0c>4k:b;gYP`1
-IkIfQHkCVjb@M6SJ?kNho?0
+!s100 Fnh[96_3e]omkM2V?J[Am3
+IHJlj;V2CQ6JDBB`0hLi[e1
 S1
-R7
-w1714506262
+Z6 dC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/simulation/modelsim
+w1714703402
 8C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv
 FC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv
 !i122 2
-L0 1 330
-R8
-R9
+L0 1 349
+Z7 VDg1SIo80bB@j0V0VzS_@n1
+Z8 OL;L;2021.2;73
 r1
 !s85 0
 31
-R10
+!s108 1714704384.000000
 !s107 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman|C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv|
 !i113 0
-R11
-R12
+o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+!s92 -sv -work work {+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman} -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R3
+vpacman
+R5
+!s110 1714706065
+!i10b 1
+!s100 ^?Rn6zKV1BUWQ>]_jcDO83
+IDBTA6dfzTKeTk3aLB_YF43
+S1
+R6
+w1714705999
+8C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv
+FC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv
+!i122 5
+L0 1 204
+R7
+R8
+r1
+!s85 0
+31
+!s108 1714706065.000000
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv|
+!s90 -reportprogress|300|-work|work|C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv|
+!i113 0
+Z9 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R3
+vpacman_tb
+R5
+!s110 1714705401
+!i10b 1
+!s100 [Nhg_MWHoAYQOj_F=XAc]0
+IfbajW<;;X>z?BfHz6@cQA2
+S1
+R6
+w1714705389
+8C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv
+FC:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv
+!i122 4
+L0 3 45
+R7
+R8
+r1
+!s85 0
+31
+!s108 1714705401.000000
+!s107 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv|
+!s90 -reportprogress|300|-work|work|C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv|
+!i113 0
+R9
 R3

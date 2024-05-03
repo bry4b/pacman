@@ -1,4 +1,10 @@
 
+State Machine - |pacman_top|pacman:PACMAN|curr_state
+Name curr_state.START curr_state.DEATH curr_state.NORMAL 
+curr_state.START 0 0 0 
+curr_state.NORMAL 1 0 1 
+curr_state.DEATH 1 1 0 
+
 State Machine - |pacman_top|game_ghost:CLYDE|state_prev
 Name state_prev.STATE_EXTGH state_prev.STATE_RSPWN state_prev.STATE_SCORE state_prev.STATE_FRGHT state_prev.STATE_SCTTR state_prev.STATE_CHASE state_prev.STATE_START 
 state_prev.STATE_START 0 0 0 0 0 0 0 

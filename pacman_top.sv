@@ -112,11 +112,13 @@ module pacman_top (
     // TESTING GAME STATE WITH SWTICHES
     // assign pacman_xloc = 10'd119 + (switches[9:7] << 3);
     // assign pacman_yloc = 10'd227 + (switches[6:4] << 3);
-    assign pacman_xloc = (pacman_xtile << 2'd3) + 2'd3;
-    assign pacman_yloc = ((pacman_ytile + 2'd3) << 2'd3) + 2'd3;
-    assign pacman_xtile = 'd15 + (switches[9:6]);
-    assign pacman_ytile = 'd25 + (switches[5:4]);
-    assign pacman_dir = switches [1:0]; 
+
+    // assign pacman_xloc = (pacman_xtile << 2'd3) + 2'd3;
+    // assign pacman_yloc = ((pacman_ytile + 2'd3) << 2'd3) + 2'd3;
+    // assign pacman_xtile = 'd15 + (switches[9:6]);
+    // assign pacman_ytile = 'd25 + (switches[5:4]);
+    // assign pacman_dir = switches [1:0]; 
+    
     // assign pacman_anim = switches[3:2]; 
     // assign pacman_alive = 2'b00;
     assign pacman_anim = 2'b01;
@@ -250,23 +252,22 @@ module pacman_top (
         .ghost_outputs (clyde_outputs)
     );
 	 
-    // pacman PACMAN ( 
-    //     .clk60 (gameclk), 
-    //     .reset (~rst), 
-    //     .start (~btn),
-    //     .left (switches[9]),
-    //     .right (switches[8]),
-    //     .uturn (switches[7]),
-    //     .tile_info (pacman_tile_info), 
+    pacman PACMAN ( 
+        .clk60 (gameclk), 
+        .reset (~rst), 
+        .start (~btn),
+        .left (switches[9]),
+        .right (switches[8]),
+        .uturn (switches[7]),
+        .tile_info (pacman_tile_info), 
 
-    //     .xloc (pacman_xloc), 
-    //     .yloc (pacman_yloc), 
-    //     .dir (pacman_dir), 
-    //     .curr_xtile (pacman_xtile), 
-    //     .curr_ytile (pacman_ytile)
-    // );
+        .xloc (pacman_xloc), 
+        .yloc (pacman_yloc), 
+        .dir (pacman_dir), 
+        .curr_xtile (pacman_xtile), 
+        .curr_ytile (pacman_ytile)
+    );
 
-	 
     // 
     // COORDINATE BLOCKING & ROTATION
     // localparam XMAX  = 160;  // horizontal pixels

@@ -47,10 +47,10 @@ module pacman (
     assign curr_ytile = (yloc >> 3) - 3;
 
     logic wall_in_front;
-    assign wall_in_front = (tile_info[dir_d] == WALL);
+    assign wall_in_front = (tile_info[dir] == WALL);
 
     logic in_center_of_tile;
-    assign in_center_of_tile = (xloc_d % 8 == 3 && yloc_d % 8 == 3);
+    assign in_center_of_tile = (xloc % 8 == 3 && yloc % 8 == 3);
 
     initial begin
         curr_state = START;
@@ -157,7 +157,7 @@ module pacman (
             xloc_d = 119;
             yloc_d = 227;
         end else if (curr_state == NORMAL) begin
-            if (!(in_center_of_tile && wall_in_front)) begin
+            if ( !(in_center_of_tile && wall_in_front) && ( (dir_d == dir) || (dir_d == ~dir) ) ) begin
                 case (dir)
                     RIGHT: begin
                         xloc_d = xloc + 1;

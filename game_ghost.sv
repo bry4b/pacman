@@ -531,13 +531,13 @@ always_comb begin
         distance_lt = 'd1989;
 
     end else if (state == STATE_FRGHT) begin
-        if (tile_info[rand_dir] != WALL && dir_exit != ~rand_dir) begin
+        if (tile_info[rand_dir] != WALL && tile_info[rand_dir] != PTGH && dir_exit != ~rand_dir) begin
             dir_plan = rand_dir;
-        end else if (tile_info[UP] != WALL && dir_exit != ~UP) begin
+        end else if (tile_info[UP] != WALL && tile_info[UP] != PTGH && dir_exit != ~UP) begin
             dir_plan = UP;
-        end else if (tile_info[LT] != WALL && dir_exit != ~LT) begin
+        end else if (tile_info[LT] != WALL && tile_info[LT] != PTGH && dir_exit != ~LT) begin
             dir_plan = LT;
-        end else if (tile_info[DN] != WALL && dir_exit != ~DN) begin
+        end else if (tile_info[DN] != WALL && tile_info[DN] != PTGH && dir_exit != ~DN) begin
             dir_plan = DN;
         end else begin
             dir_plan = RT;
