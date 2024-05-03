@@ -68,7 +68,7 @@ always_comb begin
             if (ghost_dir == RT || ghost_dir == LT) begin
                 pixel_address = ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
             end else begin
-                pixel_address = 10'd256 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
+                pixel_address = 10'd256 + ((ypos-yloc+3'd) << 3'd4) + (xpos-xloc+3'd7);
             end
             // assign correct color
             if (ghost_mode == DEAD) begin
@@ -85,7 +85,7 @@ always_comb begin
         // frightened ghost appearance
         end else begin // if (ghost_mode == FRGT) begin 
             pixel_address = 10'd512 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
-            if (ghost_flash) begin
+            if (flash) begin
                 bodycolor = WHT;
             end else begin
                 bodycolor = BLU;
@@ -97,7 +97,7 @@ always_comb begin
             case (pixel)
                 BODY: color = bodycolor;
                 EYES: begin
-                    if (ghost_flash) color = RED;
+                    if (flash) color = RED;
                     else color = WHT;
                 end
                 WHT0: begin

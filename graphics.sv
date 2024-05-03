@@ -8,31 +8,36 @@ module graphics (
     // input [9:0] switches, // testing outputs
 
     // testing module connections
-    input [9:0] pacman_xloc,
-    input [9:0] pacman_yloc,    
-    input [1:0] pacman_dir, 
-    input [1:0] pacman_animation,
-    input pacman_alive,
+    // input [9:0] pacman_xloc,
+    // input [9:0] pacman_yloc,    
+    // input [1:0] pacman_dir, 
+    // input [1:0] pacman_anim,
+    // input pacman_alive,
+    input [24:0] pacman_inputs,
 
-    input [9:0] blinky_xloc, 
-    input [9:0] blinky_yloc,
-    input [1:0] blinky_dir, 
-    input [1:0] blinky_mode,
+    // input [9:0] blinky_xloc, 
+    // input [9:0] blinky_yloc,
+    // input [1:0] blinky_dir, 
+    // input [1:0] blinky_mode,
+    input [24:0] blinky_inputs,
 
-    input [9:0] pinky_xloc, 
-    input [9:0] pinky_yloc,
-    input [1:0] pinky_dir, 
-    input [1:0] pinky_mode,
+    // input [9:0] pinky_xloc, 
+    // input [9:0] pinky_yloc,
+    // input [1:0] pinky_dir, 
+    // input [1:0] pinky_mode,
+    input [24:0] pinky_inputs,
 
-    input [9:0] inky_xloc, 
-    input [9:0] inky_yloc,
-    input [1:0] inky_dir, 
-    input [1:0] inky_mode,
+    // input [9:0] inky_xloc, 
+    // input [9:0] inky_yloc,
+    // input [1:0] inky_dir, 
+    // input [1:0] inky_mode,
+    input [24:0] inky_inputs,
 
-    input [9:0] clyde_xloc, 
-    input [9:0] clyde_yloc,
-    input [1:0] clyde_dir, 
-    input [1:0] clyde_mode,
+    // input [9:0] clyde_xloc, 
+    // input [9:0] clyde_yloc,
+    // input [1:0] clyde_dir, 
+    // input [1:0] clyde_mode,
+    input [24:0] clyde_inputs,
 
     input ghost_animation,
 
@@ -45,7 +50,12 @@ module graphics (
 reg [8:0] xpos;
 reg [8:0] ypos;
 
-// 
+wire [9:0] pacman_xloc  = pacman_inputs [24:15];
+wire [9:0] pacman_yloc  = pacman_inputs [14:5];     
+wire [1:0] pacman_dir   = pacman_inputs [4:3]; 
+wire [1:0] pacman_anim  = pacman_inputs [2:1];
+wire pacman_alive       = pacman_inputs [0];
+
 // COLOR DEFINITIONS
 localparam RED  = 8'b11100000;
 localparam PNK  = 8'b11101111;
@@ -65,34 +75,39 @@ localparam BLK  = 8'b00000000;
 
 //
 // GHOST INSTANTIATION
-// wire [9:0] blinky_xloc;
-// wire [9:0] blinky_yloc;
-// wire [1:0] blinky_dir;
-// wire [1:0] blinky_mode;
+
+// wire [9:0] blinky_xloc  = blinky_inputs [24:15]; 
+// wire [9:0] blinky_yloc  = blinky_inputs [14:5];
+// wire [1:0] blinky_dir   = blinky_inputs [4:3];
+// wire [1:0] blinky_mode  = blinky_inputs [2:1];
+// wire blinky_flash       = blinky_inputs [0];
 wire [9:0] blinky_address;
 wire [2:0] blinky_pixel;
 wire [7:0] blinky_color;
 
-// wire [9:0] pinky_xloc;
-// wire [9:0] pinky_yloc;
-// wire [1:0] pinky_dir;
-// wire [1:0] pinky_mode;
+// wire [9:0] pinky_xloc  = pinky_inputs [24:15]; 
+// wire [9:0] pinky_yloc  = pinky_inputs [14:5];
+// wire [1:0] pinky_dir   = pinky_inputs [4:3];
+// wire [1:0] pinky_mode  = pinky_inputs [2:1];
+// wire pinky_flash       = pinky_inputs [0];
 wire [9:0] pinky_address;
 wire [2:0] pinky_pixel;
 wire [7:0] pinky_color;
 
-// wire [9:0] inky_xloc;
-// wire [9:0] inky_yloc;
-// wire [1:0] inky_dir;
-// wire [1:0] inky_mode;
+// wire [9:0] inky_xloc  = inky_inputs [24:15]; 
+// wire [9:0] inky_yloc  = inky_inputs [14:5];
+// wire [1:0] inky_dir   = inky_inputs [4:3];
+// wire [1:0] inky_mode  = inky_inputs [2:1];
+// wire inky_flash       = inky_inputs [0];
 wire [9:0] inky_address;
 wire [2:0] inky_pixel;
 wire [7:0] inky_color;
 
-// wire [9:0] clyde_xloc;
-// wire [9:0] clyde_yloc;
-// wire [1:0] clyde_dir;
-// wire [1:0] clyde_mode;
+// wire [9:0] clyde_xloc  = clyde_inputs [24:15]; 
+// wire [9:0] clyde_yloc  = clyde_inputs [14:5];
+// wire [1:0] clyde_dir   = clyde_inputs [4:3];
+// wire [1:0] clyde_mode  = clyde_inputs [2:1];
+// wire clyde_flash       = clyde_inputs [0];
 wire [9:0] clyde_address;
 wire [2:0] clyde_pixel;
 wire [7:0] clyde_color;
@@ -100,15 +115,59 @@ wire [7:0] clyde_color;
 // wire ghost_animation;
 
 graphics_ghost_LUT GLUT (blinky_address, pinky_address, inky_address, clyde_address, blinky_pixel, pinky_pixel, inky_pixel, clyde_pixel);
-graphics_ghost BLINKY   (xpos, ypos, blinky_xloc,   blinky_yloc,    2'b00, blinky_dir,  blinky_mode,   ghost_animation, blinky_pixel,  blinky_address, blinky_color);
-graphics_ghost PINKY    (xpos, ypos, pinky_xloc,    pinky_yloc,     2'b01, pinky_dir,   pinky_mode,    ghost_animation, pinky_pixel,   pinky_address,  pinky_color);
-graphics_ghost INKY     (xpos, ypos, inky_xloc,     inky_yloc,      2'b10, inky_dir,    inky_mode,     ghost_animation, inky_pixel,    inky_address,   inky_color);
-graphics_ghost CLYDE    (xpos, ypos, clyde_xloc,    clyde_yloc,     2'b11, clyde_dir,   clyde_mode,    ghost_animation, clyde_pixel,   clyde_address,  clyde_color);
+
+graphics_ghost BLINKY (
+    .xpos (xpos),
+    .ypos (ypos),
+    .ghost_color (2'b00),
+    .ghost_inputs (blinky_inputs), 
+    .animation_cycle (ghost_animation),
+    .pixel (blinky_pixel),
+
+    .pixel_address (blinky_address), 
+    .color (blinky_color),
+);
+    
+graphics_ghost PINKY (
+    .xpos (xpos),
+    .ypos (ypos),
+    .ghost_color (2'b01),
+    .ghost_inputs (pinky_inputs), 
+    .animation_cycle (ghost_animation),
+    .pixel (pinky_pixel),
+
+    .pixel_address (pinky_address), 
+    .color (pinky_color),
+);
+
+graphics_ghost INKY (
+    .xpos (xpos),
+    .ypos (ypos),
+    .ghost_color (2'b10),
+    .ghost_inputs (inky_inputs), 
+    .animation_cycle (ghost_animation),
+    .pixel (inky_pixel),
+
+    .pixel_address (inky_address), 
+    .color (inky_color),
+);
+
+graphics_ghost CLYDE (
+    .xpos (xpos),
+    .ypos (ypos),
+    .ghost_color (2'b11),
+    .ghost_inputs (clyde_inputs), 
+    .animation_cycle (ghost_animation),
+    .pixel (clyde_pixel),
+
+    .pixel_address (clyde_address), 
+    .color (clyde_color),
+);
 
 // 
 // PACMAN INSTANTIATION
 wire [7:0] pacman_color;
-graphics_pacman PACMAN  (xpos, ypos, pacman_xloc,   pacman_yloc,    pacman_dir,     pacman_alive,   pacman_animation,   pacman_color);
+graphics_pacman PACMAN  (xpos, ypos, pacman_xloc,   pacman_yloc,    pacman_dir,     pacman_alive,   pacman_anim,   pacman_color);
 
 //
 // LOGIC FOR SPRITE HIERARCHY

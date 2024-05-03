@@ -1,40 +1,82 @@
 `timescale 1ns/1ns
 
 module game_tb (
-    output reg clk,
+    output reg gameclk,
     output reg rst,
     output reg [9:0] xpos,
     output reg [9:0] ypos,
-    output reg [9:0] pac_x,
-    output reg [9:0] pac_y,
-    output reg [1:0] pac_dir,
+    output reg [9:0] pacman_x,
+    output reg [9:0] pacman_y,
+    output reg [1:0] pacman_dir,
 
-    output reg [9:0] blinky_x,
-    output reg [9:0] blinky_y,
-    output reg [1:0] blinky_dir,
-    output reg [1:0] blinky_mode,
+    output reg [9:0] inky_xloc,
+    output reg [9:0] inky_yloc,
+    output reg [1:0] inky_dir,
+    output reg [1:0] inky_mode,
 
     output [7:0] maze_color
 );
-
-reg [1:0] pac_tile_info;
-reg [1:0] blinky_tile_info;
+reg [1:0] pacman_tile_info [0:3];
+reg pacman_pellet;
 reg power_pellet;
-wire [6:0] pac_xtile = pac_x >> 3;
-wire [6:0] pac_ytile = (pac_y >> 3) - 3;
-// wire [6:0] blinky_xtile = blinky_x >> 3;
-// wire [6:0] blinky_ytile = (blinky_y >> 3) - 3;
+reg [1:0] blinky_tile_info [0:3];
+reg [1:0] pinky_tile_info [0:3];
+reg [1:0] inky_tile_info [0:3];
+reg [1:0] clyde_tile_info [0:3];
 
-maze UUT_MAZE(clk, rst, xpos, ypos, pac_xtile, pac_ytile, blinky_xtile, blinky_ytile, 1, pac_tile_info, power_pellet, blnky_tile_info, maze_color);
-game_ghost UUT_BLINKY(clk, rst, start, 2'b00, pac_xtile, pac_ytile, pac_dir, power_pellet, blinky_tile_info, blinky_xtile, blinky_ytile, blinky_x, blinky_y, blinky_dir, blinky_mode)
+wire [6:0] pacman_xtile = pacman_x >> 3;
+wire [6:0] pacman_ytile = (pacman_y >> 3) - 3;
+reg [6:0] blinky_xtile_next;
+reg [6:0] blinky_ytile_next;
+reg [6:0] pinky_xtile_next;
+reg [6:0] pinky_ytile_next;
+reg [6:0] inky_xtile_next;
+reg [6:0] inky_ytile_next;
+reg [6:0] clyde_xtile_next;
+reg [6:0] clyde_ytile_next;
+
+
+reg [9:0] blinky_xloc = 'd203;
+reg [9:0] blinky_yloc = 'd227;
+
+reg start;
+
+maze MAZEPIN(gameclk, ~rst, xpos, ypos, 
+    pacman_xtile, pacman_ytile, 
+    blinky_xtile_next, blinky_ytile_next, 
+    pinky_xtile_next, pinky_ytile_next, 
+    inky_xtile_next, inky_ytile_next, 
+    clyde_xtile_next, clyde_ytile_next,
+    btn, pacman_pellet, power_pellet, pacman_tile_info, 
+    blinky_tile_info, pinky_tile_info, inky_tile_info, clyde_tile_info, 
+    maze_color
+);
+// game_ghost BLINKY(gameclk, ~rst, ~btn, 2'b00, pacman_xtile, pacman_ytile, pacman_dir, power_pellet, blinky_tile_info, 10'b0, 10'b0, blinky_xtile_next, blinky_ytile_next, blinky_xloc, blinky_yloc, blinky_dir, blinky_mode);
+// game_ghost PINKY(gameclk, ~rst, ~btn, 2'b01, pacman_xtile, pacman_ytile, pacman_dir, power_pellet, pinky_tile_info, 10'b0, 10'b0, pinky_xtile_next, pinky_ytile_next, pinky_xloc, pinky_yloc, pinky_dir, pinky_mode);
+game_ghost UUT_INKY(gameclk, ~rst, ~btn, 2'b10, 
+    pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
+    inky_tile_info, blinky_xloc, blinky_yloc, 
+    inky_xtile_next, inky_ytile_next, 
+    inky_xloc, inky_yloc, inky_dir, inky_mode
+);
+
+// game_ghost UUT_CLYDE(gameclk, ~rst, ~btn, 2'b11, 
+//     pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
+//     clyde_tile_info, 10'b0, 10'b0, 
+//     clyde_xtile_next, clyde_ytile_next, 
+//     clyde_xloc, clyde_yloc, clyde_dir, clyde_mode
+// );
 
 initial begin
-    clk = 0;
+    gameclk = 0;
     rst = 1;
     xpos = 0;
     ypos = 0;
-    pac_x = 'd8;
-    pac_y = 'd40;
+    pacman_x = 'd119;
+    pacman_y = 'd227;
+    pacman_dir = 'd0;
+
+    # 10 start = 1'b1;
     // blinky_x = 'd119;
     // blinky_y = 'd151;
 end
@@ -51,7 +93,7 @@ always @(posedge clk) begin
 end
 
 always begin
-    #5 clk = ~clk;
+    #5 gameclk = ~gameclk;
 end
 
 

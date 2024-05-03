@@ -1,0 +1,102 @@
+Restore Archived Project report for pacman_top
+Thu May  2 12:51:42 2024
+Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2021  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Thu May  2 12:51:42 2024 ;
+; Revision Name                   ; pacman_top                            ;
+; Top-level Entity Name           ; pacman_top                            ;
+; Family                          ; MAX 10                                ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'C:/Users/bryan/Downloads/pacman.qar' into the 'C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/' directory
+Info: Generated report 'pacman_top.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 4846 megabytes
+    Info: Processing ended: Thu May  2 12:51:42 2024
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:00
+
+
++-------------------------+
+; Files Restored          ;
++-------------------------+
+; File Name               ;
++-------------------------+
+; qar_info.json           ;
+; clk_vga.ppf             ;
+; clk_vga.qip             ;
+; clk_vga.v               ;
+; clk_vga_bb.v            ;
+; clk_vga_inst.v          ;
+; clockDivider.sv         ;
+; game_controller.sv      ;
+; game_ghost.sv           ;
+; game_tb.sv              ;
+; graphics.sv             ;
+; graphics_ghost.sv       ;
+; graphics_ghost_LUT.sv   ;
+; graphics_pacman.sv      ;
+; maze.sv                 ;
+; maze_tb.sv              ;
+; pacman.qpf              ;
+; pacman_top.qsf          ;
+; pacman_top.sv           ;
+; ram_ip.qip              ;
+; ram_ip.v                ;
+; ram_ip_bb.v             ;
+; ram_ip_inst.v           ;
+; vga.sv                  ;
+; vga_ram.sv              ;
+; vga_tb.sv               ;
+; vga_top.sv              ;
+; assignment_defaults.qdf ;
++-------------------------+
+
+
++--------------------+
+; Files Not Restored ;
++--------------------+
+; File Name          ;
++--------------------+
+
+

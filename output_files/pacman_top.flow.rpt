@@ -1,5 +1,5 @@
 Flow report for pacman_top
-Tue Apr 30 12:52:42 2024
+Thu May  2 18:56:25 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -41,17 +41,17 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Tue Apr 30 12:52:42 2024       ;
+; Flow Status                        ; Successful - Thu May  2 18:56:25 2024       ;
 ; Quartus Prime Version              ; 21.1.0 Build 842 10/21/2021 SJ Lite Edition ;
 ; Revision Name                      ; pacman_top                                  ;
 ; Top-level Entity Name              ; pacman_top                                  ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DAF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 7,809 / 49,760 ( 16 % )                     ;
-;     Total combinational functions  ; 7,789 / 49,760 ( 16 % )                     ;
-;     Dedicated logic registers      ; 307 / 49,760 ( < 1 % )                      ;
-; Total registers                    ; 307                                         ;
+; Total logic elements               ; 8,435 / 49,760 ( 17 % )                     ;
+;     Total combinational functions  ; 8,409 / 49,760 ( 17 % )                     ;
+;     Dedicated logic registers      ; 452 / 49,760 ( < 1 % )                      ;
+; Total registers                    ; 452                                         ;
 ; Total pins                         ; 37 / 360 ( 10 % )                           ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 1,048,576 / 1,677,312 ( 63 % )              ;
@@ -67,7 +67,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/30/2024 12:51:53 ;
+; Start date & time ; 05/02/2024 18:55:42 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; pacman_top          ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 171983378866755.171450671349288        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 171983378866755.171470134228268        ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -107,10 +107,10 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:26     ; 1.0                     ; 4908 MB             ; 00:00:17                           ;
-; Fitter               ; 00:00:19     ; 1.8                     ; 6334 MB             ; 00:00:22                           ;
-; Assembler            ; 00:00:01     ; 1.0                     ; 4754 MB             ; 00:00:01                           ;
-; Total                ; 00:00:46     ; --                      ; --                  ; 00:00:40                           ;
+; Analysis & Synthesis ; 00:00:18     ; 1.0                     ; 4917 MB             ; 00:00:11                           ;
+; Fitter               ; 00:00:19     ; 1.8                     ; 6327 MB             ; 00:00:21                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 4753 MB             ; 00:00:00                           ;
+; Total                ; 00:00:39     ; --                      ; --                  ; 00:00:32                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

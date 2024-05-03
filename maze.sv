@@ -5,33 +5,52 @@ module maze (
     input [9:0] xpos, 
     input [9:0] ypos, 
 
-    input [6:0] pacman_xtile,
-    input [6:0] pacman_ytile,
+    // input x,y tiles from characters
+    input [13:0] pacman_inputs,
+    input [13:0] blinky_inputs,
+    input [13:0] pinky_inputs,
+    input [13:0] inky_inputs,
+    input [13:0] clyde_inputs, 
+    
+    // input [6:0] pacman_xtile,
+    // input [6:0] pacman_ytile,
 
-    input [6:0] blinky_xtile,
-    input [6:0] blinky_ytile,
+    // input [6:0] blinky_xtile,
+    // input [6:0] blinky_ytile,
 
-    input [6:0] pinky_xtile,
-    input [6:0] pinky_ytile,
+    // input [6:0] pinky_xtile,
+    // input [6:0] pinky_ytile,
 
-    input [6:0] inky_xtile,
-    input [6:0] inky_ytile,
+    // input [6:0] inky_xtile,
+    // input [6:0] inky_ytile,
 
-    input [6:0] clyde_xtile,
-    input [6:0] clyde_ytile,
+    // input [6:0] clyde_xtile,
+    // input [6:0] clyde_ytile,
 
-    input pellet_animation,
+    input pellet_anim,
 
-    output reg pacman_pellet,
+    output reg pellet_out,
     output reg power_pellet,
-    output reg [1:0] pacman_tile_info [0:3],    // RT, UP, DN, LT walkability 
-    output reg [1:0] blinky_tile_info [0:3],      
-    output reg [1:0] pinky_tile_info [0:3],
-    output reg [1:0] inky_tile_info [0:3],
-    output reg [1:0] clyde_tile_info [0:3],
 
-    output reg [7:0] color      // communicates with graphics
+    output reg [1:0] pacman_outputs [0:3],    // RT, UP, DN, LT walkability 
+    output reg [1:0] blinky_outputs [0:3],      
+    output reg [1:0] pinky_outputs [0:3],
+    output reg [1:0] inky_outputs [0:3],
+    output reg [1:0] clyde_outputs [0:3],
+
+    output reg [7:0] color              // communicates with graphics
 );
+
+wire [6:0] pacman_xtile = pacman_inputs [13:7];
+wire [6:0] pacman_ytile = pacman_inputs [6:0];
+wire [6:0] blinky_xtile = blinky_inputs [13:7];
+wire [6:0] blinky_ytile = blinky_inputs [6:0];
+wire [6:0] pinky_xtile  = pinky_inputs [13:7];
+wire [6:0] pinky_ytile  = pinky_inputs [6:0];
+wire [6:0] inky_xtile   = inky_inputs [13:7];
+wire [6:0] inky_ytile   = inky_inputs [6:0];
+wire [6:0] clyde_xtile  = clyde_inputs [13:7];
+wire [6:0] clyde_ytile  = clyde_inputs [6:0];
 
 // COLORS
 localparam WHT  = 8'b11111111;
@@ -232,7 +251,7 @@ localparam POWER1_Y = 4;    // 4th tile from top
 localparam POWER2_Y = 25;    // 7th tile from bottom
 
 always @(posedge clk) begin
-    pacman_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP);
+    pellet_out <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP);
     power_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP) && ( ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER2_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER2_X)) );
     if (rst) begin     // reset pellet map
         pellets <= '{
@@ -287,7 +306,7 @@ reg [7:0] pellet_color;
 always_comb begin
     // locations of power pellets
     if ( ((ytile == POWER1_Y + YOFFSET) && (xtile == POWER1_X)) || ((ytile == POWER1_Y + YOFFSET) && (xtile == POWER2_X)) || ((ytile == POWER2_Y + YOFFSET) && (xtile == POWER1_X)) || ((ytile == POWER2_Y + YOFFSET) && (xtile == POWER2_X)) ) begin
-        if (pellet_animation) begin
+        if (pellet_anim) begin
             pellet_sprite = pellet_large;
         end else begin
             pellet_sprite = 64'h0;
@@ -321,10 +340,10 @@ always_comb begin
     end
 end
 
-assign pacman_tile_info = '{pellets [pacman_ytile * 30 + pacman_xtile+1'b1], pellets [(pacman_ytile-1'b1) * 30 + pacman_xtile], pellets [(pacman_ytile+1'b1) * 30 + pacman_xtile], pellets [pacman_ytile * 30 + pacman_xtile-1'b1]};
-assign blinky_tile_info = '{pellets [blinky_ytile * 30 + blinky_xtile+1'b1], pellets [(blinky_ytile-1'b1) * 30 + blinky_xtile], pellets [(blinky_ytile+1'b1) * 30 + blinky_xtile], pellets [blinky_ytile * 30 + blinky_xtile-1'b1]};
-assign pinky_tile_info  = '{pellets [pinky_ytile * 30 + pinky_xtile+1'b1], pellets [(pinky_ytile-1'b1) * 30 + pinky_xtile], pellets [(pinky_ytile+1'b1) * 30 + pinky_xtile], pellets [pinky_ytile * 30 + pinky_xtile-1'b1]};
-assign inky_tile_info   = '{pellets [inky_ytile * 30 + inky_xtile+1'b1], pellets [(inky_ytile-1'b1) * 30 + inky_xtile], pellets [(inky_ytile+1'b1) * 30 + inky_xtile], pellets [inky_ytile * 30 + inky_xtile-1'b1]};
-assign clyde_tile_info  = '{pellets [clyde_ytile * 30 + clyde_xtile+1'b1], pellets [(clyde_ytile-1'b1) * 30 + clyde_xtile], pellets [(clyde_ytile+1'b1) * 30 + clyde_xtile], pellets [clyde_ytile * 30 + clyde_xtile-1'b1]};
+assign pacman_outputs   = '{pellets [pacman_ytile * 30 + pacman_xtile+1'b1], pellets [(pacman_ytile-1'b1) * 30 + pacman_xtile], pellets [(pacman_ytile+1'b1) * 30 + pacman_xtile], pellets [pacman_ytile * 30 + pacman_xtile-1'b1]};
+assign blinky_outputs   = '{pellets [blinky_ytile * 30 + blinky_xtile+1'b1], pellets [(blinky_ytile-1'b1) * 30 + blinky_xtile], pellets [(blinky_ytile+1'b1) * 30 + blinky_xtile], pellets [blinky_ytile * 30 + blinky_xtile-1'b1]};
+assign pinky_outputs    = '{pellets [pinky_ytile * 30 + pinky_xtile+1'b1], pellets [(pinky_ytile-1'b1) * 30 + pinky_xtile], pellets [(pinky_ytile+1'b1) * 30 + pinky_xtile], pellets [pinky_ytile * 30 + pinky_xtile-1'b1]};
+assign inky_outputs     = '{pellets [inky_ytile * 30 + inky_xtile+1'b1], pellets [(inky_ytile-1'b1) * 30 + inky_xtile], pellets [(inky_ytile+1'b1) * 30 + inky_xtile], pellets [inky_ytile * 30 + inky_xtile-1'b1]};
+assign clyde_outputs    = '{pellets [clyde_ytile * 30 + clyde_xtile+1'b1], pellets [(clyde_ytile-1'b1) * 30 + clyde_xtile], pellets [(clyde_ytile+1'b1) * 30 + clyde_xtile], pellets [clyde_ytile * 30 + clyde_xtile-1'b1]};
 
 endmodule

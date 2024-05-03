@@ -6,6 +6,10 @@
 // write timers for states
 //      this is done
 // write frightened state random turning
+//      this is done, uses 16-bit LFSR w/ a different seed for each ghost, x^15 + x + 1
+// maybe create new state for exiting ghost house?
+//      this is done: STATE_EXTGH, hardcodes exit lmao
+// implement STATE_SCORE
 
 module game_ghost (
     input clk, 
@@ -14,25 +18,52 @@ module game_ghost (
 
     input [1:0] personality,
 
-    input [6:0] pacman_xtile,
-    input [6:0] pacman_ytile, 
-    input [1:0] pacman_dir,
+    input [21:0] pacman_inputs,
+    // input [6:0] pacman_xtile,
+    // input [6:0] pacman_ytile, 
+    // input [1:0] pacman_dir,
 
     input power_pellet,             // HIGH when a power pellet gets eaten
     input [1:0] tile_info [0:3], 
 
-    input [9:0] blinky_xloc,        // only for inky :/
-    input [9:0] blinky_yloc,        // only for ionky :/
+    input [19:0] blinky_pos, 
+    // input [9:0] blinky_xloc,        // only for inky :/
+    // input [9:0] blinky_yloc,        // only for inky :/
 
-    output reg [6:0] xtile_next,
-    output reg [6:0] ytile_next,
+    output [13:0] tile_checks,
+    // output reg [6:0] xtile_next,
+    // output reg [6:0] ytile_next,
 
-    output reg [9:0] xloc,
-    output reg [9:0] yloc,
+    output [24:0] ghost_outputs
 
-    output reg [1:0] dir,
-    output reg [1:0] mode
+    // output reg [9:0] xloc,
+    // output reg [9:0] yloc,
+
+    // output reg [1:0] dir,
+    // output reg [1:0] mode
 );
+
+wire [6:0] pacman_xtile = pacman_inputs [21:12] >> 2'd3;
+wire [6:0] pacman_ytile = (pacman_inputs [11:2] >> 2'd3) - 2'd3; 
+wire [1:0] pacman_dir = pacman_inputs [1:0];
+
+wire [9:0] blinky_xloc = blinky_pos [19:10];
+wire [9:0] blinky_yloc = blinky_pos [9:0];
+
+reg [6:0] xtile_next; 
+reg [6:0] ytile_next;
+
+reg [9:0] xloc;
+reg [9:0] yloc;
+reg [1:0] dir;
+reg [1:0] mode;
+
+reg flash;          // controls flashing when frightened mode is ending
+reg flash_d;
+
+assign tile_checks = {xtile_next, ytile_next};
+assign ghost_outputs = {xloc, yloc, dir, mode, flash};
+
 
 // ghost personality definitions
 localparam BLINKY   = 2'b00;
@@ -47,6 +78,7 @@ localparam STATE_SCTTR = 3'b010;
 localparam STATE_FRGHT = 3'b011;
 localparam STATE_SCORE = 3'b100;
 localparam STATE_RSPWN = 3'b101;
+localparam STATE_EXTGH = 3'b110;
 
 reg [2:0] state;
 reg [2:0] state_d;
@@ -70,14 +102,6 @@ localparam DEAD = 2'b11;
 
 reg [1:0] mode_d;
 
-// ghost direction definitions
-localparam RT   = 2'b00;
-localparam UP   = 2'b01;
-localparam DN   = 2'b10;
-localparam LT   = 2'b11;
-
-reg [1:0] dir_d;
-
 // maze information
 localparam WALL = 2'b00;    // wall (not walkable)
 localparam PTNP = 2'b01;    // path, no pellet
@@ -88,6 +112,7 @@ localparam YOFFSET = 2'd3;  // Y offset for tiles = 3
 localparam XTILES = 6'd30;  // horizontal width in tiles 
 localparam YTILES = 6'd33;  // vertical height in tiles
 
+// location information
 reg [9:0] start_xloc; 
 reg [9:0] start_yloc;
 
@@ -100,6 +125,13 @@ reg [6:0] ytile;
 wire [6:0] xtile_d = xloc_d >> 2'd3;   
 wire [6:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
 
+// ghost direction definitions
+localparam RT   = 2'b00;
+localparam UP   = 2'b01;
+localparam DN   = 2'b10;
+localparam LT   = 2'b11;
+
+// targeting software
 reg [6:0] target_xtile;
 reg [6:0] target_ytile;
 
@@ -108,9 +140,19 @@ reg [12:0] distance_up;
 reg [12:0] distance_dn;
 reg [12:0] distance_lt;
 
+reg [1:0] dir_d;
 reg [1:0] dir_exit;         // direction that ghost should exit current tile from
 reg [1:0] dir_plan;         // direction that ghost should exit next tile from
 reg [1:0] dir_prev;         // direction that ghost exited last tile from
+
+// frightened state PRNG 
+reg [15:0] lfsr_state;       
+reg [1:0] rand_dir;
+assign rand_dir = lfsr_state[1:0];
+
+// targeting for inky
+wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;  
+wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
 
 initial begin
     state = STATE_START;
@@ -127,10 +169,14 @@ always @(posedge clk) begin
 
     timer_reg <= timer_reg_d;
     timer_frt <= timer_frt_d;
+    flash <= flash_d;
 
-    if (state_d != state) begin
+    if ( (state_d != state) && (state == STATE_SCTTR || state == STATE_CHASE || state == STATE_RSPWN || state == STATE_START) ) begin
         state_prev <= state;
     end
+    // end else if (( state == STATE_START && start) || rst) begin
+    //     state_prev <= STATE_START;
+    // end
 end
 
 // STATE TRANSITIONS, DIRECTION CHANGES, SPRITE DISPLAY MODES
@@ -138,23 +184,35 @@ always_comb begin
     case (state)
         STATE_START: begin
             if (start) begin
-                state_d = STATE_SCTTR;
-                // state_d = STATE_CHASE;
+                if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
+                    state_d = STATE_EXTGH;
+                end else begin
+                    state_d = STATE_SCTTR;
+                end
             end else if (timer_reg_d > 'd300) begin
-                state_d = STATE_CHASE;
+                state_d = STATE_EXTGH;
             end else begin
                 state_d = STATE_START;
             end
-            timer_reg_d = 1'b0;
+            
+            // timer_reg_d = 1'b0;
+            if (state_prev == STATE_RSPWN) begin
+                timer_reg_d = timer_reg + 1'b1;
+            end else begin
+                timer_reg_d = 1'b0;
+            end
+
             timer_frt_d = 1'b0;
             mode_d = NORM;
 
             case (personality)
-                2'b00: dir_d = RT;
-                2'b01: dir_d = RT;
-                2'b10: dir_d = UP;
-                2'b11: dir_d = LT;
+                BLINKY: dir_d = RT;
+                PINKY:  dir_d = RT;
+                INKY:   dir_d = UP;
+                CLYDE:  dir_d = LT;
             endcase
+
+            flash_d = 1'b0;
         end
 
         STATE_CHASE: begin
@@ -190,8 +248,10 @@ always_comb begin
                     end
                 endcase
             end
+
             timer_frt_d = 1'b0;
             mode_d = NORM;
+            flash_d = 1'b0;
         end
 
         STATE_SCTTR: begin
@@ -227,36 +287,76 @@ always_comb begin
                     end
                 endcase
             end
+
             timer_frt_d = 1'b0;
             mode_d = NORM;
+            flash_d = 1'b0;
         end
 
         STATE_FRGHT: begin
             if (pacman_xtile == xtile && pacman_ytile == ytile) begin
-                state_d = STATE_SCORE;
+                state_d = STATE_RSPWN;
                 timer_reg_d = 1'b0;
                 timer_frt_d = 1'b0;
+                dir_d = dir;
+                mode_d = DEAD;
+                flash_d = 1'b0;
             end else if (timer_frt > FRGHT_TIME) begin
                 if (state_prev == STATE_SCTTR) begin
                     state_d = STATE_SCTTR;
                     timer_reg_d = timer_reg + 1'b1;
                     timer_frt_d = 1'b0;
+                    dir_d = dir;
                 end else begin
                     state_d = STATE_CHASE;
                     timer_reg_d = timer_reg + 1'b1;
                     timer_frt_d = 1'b0;
+                    dir_d = dir;
                 end
+
+                mode_d = NORM;
+                flash_d = 1'b0;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
                 timer_frt_d = 1'b0;
+                dir_d = dir;
+                mode_d = NORM;
+                flash_d = 1'b0;
             end else begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
                 timer_frt_d = timer_frt + 1'b1;
+
+                case (dir_exit) 
+                    RT, LT: begin
+                        if (yloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                    UP, DN: begin
+                        if (xloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                endcase
+
+                mode_d = FRGT;
+
+                if (timer_frt > FRGHT_TIME - 'd120) begin
+                    if ((FRGHT_TIME - timer_frt) % 15 == 0) begin
+                        flash_d = ~flash;
+                    end else begin
+                        flash_d = flash;
+                    end 
+                end else begin
+                    flash_d = 1'b0;
+                end
             end
-            mode_d = FRGT;
-            dir_d = dir;
         end
         
         STATE_SCORE: begin
@@ -273,28 +373,83 @@ always_comb begin
                 timer_reg_d = timer_reg + 1'b1;
                 timer_frt_d = 1'b0;
             end
-            mode_d = SCOR;
+
             dir_d = dir;
+            mode_d = SCOR;
+            flash_d = 1'b0;
         end
 
         STATE_RSPWN: begin
-            if (rst) begin
+            if (rst || (xtile == 'd14 && ytile == 'd16) )begin
                 state_d = STATE_START;
+                mode_d = NORM;
             end else begin
                 state_d = STATE_RSPWN;
+                mode_d = DEAD;
             end
+
+            case (dir_exit) 
+                RT, LT: begin
+                    if (yloc_d % 8 == 3) begin
+                        dir_d = dir_exit;
+                    end else begin
+                        dir_d = dir;
+                    end
+                end
+                UP, DN: begin
+                    if (xloc_d % 8 == 3) begin
+                        dir_d = dir_exit;
+                    end else begin
+                        dir_d = dir;
+                    end
+                end
+            endcase
+
             timer_reg_d = 1'b0;
             timer_frt_d = 1'b0;
-            mode_d = DEAD;
-            dir_d = dir;
+            flash_d = 1'b0;
+        end
+
+        STATE_EXTGH: begin
+            if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
+                state_d = STATE_EXTGH;
+                case (dir_exit) 
+                    RT, LT: begin
+                        if (yloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                    UP, DN: begin
+                        if (xloc_d % 8 == 3) begin
+                            dir_d = dir_exit;
+                        end else begin
+                            dir_d = dir;
+                        end
+                    end
+                endcase
+            end else if (state_prev == STATE_START) begin
+                state_d = STATE_SCTTR;
+                dir_d = dir;
+            end else begin
+                state_d = state_prev;
+                dir_d = dir;
+            end
+
+            timer_reg_d = 1'b0;
+            timer_frt_d = 1'b0;
+            mode_d = NORM;
+            flash_d = 1'b0;
         end
 
         default: begin
             state_d = STATE_START;
             timer_reg_d = 1'b0;
             timer_frt_d = 1'b0;
-            mode_d = NORM;
             dir_d = RT;
+            mode_d = NORM;
+            flash_d = 1'b0;
         end
 
     endcase
@@ -304,19 +459,21 @@ end
 always @(posedge clk) begin
     xloc <= xloc_d;
     yloc <= yloc_d;
-    
+    xtile <= xtile_d;
+    ytile <= ytile_d;
+
     if (state == STATE_START) begin
-        xtile <= start_xloc >> 2'd3;
-        ytile <= (start_yloc >> 2'd3) - 2'd3;
-        case (personality)
-            BLINKY: dir_exit <= RT;
-            PINKY: dir_exit <= RT;
-            INKY: dir_exit <= UP;
-            CLYDE: dir_exit <= LT;
-        endcase
+        if (state_prev == STATE_RSPWN) begin
+            dir_exit <= UP;
+        end else begin
+            case (personality)
+                BLINKY: dir_exit <= RT;
+                PINKY: dir_exit <= RT;
+                INKY: dir_exit <= UP;
+                CLYDE: dir_exit <= LT;
+            endcase
+        end
     end else begin
-        xtile <= xtile_d;
-        ytile <= ytile_d;
         if ( (state_d == STATE_CHASE && state == STATE_SCTTR) || (state_d == STATE_SCTTR && state == STATE_CHASE) || (state_d == STATE_FRGHT && state == STATE_CHASE) || (state_d == STATE_FRGHT && state == STATE_SCTTR) ) begin
             dir_exit <= ~dir_prev;
         end else if (xtile != xtile_d || ytile != ytile_d) begin
@@ -324,9 +481,10 @@ always @(posedge clk) begin
             dir_exit <= dir_plan;
         end
     end
+
 end
 
-// DETERMINE NEXT TILE & PLANNED DIRECTION
+// DETERMINE NEXT TILE TO CHECK FOR WALLS
 always_comb begin
     if (state == STATE_START) begin
         xtile_next = xtile; 
@@ -354,97 +512,106 @@ always_comb begin
             end
         endcase
     end
-    // if (state == STATE_FRGHT) begin
-    //     if (tile_info[0] && dir_exit != ~RT) begin
-    //         distance_rt = $urandom_range(30);
-    //     end else begin
-    //         distance_rt = 'd1989;
-    //     end 
-    //     if (tile_info[1] && dir_exit != ~UP) begin
-    //         distance_up = $urandom_range(30);
-    //     end else begin
-    //         distance_up = 'd1989;
-    //     end
-    //     if (tile_info[1] && dir_exit != ~DN) begin
-    //         distance_dn = $urandom_range(30);
-    //     end else begin
-    //         distance_dn = 'd1989;
-    //     end
-    //     if (tile_info[1] && dir_exit != ~UP) begin
-    //         distance_lt = $urandom_range(30);
-    //     end else begin
-    //         distance_lt = 'd1989;
-    //     end
-    // end else if (state == STATE_CHASE) begin
-        if (tile_info[0] != WALL && dir_exit != ~RT && (tile_info[0] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
-            distance_rt = (target_xtile-(xtile_next+1'b1))*(target_xtile-(xtile_next+1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
-        end else begin
-            distance_rt = 'd1989;
-        end 
-        if (tile_info[1] != WALL && dir_exit != ~UP && (tile_info[1] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) && !( (xtile_next == 13 && ytile_next == 13) || (xtile_next == 16 && ytile_next == 13) || (xtile_next == 13 && ytile_next == 25) || (xtile_next == 16 && ytile_next == 25) ) ) begin
-            distance_up = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next-1'b1))*(target_ytile-(ytile_next-1'b1));
-        end else begin
-            distance_up = 'd1989;
-        end
-        if (tile_info[2] != WALL && dir_exit != ~DN && (tile_info[2] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
-            distance_dn = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next+1'b1))*(target_ytile-(ytile_next+1'b1));
-        end else begin
-            distance_dn = 'd1989;
-        end
-        if (tile_info[3] != WALL && dir_exit != ~LT && (tile_info[3] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
-            distance_lt = (target_xtile-(xtile_next-1'b1))*(target_xtile-(xtile_next-1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
-        end else begin
-            distance_lt = 'd1989;
-        end
-    // end
-
-    if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin     // within ghost house
-        if (xtile_next < 14) dir_plan = RT;
-        else if (xtile_next > 15) dir_plan = LT;
-        // else if (ytile_next == 13) dir_plan = RT;
-        else dir_plan = UP;
-    end else if (distance_up <= distance_rt && distance_up <= distance_dn && distance_up <= distance_lt) begin
-        dir_plan = UP;
-    end else if (distance_lt <= distance_rt && distance_lt <= distance_up && distance_lt <= distance_dn) begin
-        dir_plan = LT; 
-    end else if (distance_dn <= distance_rt && distance_dn <= distance_up && distance_dn <= distance_lt) begin
-        dir_plan = DN;
-    end else begin
-        dir_plan = RT;
-    end
 end
 
-// START LOCATIONS
+// PLAN NEXT DIRECTION
 always_comb begin
-    case (personality)
-        BLINKY: begin
-            start_xloc = 'd119;
-            start_yloc = 'd131;
+    if (state == STATE_EXTGH) begin // hardcode exit ghost house
+        if (xtile < 14) begin
+            dir_plan = RT;
+        end else if (xtile > 15) begin
+            dir_plan = LT;
+        end else begin
+            dir_plan = UP;
+        end
+        
+        distance_rt = 'd1989;
+        distance_up = 'd1989;
+        distance_dn = 'd1989;
+        distance_lt = 'd1989;
+
+    end else if (state == STATE_FRGHT) begin
+        if (tile_info[rand_dir] != WALL && dir_exit != ~rand_dir) begin
+            dir_plan = rand_dir;
+        end else if (tile_info[UP] != WALL && dir_exit != ~UP) begin
+            dir_plan = UP;
+        end else if (tile_info[LT] != WALL && dir_exit != ~LT) begin
+            dir_plan = LT;
+        end else if (tile_info[DN] != WALL && dir_exit != ~DN) begin
+            dir_plan = DN;
+        end else begin
+            dir_plan = RT;
         end
 
-        PINKY: begin
-            start_xloc = 'd103;
-            start_yloc = 'd155;
+        distance_rt = 'd1989;
+        distance_up = 'd1989;
+        distance_dn = 'd1989;
+        distance_lt = 'd1989;
+
+    end else begin // if (state == STATE_CHASE || state == STATE_SCTTR || state == STATE_RSPWN) 
+        if (state == STATE_RSPWN) begin
+            if (tile_info[RT] != WALL && dir_exit != ~RT) begin
+                distance_rt = (target_xtile-(xtile_next+1'b1))*(target_xtile-(xtile_next+1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
+            end else begin
+                distance_rt = 'd1989;
+            end 
+            if (tile_info[UP] != WALL && dir_exit != ~UP) begin
+                distance_up = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next-1'b1))*(target_ytile-(ytile_next-1'b1));
+            end else begin
+                distance_up = 'd1989;
+            end
+            if (tile_info[DN] != WALL && dir_exit != ~DN) begin
+                distance_dn = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next+1'b1))*(target_ytile-(ytile_next+1'b1));
+            end else begin
+                distance_dn = 'd1989;
+            end
+            if (tile_info[LT] != WALL && dir_exit != ~LT) begin
+                distance_lt = (target_xtile-(xtile_next-1'b1))*(target_xtile-(xtile_next-1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
+            end else begin
+                distance_lt = 'd1989;
+            end
+        end else begin
+            if (tile_info[RT] != WALL && dir_exit != ~RT && (tile_info[0] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
+                distance_rt = (target_xtile-(xtile_next+1'b1))*(target_xtile-(xtile_next+1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
+            end else begin
+                distance_rt = 'd1989;
+            end 
+            if (tile_info[UP] != WALL && dir_exit != ~UP && (tile_info[1] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) && !( (xtile_next == 13 && ytile_next == 13) || (xtile_next == 16 && ytile_next == 13) || (xtile_next == 13 && ytile_next == 25) || (xtile_next == 16 && ytile_next == 25) ) ) begin
+                distance_up = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next-1'b1))*(target_ytile-(ytile_next-1'b1));
+            end else begin
+                distance_up = 'd1989;
+            end
+            if (tile_info[DN] != WALL && dir_exit != ~DN && (tile_info[2] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
+                distance_dn = (target_xtile-xtile_next)*(target_xtile-xtile_next) + (target_ytile-(ytile_next+1'b1))*(target_ytile-(ytile_next+1'b1));
+            end else begin
+                distance_dn = 'd1989;
+            end
+            if (tile_info[LT] != WALL && dir_exit != ~LT && (tile_info[3] != PTGH || (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18)) ) begin
+                distance_lt = (target_xtile-(xtile_next-1'b1))*(target_xtile-(xtile_next-1'b1)) + (target_ytile-ytile_next)*(target_ytile-ytile_next);
+            end else begin
+                distance_lt = 'd1989;
+            end
         end
 
-        INKY: begin
-            start_xloc = 'd119;
-            start_yloc = 'd155;
+        if (distance_up <= distance_rt && distance_up <= distance_dn && distance_up <= distance_lt) begin
+            dir_plan = UP;
+        end else if (distance_lt <= distance_rt && distance_lt <= distance_up && distance_lt <= distance_dn) begin
+            dir_plan = LT; 
+        end else if (distance_dn <= distance_rt && distance_dn <= distance_up && distance_dn <= distance_lt) begin
+            dir_plan = DN;
+        end else begin
+            dir_plan = RT;
         end
+    end
 
-        CLYDE: begin
-            start_xloc = 'd135;
-            start_yloc = 'd155;
-        end
-    endcase
 end
-
-wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;   
-wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
 
 // TARGETING SOFTWARE © 
 always_comb begin
-    if (state == STATE_SCTTR) begin
+    if (state == STATE_RSPWN) begin
+        target_xtile = 'd14;
+        target_ytile = 'd16;
+    end else if (state == STATE_SCTTR) begin
         case (personality)
             BLINKY: begin    
                 target_xtile = 'd29;
@@ -595,10 +762,41 @@ end
 // INCREMENT LOCATION
 always_comb begin
     if (state == STATE_START) begin
-        xloc_d = start_xloc;
-        yloc_d = start_yloc;
+        if (state_prev == STATE_RSPWN) begin
+            xloc_d = 'd119;
+            yloc_d = 'd155;
+        end else begin
+            xloc_d = start_xloc;
+            yloc_d = start_yloc;
+        end
+    end else if (state == STATE_FRGHT) begin    // cut 50% speed in frightened state
+        if (timer_frt[0]) begin
+            case (dir)
+                RT: begin
+                    xloc_d = xloc + 1'd1;
+                    yloc_d = yloc;
+                end
 
-    end else begin
+                UP: begin
+                    xloc_d = xloc;
+                    yloc_d = yloc - 1'd1;
+                end
+
+                DN: begin
+                    xloc_d = xloc;
+                    yloc_d = yloc + 1'd1;
+                end
+
+                LT: begin
+                    xloc_d = xloc - 1'd1;
+                    yloc_d = yloc;
+                end
+            endcase
+        end else begin
+            xloc_d = xloc;
+            yloc_d = yloc;
+        end
+    end else begin  // if (state == STATE_CHASE || state == STATE_SCTTR) begin
         case (dir)
             RT: begin
                 xloc_d = xloc + 1'd1;
@@ -620,6 +818,45 @@ always_comb begin
                 yloc_d = yloc;
             end
         endcase
+    end
+end
+
+// START LOCATIONS
+always_comb begin
+    case (personality)
+        BLINKY: begin
+            start_xloc = 'd119;
+            start_yloc = 'd131;
+        end
+
+        PINKY: begin
+            start_xloc = 'd103;
+            start_yloc = 'd155;
+        end
+
+        INKY: begin
+            start_xloc = 'd119;
+            start_yloc = 'd155;
+        end
+
+        CLYDE: begin
+            start_xloc = 'd135;
+            start_yloc = 'd155;
+        end
+    endcase
+end
+
+// GENERATE PSEUDORANDOM DIRECTION FOR FRIGHTENED STATE
+always @(posedge clk) begin
+    if (start || rst) begin
+        case (personality)
+           BLINKY:  lfsr_state <= 16'b1010101010101010;
+           PINKY:   lfsr_state <= 16'b1100110011001100;
+           INKY:    lfsr_state <= 16'b1111000011110000;
+           CLYDE:   lfsr_state <= 16'b0101010101010101;
+        endcase
+    end else if (xtile != xtile_d || ytile != ytile_d) begin
+        lfsr_state <= {lfsr_state[14:0], lfsr_state[0] ^ lfsr_state[15]};
     end
 end
 

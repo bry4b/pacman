@@ -15,7 +15,7 @@ module pacman_top (
 );
 
 	assign leds = switches;
-    
+   
     //
     // GRAPHICS
     reg [9:0] xpos; 
@@ -42,44 +42,59 @@ module pacman_top (
     // GAME
     wire gameclk;
 
+	 
     // 
     // CHARACTERS
     wire [9:0] pacman_xloc;
     wire [9:0] pacman_yloc;
     wire [1:0] pacman_dir; 
-    wire [1:0] pacman_animation;
+    wire [1:0] pacman_anim;
     wire pacman_alive;
 
-    wire [9:0] blinky_xloc; 
-    wire [9:0] blinky_yloc;
-    wire [1:0] blinky_dir; 
-    wire [1:0] blinky_mode;
+    wire [24:0] pacman_outputs = {pacman_xloc, pacman_yloc, pacman_dir, pacman_anim, pacman_alive};
+    wire [13:0] pacman_tiles = {pacman_xtile, pacman_ytile};
 
-    wire [9:0] pinky_xloc; 
-    wire [9:0] pinky_yloc;
-    wire [1:0] pinky_dir; 
-    wire [1:0] pinky_mode;
+    wire [24:0] blinky_outputs;
+    wire [24:0] pinky_outputs;
+    wire [24:0] inky_outputs;
+    wire [24:0] clyde_outputs;
 
-    wire [9:0] inky_xloc; 
-    wire [9:0] inky_yloc;
-    wire [1:0] inky_dir; 
-    wire [1:0] inky_mode;
 
-    wire [9:0] clyde_xloc; 
-    wire [9:0] clyde_yloc;
-    wire [1:0] clyde_dir; 
-    wire [1:0] clyde_mode;
+    // wire [9:0] blinky_xloc; 
+    // wire [9:0] blinky_yloc;
+    // wire [1:0] blinky_dir; 
+    // wire [1:0] blinky_mode;
+
+    // wire [9:0] pinky_xloc; 
+    // wire [9:0] pinky_yloc;
+    // wire [1:0] pinky_dir; 
+    // wire [1:0] pinky_mode;
+
+    // wire [9:0] inky_xloc; 
+    // wire [9:0] inky_yloc;
+    // wire [1:0] inky_dir; 
+    // wire [1:0] inky_mode;
+
+    // wire [9:0] clyde_xloc; 
+    // wire [9:0] clyde_yloc;
+    // wire [1:0] clyde_dir; 
+    // wire [1:0] clyde_mode;
 
     wire ghost_animation;
 
-    wire [6:0] blinky_xtile_next;
-    wire [6:0] blinky_ytile_next;
-    wire [6:0] pinky_xtile_next;
-    wire [6:0] pinky_ytile_next;
-    wire [6:0] inky_xtile_next;
-    wire [6:0] inky_ytile_next;
-    wire [6:0] clyde_xtile_next;
-    wire [6:0] clyde_ytile_next;
+    // wire [6:0] blinky_xtile_next;
+    // wire [6:0] blinky_ytile_next;
+    // wire [6:0] pinky_xtile_next;
+    // wire [6:0] pinky_ytile_next;
+    // wire [6:0] inky_xtile_next;
+    // wire [6:0] inky_ytile_next;
+    // wire [6:0] clyde_xtile_next;
+    // wire [6:0] clyde_ytile_next;
+
+    wire [13:0] blinky_tiles;
+    wire [13:0] pinky_tiles;
+    wire [13:0] inky_tiles;
+    wire [13:0] clyde_tiles;
 
     wire [6:0] pacman_xtile;
     wire [6:0] pacman_ytile;
@@ -99,12 +114,14 @@ module pacman_top (
     // assign pacman_yloc = 10'd227 + (switches[6:4] << 3);
     assign pacman_xloc = (pacman_xtile << 2'd3) + 2'd3;
     assign pacman_yloc = ((pacman_ytile + 2'd3) << 2'd3) + 2'd3;
-    assign pacman_xtile = 'd15 + (switches[9:7]);
-    assign pacman_ytile = 'd25 + (switches[6:4]);
+    assign pacman_xtile = 'd15 + (switches[9:6]);
+    assign pacman_ytile = 'd25 + (switches[5:4]);
     assign pacman_dir = switches [1:0]; 
-    assign pacman_animation = switches[3:2]; 
-    assign pacman_alive = 2'b00;
-
+    // assign pacman_anim = switches[3:2]; 
+    // assign pacman_alive = 2'b00;
+    assign pacman_anim = 2'b01;
+    assign pacman_alive = 1'b0;
+	 
     // 
     // GHOST STATES (HARDCODED)
     // assign blinky_xloc = switches[9:6] << 3;
@@ -135,57 +152,121 @@ module pacman_top (
     vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
 
     vga_ram PONG(vgaclk, address, hc, vc, color, writeEnable, vga_data);
-    graphics BOO(vgaclk, ~rst, hc, vc, 
-        pacman_xloc, pacman_yloc, pacman_dir, pacman_animation, pacman_alive, 
-        blinky_xloc, blinky_yloc, blinky_dir, blinky_mode, 
-        pinky_xloc, pinky_yloc, pinky_dir, pinky_mode, 
-        inky_xloc, inky_yloc, inky_dir, inky_mode, 
-        clyde_xloc, clyde_yloc, clyde_dir, clyde_mode,
-        ghost_animation, 
-        maze_color, color, address
+    
+    graphics BOO(
+        .clk (vgaclk), 
+        .rst (~rst), 
+        .hc (hc), 
+        .vc (vc), 
+        .pacman_inputs (pacman_outputs),
+        .blinky_inputs (blinky_outputs), 
+        .pinky_inputs (pinky_outputs),
+        .inky_inputs (inky_outputs),
+        .clyde_inputs (clyde_outputs),
+        .ghost_animation (ghost_animation), 
+        .maze_color (maze_color), 
+
+        .color (color), 
+        .address (address)
     );
 
     clockDivider TOCK(clk, 'd60, 1'b0, gameclk);
     
-    maze MAZEPIN(gameclk, ~rst, xpos, ypos, 
-        pacman_xtile, pacman_ytile, 
-        blinky_xtile_next, blinky_ytile_next, 
-        pinky_xtile_next, pinky_ytile_next, 
-        inky_xtile_next, inky_ytile_next, 
-        clyde_xtile_next, clyde_ytile_next,
-        btn, pacman_pellet, power_pellet, pacman_tile_info, 
-        blinky_tile_info, pinky_tile_info, inky_tile_info, clyde_tile_info, 
-        maze_color
+    maze MAZEPIN(
+        .clk (gameclk),
+        .rst (~rst),
+        .xpos (xpos), 
+        .ypos (ypos),
+        .pacman_inputs (pacman_tiles),
+        .blinky_inputs (blinky_tiles),
+        .pinky_inputs (pinky_tiles), 
+        .inky_inputs (inky_tiles),
+        .clyde_inputs (clyde_tiles),
+        .pellet_anim (btn),
+
+        .pellet_out (pacman_pellet), 
+        .power_pellet (power_pellet), 
+        .pacman_outputs (pacman_tile_info),
+        .blinky_outputs (blinky_tile_info),
+        .pinky_outputs (pinky_tile_info), 
+        .inky_outputs (inky_tile_info), 
+        .clyde_outputs (clyde_tile_info),
+        .color (maze_color) 
     );
 
-    game_ghost BLINKY(gameclk, ~rst, ~btn, 2'b00, 
-        pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
-        blinky_tile_info, 10'b0, 10'b0, 
-        blinky_xtile_next, blinky_ytile_next, 
-        blinky_xloc, blinky_yloc, blinky_dir, blinky_mode
+    game_ghost BLINKY (
+        .clk (gameclk),
+        .rst (~rst),
+        .start (~btn),
+        .personality (2'b00),
+        .pacman_inputs (pacman_outputs [24:3]),
+        .power_pellet (power_pellet),
+        .tile_info (blinky_tile_info),
+        .blinky_pos (20'b0),
+
+        .tile_checks (blinky_tiles),
+        .ghost_outputs (blinky_outputs)
     );
 
-    game_ghost PINKY(gameclk, ~rst, ~btn, 2'b01, 
-        pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
-        pinky_tile_info, 10'b0, 10'b0, 
-        pinky_xtile_next, pinky_ytile_next, 
-        pinky_xloc, pinky_yloc, pinky_dir, pinky_mode
+    game_ghost PINKY ( 
+        .clk (gameclk),
+        .rst (~rst),
+        .start (~btn),
+        .personality (2'b01),
+        .pacman_inputs (pacman_outputs [24:3]),
+        .power_pellet (power_pellet),
+        .tile_info (pinky_tile_info), 
+        .blinky_pos (20'b0),
+
+        .tile_checks (pinky_tiles),
+        .ghost_outputs (pinky_outputs)
+    );
+	 
+    game_ghost INKY ( 
+        .clk (gameclk),
+        .rst (~rst),
+        .start (~btn),
+        .personality (2'b10),
+        .pacman_inputs (pacman_outputs [24:3]),
+        .power_pellet (power_pellet),
+        .tile_info (inky_tile_info), 
+        .blinky_pos (blinky_outputs [23:4]), 
+
+        .tile_checks (inky_tiles),
+        .ghost_outputs (inky_outputs)
     );
 
-    game_ghost INKY(gameclk, ~rst, ~btn, 2'b10, 
-        pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
-        inky_tile_info, blinky_xloc, blinky_yloc, 
-        inky_xtile_next, inky_ytile_next, 
-        inky_xloc, inky_yloc, inky_dir, inky_mode
-    );
+    game_ghost CLYDE (
+        .clk (gameclk),
+        .rst (~rst),
+        .start (~btn),
+        .personality (2'b11),
+        .pacman_inputs (pacman_outputs [24:3]),
+        .power_pellet (power_pellet),
+        .tile_info (clyde_tile_info), 
+        .blinky_pos (20'b0),
 
-    game_ghost CLYDE(gameclk, ~rst, ~btn, 2'b11, 
-        pacman_xtile, pacman_ytile, pacman_dir, power_pellet, 
-        clyde_tile_info, 10'b0, 10'b0, 
-        clyde_xtile_next, clyde_ytile_next, 
-        clyde_xloc, clyde_yloc, clyde_dir, clyde_mode
+        .tile_checks (clyde_tiles),
+        .ghost_outputs (clyde_outputs)
     );
+	 
+    // pacman PACMAN ( 
+    //     .clk60 (gameclk), 
+    //     .reset (~rst), 
+    //     .start (~btn),
+    //     .left (switches[9]),
+    //     .right (switches[8]),
+    //     .uturn (switches[7]),
+    //     .tile_info (pacman_tile_info), 
 
+    //     .xloc (pacman_xloc), 
+    //     .yloc (pacman_yloc), 
+    //     .dir (pacman_dir), 
+    //     .curr_xtile (pacman_xtile), 
+    //     .curr_ytile (pacman_ytile)
+    // );
+
+	 
     // 
     // COORDINATE BLOCKING & ROTATION
     // localparam XMAX  = 160;  // horizontal pixels
