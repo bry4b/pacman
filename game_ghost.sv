@@ -8,13 +8,17 @@
 // write frightened state random turning
 //      this is done, uses 16-bit LFSR w/ a different seed for each ghost, x^15 + x + 1
 // maybe create new state for exiting ghost house?
-//      this is done: STATE_EXTGH, hardcodes exit lmao
+//      this is done: STATE_EXTGH hardcodes exit lmao
 // implement STATE_SCORE
+//      WHY IS THIS SO HARD
+//      mostly working now, with global ghost pause (pacman currently does not pause) 
+//      
 
 module game_ghost (
     input clk, 
     input rst,
     input start,
+    input pause,
 
     input [1:0] personality,
 
@@ -30,6 +34,8 @@ module game_ghost (
     // input [9:0] blinky_xloc,        // only for inky :/
     // input [9:0] blinky_yloc,        // only for inky :/
 
+    output eaten, 
+
     output [13:0] tile_checks,
     // output reg [6:0] xtile_next,
     // output reg [6:0] ytile_next,
@@ -40,9 +46,11 @@ module game_ghost (
     // output reg [9:0] yloc,
 
     // output reg [1:0] dir,
-    // output reg [1:0] mode
+    // output reg [1:0] mode,
+    // output reg flash         // controls flashing when frightened mode is ending
 );
 
+// input unpacking
 wire [6:0] pacman_xtile = pacman_inputs [21:12] >> 2'd3;
 wire [6:0] pacman_ytile = (pacman_inputs [11:2] >> 2'd3) - 2'd3; 
 wire [1:0] pacman_dir = pacman_inputs [1:0];
@@ -50,6 +58,7 @@ wire [1:0] pacman_dir = pacman_inputs [1:0];
 wire [9:0] blinky_xloc = blinky_pos [19:10];
 wire [9:0] blinky_yloc = blinky_pos [9:0];
 
+// output packing
 reg [6:0] xtile_next; 
 reg [6:0] ytile_next;
 
@@ -57,13 +66,18 @@ reg [9:0] xloc;
 reg [9:0] yloc;
 reg [1:0] dir;
 reg [1:0] mode;
+reg flash;          
 
-reg flash;          // controls flashing when frightened mode is ending
+reg [9:0] xloc_d;
+reg [9:0] yloc_d;
+reg [1:0] dir_d;
+reg [1:0] mode_d;
 reg flash_d;
 
 assign tile_checks = {xtile_next, ytile_next};
 assign ghost_outputs = {xloc, yloc, dir, mode, flash};
 
+reg eaten_d;
 
 // ghost personality definitions
 localparam BLINKY   = 2'b00;
@@ -71,7 +85,7 @@ localparam PINKY    = 2'b01;
 localparam INKY     = 2'b10;
 localparam CLYDE    = 2'b11;
 
-// ghost state definitions
+// ghost states
 localparam STATE_START = 3'b000;
 localparam STATE_CHASE = 3'b001;
 localparam STATE_SCTTR = 3'b010;
@@ -79,57 +93,58 @@ localparam STATE_FRGHT = 3'b011;
 localparam STATE_SCORE = 3'b100;
 localparam STATE_RSPWN = 3'b101;
 localparam STATE_EXTGH = 3'b110;
+localparam STATE_PAUSE = 3'b111;        // pauses when other ghosts are eaten unless when respawning
 
-reg [2:0] state;
-reg [2:0] state_d;
-reg [2:0] state_prev;
+// ghost directions
+localparam RT   = 2'b00;
+localparam UP   = 2'b01;
+localparam DN   = 2'b10;
+localparam LT   = 2'b11;
 
 // state timers 
 localparam CHASE_TIME = 'd20 * 'd60;    // chase time
 localparam SCTTR_TIME = 'd7 * 'd60;     // scatter time
 localparam FRGHT_TIME = 'd10 * 'd60;    // frightened time
 
-reg [10:0] timer_reg;
-reg [10:0] timer_reg_d;
-reg [9:0] timer_frt;
-reg [9:0] timer_frt_d;
-
-// ghost mode definitions
+// ghost modes
 localparam NORM = 2'b00;
 localparam FRGT = 2'b01;
 localparam SCOR = 2'b10;
 localparam DEAD = 2'b11;
 
-reg [1:0] mode_d;
-
-// maze information
+// wall types
 localparam WALL = 2'b00;    // wall (not walkable)
 localparam PTNP = 2'b01;    // path, no pellet
 localparam PTYP = 2'b10;    // path, yes pellet
 localparam PTGH = 2'b11;    // path, ghost house
 
+// maze constants
 localparam YOFFSET = 2'd3;  // Y offset for tiles = 3
 localparam XTILES = 6'd30;  // horizontal width in tiles 
 localparam YTILES = 6'd33;  // vertical height in tiles
 
+// state registers
+reg [2:0] state;
+reg [2:0] state_d;
+reg [2:0] state_prev;
+reg [2:0] state_cont;
+reg [2:0] state_exit;
+
+// timer registers
+reg [10:0] timer_reg;
+reg [10:0] timer_reg_d;
+reg [9:0] timer_frt;
+reg [9:0] timer_frt_d;
+
 // location information
 reg [9:0] start_xloc; 
 reg [9:0] start_yloc;
-
-reg [9:0] xloc_d;
-reg [9:0] yloc_d;
 
 reg [6:0] xtile;
 reg [6:0] ytile;
 
 wire [6:0] xtile_d = xloc_d >> 2'd3;   
 wire [6:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
-
-// ghost direction definitions
-localparam RT   = 2'b00;
-localparam UP   = 2'b01;
-localparam DN   = 2'b10;
-localparam LT   = 2'b11;
 
 // targeting software
 reg [6:0] target_xtile;
@@ -140,7 +155,6 @@ reg [12:0] distance_up;
 reg [12:0] distance_dn;
 reg [12:0] distance_lt;
 
-reg [1:0] dir_d;
 reg [1:0] dir_exit;         // direction that ghost should exit current tile from
 reg [1:0] dir_plan;         // direction that ghost should exit next tile from
 reg [1:0] dir_prev;         // direction that ghost exited last tile from
@@ -150,6 +164,7 @@ reg [15:0] lfsr_state;
 reg [1:0] rand_dir;
 assign rand_dir = lfsr_state[1:0];
 
+reg [1:0] movespeed; 
 // targeting for inky
 wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;  
 wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
@@ -170,13 +185,21 @@ always @(posedge clk) begin
     timer_reg <= timer_reg_d;
     timer_frt <= timer_frt_d;
     flash <= flash_d;
+    eaten <= eaten_d;
 
-    if ( (state_d != state) && (state == STATE_SCTTR || state == STATE_CHASE || state == STATE_RSPWN || state == STATE_START) ) begin
+    if ( (state_d != state) && (state == STATE_SCTTR || state == STATE_CHASE || state == STATE_RSPWN) ) begin
         state_prev <= state;
+    end else if (( state == STATE_START && start) || rst) begin
+        state_prev <= STATE_START;
     end
-    // end else if (( state == STATE_START && start) || rst) begin
-    //     state_prev <= STATE_START;
-    // end
+    if ( (state_d != state) && (state == STATE_SCTTR || state == STATE_CHASE) )begin
+        state_exit <= state;
+    end
+     
+
+    if (state_d == STATE_PAUSE && state != STATE_PAUSE && state != STATE_RSPWN) begin
+        state_cont <= state;
+    end 
 end
 
 // STATE TRANSITIONS, DIRECTION CHANGES, SPRITE DISPLAY MODES
@@ -189,6 +212,8 @@ always_comb begin
                 end else begin
                     state_d = STATE_SCTTR;
                 end
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
             end else if (timer_reg_d > 'd300) begin
                 state_d = STATE_EXTGH;
             end else begin
@@ -202,9 +227,6 @@ always_comb begin
                 timer_reg_d = 1'b0;
             end
 
-            timer_frt_d = 1'b0;
-            mode_d = NORM;
-
             case (personality)
                 BLINKY: dir_d = RT;
                 PINKY:  dir_d = RT;
@@ -212,6 +234,8 @@ always_comb begin
                 CLYDE:  dir_d = LT;
             endcase
 
+            // timer_frt_d = 1'b0;
+            mode_d = NORM;
             flash_d = 1'b0;
         end
 
@@ -220,14 +244,18 @@ always_comb begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
                 dir_d = ~dir;
-            end else if (timer_reg > CHASE_TIME) begin
-                state_d = STATE_SCTTR;
-                timer_reg_d = 1'b0;
-                dir_d = ~dir;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
                 dir_d = dir;
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = timer_reg;
+                dir_d = dir;
+            end else if (timer_reg > CHASE_TIME) begin
+                state_d = STATE_SCTTR;
+                timer_reg_d = 1'b0;
+                dir_d = ~dir;
             end else begin
                 state_d = STATE_CHASE;
                 timer_reg_d = timer_reg + 1'b1;
@@ -249,7 +277,7 @@ always_comb begin
                 endcase
             end
 
-            timer_frt_d = 1'b0;
+            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
         end
@@ -259,14 +287,18 @@ always_comb begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
                 dir_d = ~dir;
-            end else if (timer_reg > SCTTR_TIME) begin
-                state_d = STATE_CHASE;
-                timer_reg_d = 1'b0;
-                dir_d = ~dir;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
                 dir_d = dir;
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = timer_reg;
+                dir_d = dir;
+            end else if (timer_reg > SCTTR_TIME) begin
+                state_d = STATE_CHASE;
+                timer_reg_d = 1'b0;
+                dir_d = ~dir;
             end else begin
                 state_d = STATE_SCTTR;
                 timer_reg_d = timer_reg + 1'b1;
@@ -288,45 +320,59 @@ always_comb begin
                 endcase
             end
 
-            timer_frt_d = 1'b0;
+            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
         end
 
         STATE_FRGHT: begin
             if (pacman_xtile == xtile && pacman_ytile == ytile) begin
-                state_d = STATE_RSPWN;
+                state_d = STATE_SCORE;
+                mode_d = SCOR;
+                // state_d = STATE_RSPWN;
+                // mode_d = DEAD;
+
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
+                // timer_frt_d = 1'b0;
                 dir_d = dir;
-                mode_d = DEAD;
                 flash_d = 1'b0;
+            end else if (rst) begin
+                state_d = STATE_START;
+                timer_reg_d = 1'b0;
+                // timer_frt_d = 1'b0;
+                dir_d = dir;
+                mode_d = NORM;
+                flash_d = 1'b0;
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = timer_reg;
+                dir_d = dir;
+                mode_d = mode;
+                flash_d = flash;
             end else if (timer_frt > FRGHT_TIME) begin
                 if (state_prev == STATE_SCTTR) begin
                     state_d = STATE_SCTTR;
                     timer_reg_d = timer_reg + 1'b1;
-                    timer_frt_d = 1'b0;
+                    // timer_frt_d = 1'b0;
                     dir_d = dir;
                 end else begin
                     state_d = STATE_CHASE;
                     timer_reg_d = timer_reg + 1'b1;
-                    timer_frt_d = 1'b0;
+                    // timer_frt_d = 1'b0;
                     dir_d = dir;
                 end
 
                 mode_d = NORM;
                 flash_d = 1'b0;
-            end else if (rst) begin
-                state_d = STATE_START;
-                timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
-                dir_d = dir;
-                mode_d = NORM;
-                flash_d = 1'b0;
             end else begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
-                timer_frt_d = timer_frt + 1'b1;
+
+                // if (power_pellet) begin
+                //     timer_frt_d = 1'b0;
+                // end else begin
+                //     timer_frt_d = timer_frt + 1'b1;
+                // end
 
                 case (dir_exit) 
                     RT, LT: begin
@@ -344,8 +390,6 @@ always_comb begin
                         end
                     end
                 endcase
-
-                mode_d = FRGT;
 
                 if (timer_frt > FRGHT_TIME - 'd120) begin
                     if ((FRGHT_TIME - timer_frt) % 15 == 0) begin
@@ -356,24 +400,24 @@ always_comb begin
                 end else begin
                     flash_d = 1'b0;
                 end
+
+                mode_d = FRGT;
             end
         end
         
         STATE_SCORE: begin
-            if (timer_reg_d > 'd60) begin
+            if (timer_reg > 'd60) begin
                 state_d = STATE_RSPWN;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
-                timer_frt_d = 1'b0;
             end else begin
                 state_d = STATE_SCORE;
                 timer_reg_d = timer_reg + 1'b1;
-                timer_frt_d = 1'b0;
             end
 
+            // timer_frt_d = 1'b0;
             dir_d = dir;
             mode_d = SCOR;
             flash_d = 1'b0;
@@ -406,12 +450,18 @@ always_comb begin
             endcase
 
             timer_reg_d = 1'b0;
-            timer_frt_d = 1'b0;
+            // timer_frt_d = 1'b0;
             flash_d = 1'b0;
         end
 
         STATE_EXTGH: begin
-            if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
+            if (rst) begin
+                state_d = STATE_START;
+                dir_d = dir;
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
+                dir_d = dir;
+            end else if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
                 state_d = STATE_EXTGH;
                 case (dir_exit) 
                     RT, LT: begin
@@ -433,26 +483,80 @@ always_comb begin
                 state_d = STATE_SCTTR;
                 dir_d = dir;
             end else begin
-                state_d = state_prev;
+                state_d = state_exit;
                 dir_d = dir;
             end
 
             timer_reg_d = 1'b0;
-            timer_frt_d = 1'b0;
+            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
+        end
+        
+        STATE_PAUSE: begin
+            if (rst) begin
+                state_d = STATE_START;
+                timer_reg_d = 1'b0;
+            end else if (pause) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = timer_reg;
+            end else begin
+                state_d = state_cont;
+                timer_reg_d = timer_reg + 1'b1;
+            end
+
+            case (dir_exit) 
+                RT, LT: begin
+                    if (yloc_d % 8 == 3) begin
+                        dir_d = dir_exit;
+                    end else begin
+                        dir_d = dir;
+                    end
+                end
+                UP, DN: begin
+                    if (xloc_d % 8 == 3) begin
+                        dir_d = dir_exit;
+                    end else begin
+                        dir_d = dir;
+                    end
+                end
+            endcase
+
+            mode_d = mode;
+            flash_d = flash;
         end
 
         default: begin
             state_d = STATE_START;
             timer_reg_d = 1'b0;
-            timer_frt_d = 1'b0;
+            // timer_frt_d = 1'b0;
             dir_d = RT;
             mode_d = NORM;
             flash_d = 1'b0;
         end
 
     endcase
+end
+
+// FRIGHTENED TIMER
+always_comb begin
+    if (power_pellet) begin
+        eaten_d = 1'b0;
+        timer_frt_d = 1'b1;
+    end else if (state == STATE_PAUSE || state == STATE_SCORE) begin
+        eaten_d = eaten;
+        timer_frt_d = timer_frt;
+    end else if (timer_frt > 'd0 && timer_frt <= FRGHT_TIME) begin
+        if ( (pacman_xtile == xtile && pacman_ytile == ytile) || eaten ) begin
+            eaten_d = 1'b1;
+        end else begin
+            eaten_d = 1'b0;
+        end
+        timer_frt_d = timer_frt + 1'b1;
+    end else begin
+        eaten_d = 1'b0;
+        timer_frt_d = 1'b0;
+    end
 end
 
 // UPDATE TILE LOCATION AND EXIT DIRECTION
@@ -769,26 +873,31 @@ always_comb begin
             xloc_d = start_xloc;
             yloc_d = start_yloc;
         end
+        movespeed = 1'b0;
+    end else if (state == STATE_SCORE || state == STATE_PAUSE) begin
+        xloc_d = xloc;
+        yloc_d = yloc;
+        movespeed = 1'b0;
     end else if (state == STATE_FRGHT) begin    // cut 50% speed in frightened state
         if (timer_frt[0]) begin
             case (dir)
                 RT: begin
-                    xloc_d = xloc + 1'd1;
+                    xloc_d = xloc + movespeed;
                     yloc_d = yloc;
                 end
 
                 UP: begin
                     xloc_d = xloc;
-                    yloc_d = yloc - 1'd1;
+                    yloc_d = yloc - movespeed;
                 end
 
                 DN: begin
                     xloc_d = xloc;
-                    yloc_d = yloc + 1'd1;
+                    yloc_d = yloc + movespeed;
                 end
 
                 LT: begin
-                    xloc_d = xloc - 1'd1;
+                    xloc_d = xloc - movespeed;
                     yloc_d = yloc;
                 end
             endcase
@@ -796,25 +905,36 @@ always_comb begin
             xloc_d = xloc;
             yloc_d = yloc;
         end
-    end else begin  // if (state == STATE_CHASE || state == STATE_SCTTR) begin
+        movespeed = 1'b1;
+    end else begin
+        if (state == STATE_RSPWN) begin
+            if (xloc % 2 == 0 || yloc % 2 == 0) begin
+                movespeed = 1'b1;
+            end else begin
+                movespeed = 2'd2;
+            end 
+        end else begin
+            movespeed = 1'b1;
+        end
+
         case (dir)
             RT: begin
-                xloc_d = xloc + 1'd1;
+                xloc_d = xloc + movespeed;
                 yloc_d = yloc;
             end
 
             UP: begin
                 xloc_d = xloc;
-                yloc_d = yloc - 1'd1;
+                yloc_d = yloc - movespeed;
             end
 
             DN: begin
                 xloc_d = xloc;
-                yloc_d = yloc + 1'd1;
+                yloc_d = yloc + movespeed;
             end
 
             LT: begin
-                xloc_d = xloc - 1'd1;
+                xloc_d = xloc - movespeed;
                 yloc_d = yloc;
             end
         endcase

@@ -1,4 +1,5 @@
 Info (10281): Verilog HDL Declaration information at pacman.sv(6): object "start" differs only in case from object "START" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 6
+Info (10281): Verilog HDL Declaration information at pacman.sv(8): object "pause" differs only in case from object "PAUSE" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 8
 Info (10281): Verilog HDL Declaration information at pacman.sv(4): object "right" differs only in case from object "RIGHT" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 4
 Info (10281): Verilog HDL Declaration information at pacman.sv(3): object "left" differs only in case from object "LEFT" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 3
 Info (10281): Verilog HDL Declaration information at maze.sv(150): object "wall" differs only in case from object "WALL" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 150

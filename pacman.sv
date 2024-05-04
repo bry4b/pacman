@@ -5,6 +5,7 @@ module pacman (
     input uturn,
     input start,
     input reset,
+    input pause,
 
     input [1:0] tile_info [0:3], // maze info
 
@@ -17,8 +18,8 @@ module pacman (
 );
     
     // Game states
-    typedef enum logic [1:0] {START, NORMAL, DEATH} State;
-    State curr_state, next_state;
+    typedef enum logic [1:0] {START, NORMAL, DEATH, PAUSE} State;
+    State curr_state, next_state, prev_state;
 
     // Direction standard
     localparam RIGHT = 2'b00;
@@ -71,6 +72,8 @@ module pacman (
                     next_state = DEATH;
                 end else if (reset) begin
                     next_state = START;
+                end else if (pause) begin
+                    next_state = PAUSE;
                 end else begin
                     next_state = NORMAL;
                 end
@@ -82,12 +85,21 @@ module pacman (
                     next_state = DEATH;
                 end
             end
+            PAUSE : begin
+                if (reset) begin
+                    next_state = START;
+                end else if (pause) begin
+                    next_state = PAUSE;
+                end else begin
+                    next_state = prev_state;
+                end
+            end
         endcase
     end
 
     /* QUEUEING NEXT MOVE */
     always_comb begin
-        if (curr_state == NORMAL) begin
+        if (curr_state == NORMAL || curr_state == PAUSE) begin
             if (left_sr == 2'b01) begin // if left button is pressed, rotate CCW
                 case (dir)
                     RIGHT : begin
@@ -199,6 +211,10 @@ module pacman (
         left_sr  <= {left_sr[0], left};
         right_sr <= {right_sr[0], right};
         uturn_sr <= {uturn_sr[0], uturn};
+
+        if (curr_state != next_state && curr_state != PAUSE) begin
+            prev_state <= curr_state;
+        end
     end
 
 endmodule

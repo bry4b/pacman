@@ -41,6 +41,8 @@ module graphics (
 
     input ghost_animation,
 
+    input [1:0] ghosts_eaten,
+
     input [7:0] maze_color,
     
     output reg [7:0] color,
@@ -114,7 +116,18 @@ wire [7:0] clyde_color;
 
 // wire ghost_animation;
 
-graphics_ghost_LUT GLUT (blinky_address, pinky_address, inky_address, clyde_address, blinky_pixel, pinky_pixel, inky_pixel, clyde_pixel);
+graphics_ghost_LUT GLUT (
+    .blinky_in (blinky_address), 
+    .pinky_in (pinky_address), 
+    .inky_in (inky_address), 
+    .clyde_in (clyde_address), 
+    .ghosts_eaten (ghosts_eaten), 
+
+    .blinky_out(blinky_pixel), 
+    .pinky_out(pinky_pixel), 
+    .inky_out (inky_pixel), 
+    .clyde_out (clyde_pixel)
+);
 
 graphics_ghost BLINKY (
     .xpos (xpos),

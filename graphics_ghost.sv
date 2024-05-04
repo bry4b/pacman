@@ -52,6 +52,7 @@ localparam WHT1 = 3'b101;   // WHT for left/down, else body
 localparam BLU1 = 3'b110;   // BLU for left/down, else body
 localparam FRL0 = 3'b010;   // FRiLly thing, frame 0 
 localparam FRL1 = 3'b011;   // FRiLly thing, frame 1
+localparam FILL = 1'b1;
 
 // ghost mode definitions
 localparam NORM = 2'b00;
@@ -62,85 +63,94 @@ localparam DEAD = 2'b11;
 always_comb begin
     // inside render area of sprite
     if ( ( (xloc < 7 || xloc-7 <= xpos) && xpos <= xloc+8) && ( (yloc < 7 || yloc-7 <= ypos) && ypos <= yloc+8) ) begin
-        // normal or dead ghost appearance
-        if (ghost_mode == NORM || ghost_mode == DEAD) begin
-            // select pixel from LUT
-            if (ghost_dir == RT || ghost_dir == LT) begin
-                pixel_address = ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
-            end else begin
-                pixel_address = 10'd256 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
-            end
-            // assign correct color
-            if (ghost_mode == DEAD) begin
-                bodycolor = BLK;
-            end else begin
-                case (ghost_color)
-                    2'b00: bodycolor = RED;
-                    2'b01: bodycolor = PNK;
-                    2'b10: bodycolor = CYN;
-                    2'b11: bodycolor = ORG;
-                    default: bodycolor = BLK;
-                endcase
-            end
-        // frightened ghost appearance
-        end else begin // if (ghost_mode == FRGT) begin 
-            pixel_address = 10'd512 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
-            if (ghost_flash) begin
-                bodycolor = WHT;
-            end else begin
-                bodycolor = BLU;
-            end
-        end
-
-        // render eye area
-        if ((ypos-yloc+7) < 12) begin
-            case (pixel)
-                BODY: color = bodycolor;
-                EYES: begin
-                    if (ghost_flash) color = RED;
-                    else color = WHT;
-                end
-                WHT0: begin
-                    if (ghost_dir == RT || ghost_dir == UP) color = WHT;
-                    else color = bodycolor;
-                end
-                WHT1: begin
-                    if (ghost_dir == LT || ghost_dir == DN) color = WHT;
-                    else color = bodycolor;
-                end
-                BLU0: begin
-                    if (ghost_dir == RT || ghost_dir == UP) color = BLU;
-                    else color = bodycolor;
-                end
-                BLU1: begin
-                    if (ghost_dir == LT || ghost_dir == DN) color = BLU;
-                    else color = bodycolor;
-                end
-                BLNK: color = BLK;
-                default: color = bodycolor;
+        // display score number
+        if (ghost_mode == SCOR) begin
+            pixel_address = 10'd768 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
+            bodycolor = WHT;
+            case (pixel) 
+                FILL: color = bodycolor;
+                default: color = BLK;
             endcase
-
-        // render animated frilly part
         end else begin
-            if (animation_cycle == 0) begin
+        // normal or dead ghost appearance
+            if (ghost_mode == NORM || ghost_mode == DEAD) begin
+                // select pixel from LUT
+                if (ghost_dir == RT || ghost_dir == LT) begin
+                    pixel_address = ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
+                end else begin
+                    pixel_address = 10'd256 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
+                end
+                // assign correct color
+                if (ghost_mode == DEAD) begin
+                    bodycolor = BLK;
+                end else begin
+                    case (ghost_color)
+                        2'b00: bodycolor = RED;
+                        2'b01: bodycolor = PNK;
+                        2'b10: bodycolor = CYN;
+                        2'b11: bodycolor = ORG;
+                        default: bodycolor = BLK;
+                    endcase
+                end
+            // frightened ghost appearance
+            end else begin // if (ghost_mode == FRGT) begin 
+                pixel_address = 10'd512 + ((ypos-yloc+3'd7) << 3'd4) + (xpos-xloc+3'd7);
+                if (ghost_flash) begin
+                    bodycolor = WHT;
+                end else begin
+                    bodycolor = BLU;
+                end
+            end
+
+            // render eye area
+            if ((ypos-yloc+7) < 12) begin
                 case (pixel)
-                    BODY,
-                    FRL0: color = bodycolor;
-                    FRL1,
+                    BODY: color = bodycolor;
+                    EYES: begin
+                        if (ghost_flash) color = RED;
+                        else color = WHT;
+                    end
+                    WHT0: begin
+                        if (ghost_dir == RT || ghost_dir == UP) color = WHT;
+                        else color = bodycolor;
+                    end
+                    WHT1: begin
+                        if (ghost_dir == LT || ghost_dir == DN) color = WHT;
+                        else color = bodycolor;
+                    end
+                    BLU0: begin
+                        if (ghost_dir == RT || ghost_dir == UP) color = BLU;
+                        else color = bodycolor;
+                    end
+                    BLU1: begin
+                        if (ghost_dir == LT || ghost_dir == DN) color = BLU;
+                        else color = bodycolor;
+                    end
                     BLNK: color = BLK;
-                    default: color = BLK;
+                    default: color = bodycolor;
                 endcase
+
+            // render animated frilly part
             end else begin
-                case (pixel)
-                    BODY, 
-                    FRL1: color = bodycolor;
-                    FRL0, 
-                    BLNK: color = BLK;
-                    default: color = BLK;
-                endcase      
+                if (animation_cycle == 0) begin
+                    case (pixel)
+                        BODY,
+                        FRL0: color = bodycolor;
+                        FRL1,
+                        BLNK: color = BLK;
+                        default: color = BLK;
+                    endcase
+                end else begin
+                    case (pixel)
+                        BODY, 
+                        FRL1: color = bodycolor;
+                        FRL0, 
+                        BLNK: color = BLK;
+                        default: color = BLK;
+                    endcase      
+                end
             end
         end
-
     // outside render area of sprite
     end else begin
         pixel_address = 10'b0;

@@ -805,3 +805,5 @@ restart
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
 #    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
 run 500ns
+# End time: 21:41:29 on May 02,2024, Elapsed time: 1:54:54
+# Errors: 0, Warnings: 8
