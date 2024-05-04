@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pacman_top
-Fri May  3 22:45:40 2024
+Fri May  3 23:32:38 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -121,15 +121,15 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri May  3 22:45:40 2024       ;
+; Analysis & Synthesis Status        ; Successful - Fri May  3 23:32:38 2024       ;
 ; Quartus Prime Version              ; 21.1.0 Build 842 10/21/2021 SJ Lite Edition ;
 ; Revision Name                      ; pacman_top                                  ;
 ; Top-level Entity Name              ; pacman_top                                  ;
 ; Family                             ; MAX 10                                      ;
-; Total logic elements               ; 21,766                                      ;
-;     Total combinational functions  ; 21,690                                      ;
-;     Dedicated logic registers      ; 1,436                                       ;
-; Total registers                    ; 1436                                        ;
+; Total logic elements               ; 21,863                                      ;
+;     Total combinational functions  ; 21,787                                      ;
+;     Dedicated logic registers      ; 1,439                                       ;
+; Total registers                    ; 1439                                        ;
 ; Total pins                         ; 37                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 1,048,576                                   ;
@@ -246,7 +246,7 @@ https://fpgasoftware.intel.com/eula.
 ;     Processor 6            ;   0.1%      ;
 ;     Processor 7            ;   0.1%      ;
 ;     Processor 8            ;   0.1%      ;
-;     Processors 9-12        ;   0.0%      ;
+;     Processors 9-12        ;   0.1%      ;
 +----------------------------+-------------+
 
 
@@ -309,20 +309,20 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+----------------------------+
 ; Resource                                    ; Usage                      ;
 +---------------------------------------------+----------------------------+
-; Estimated Total logic elements              ; 21,766                     ;
+; Estimated Total logic elements              ; 21,863                     ;
 ;                                             ;                            ;
-; Total combinational functions               ; 21690                      ;
+; Total combinational functions               ; 21787                      ;
 ; Logic element usage by number of LUT inputs ;                            ;
-;     -- 4 input functions                    ; 14281                      ;
-;     -- 3 input functions                    ; 5294                       ;
-;     -- <=2 input functions                  ; 2115                       ;
+;     -- 4 input functions                    ; 14411                      ;
+;     -- 3 input functions                    ; 5313                       ;
+;     -- <=2 input functions                  ; 2063                       ;
 ;                                             ;                            ;
 ; Logic elements by mode                      ;                            ;
-;     -- normal mode                          ; 19187                      ;
+;     -- normal mode                          ; 19284                      ;
 ;     -- arithmetic mode                      ; 2503                       ;
 ;                                             ;                            ;
-; Total registers                             ; 1436                       ;
-;     -- Dedicated logic registers            ; 1436                       ;
+; Total registers                             ; 1439                       ;
+;     -- Dedicated logic registers            ; 1439                       ;
 ;     -- I/O registers                        ; 0                          ;
 ;                                             ;                            ;
 ; I/O pins                                    ; 37                         ;
@@ -334,9 +334,9 @@ https://fpgasoftware.intel.com/eula.
 ;     -- PLLs                                 ; 1                          ;
 ;                                             ;                            ;
 ; Maximum fan-out node                        ; clockDivider:TOCK|outClock ;
-; Maximum fan-out                             ; 1377                       ;
-; Total fan-out                               ; 83300                      ;
-; Average fan-out                             ; 3.56                       ;
+; Maximum fan-out                             ; 1380                       ;
+; Total fan-out                               ; 83730                      ;
+; Average fan-out                             ; 3.57                       ;
 +---------------------------------------------+----------------------------+
 
 
@@ -345,12 +345,12 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+-------------------------------------------------------------------------------------------------------------------------------+---------------------+--------------+
 ; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                                                           ; Entity Name         ; Library Name ;
 +----------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+-------------------------------------------------------------------------------------------------------------------------------+---------------------+--------------+
-; |pacman_top                                  ; 21690 (22)          ; 1436 (0)                  ; 1048576     ; 0          ; 26           ; 26      ; 0         ; 37   ; 0            ; 0          ; |pacman_top                                                                                                                   ; pacman_top          ; work         ;
+; |pacman_top                                  ; 21787 (22)          ; 1439 (0)                  ; 1048576     ; 0          ; 26           ; 26      ; 0         ; 37   ; 0            ; 0          ; |pacman_top                                                                                                                   ; pacman_top          ; work         ;
 ;    |clk_vga:TICK|                            ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:TICK                                                                                                      ; clk_vga             ; work         ;
 ;       |altpll:altpll_component|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:TICK|altpll:altpll_component                                                                              ; altpll              ; work         ;
 ;          |clk_vga_altpll:auto_generated|     ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:TICK|altpll:altpll_component|clk_vga_altpll:auto_generated                                                ; clk_vga_altpll      ; work         ;
 ;    |clockDivider:TOCK|                       ; 59 (59)             ; 33 (33)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clockDivider:TOCK                                                                                                 ; clockDivider        ; work         ;
-;    |game_ghost:BLINKY|                       ; 777 (660)           ; 98 (98)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY                                                                                                 ; game_ghost          ; work         ;
+;    |game_ghost:BLINKY|                       ; 773 (656)           ; 98 (98)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY                                                                                                 ; game_ghost          ; work         ;
 ;       |lpm_divide:Mod0|                      ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0                                                                                 ; lpm_divide          ; work         ;
 ;          |lpm_divide_pll:auto_generated|     ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                   ; lpm_divide_pll      ; work         ;
 ;             |sign_div_unsign_olh:divider|    ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                       ; sign_div_unsign_olh ; work         ;
@@ -367,7 +367,7 @@ https://fpgasoftware.intel.com/eula.
 ;          |mult_tds:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult8|mult_tds:auto_generated                                                          ; mult_tds            ; work         ;
 ;       |lpm_mult:Mult9|                       ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9                                                                                  ; lpm_mult            ; work         ;
 ;          |mult_1es:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9|mult_1es:auto_generated                                                          ; mult_1es            ; work         ;
-;    |game_ghost:CLYDE|                        ; 825 (708)           ; 98 (98)                   ; 0           ; 0          ; 8            ; 8       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE                                                                                                  ; game_ghost          ; work         ;
+;    |game_ghost:CLYDE|                        ; 824 (707)           ; 98 (98)                   ; 0           ; 0          ; 8            ; 8       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE                                                                                                  ; game_ghost          ; work         ;
 ;       |lpm_divide:Mod0|                      ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0                                                                                  ; lpm_divide          ; work         ;
 ;          |lpm_divide_pll:auto_generated|     ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                    ; lpm_divide_pll      ; work         ;
 ;             |sign_div_unsign_olh:divider|    ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                        ; sign_div_unsign_olh ; work         ;
@@ -405,7 +405,7 @@ https://fpgasoftware.intel.com/eula.
 ;          |mult_tds:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult8|mult_tds:auto_generated                                                            ; mult_tds            ; work         ;
 ;       |lpm_mult:Mult9|                       ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9                                                                                    ; lpm_mult            ; work         ;
 ;          |mult_1es:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9|mult_1es:auto_generated                                                            ; mult_1es            ; work         ;
-;    |game_ghost:PINKY|                        ; 821 (704)           ; 98 (98)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY                                                                                                  ; game_ghost          ; work         ;
+;    |game_ghost:PINKY|                        ; 818 (701)           ; 98 (98)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY                                                                                                  ; game_ghost          ; work         ;
 ;       |lpm_divide:Mod0|                      ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0                                                                                  ; lpm_divide          ; work         ;
 ;          |lpm_divide_pll:auto_generated|     ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                    ; lpm_divide_pll      ; work         ;
 ;             |sign_div_unsign_olh:divider|    ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                        ; sign_div_unsign_olh ; work         ;
@@ -422,22 +422,22 @@ https://fpgasoftware.intel.com/eula.
 ;          |mult_tds:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult8|mult_tds:auto_generated                                                           ; mult_tds            ; work         ;
 ;       |lpm_mult:Mult9|                       ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9                                                                                   ; lpm_mult            ; work         ;
 ;          |mult_1es:auto_generated|           ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9|mult_1es:auto_generated                                                           ; mult_1es            ; work         ;
-;    |graphics:BOO|                            ; 1550 (36)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO                                                                                                      ; graphics            ; work         ;
+;    |graphics:BOO|                            ; 1608 (37)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO                                                                                                      ; graphics            ; work         ;
 ;       |graphics_ghost:BLINKY|                ; 174 (174)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:BLINKY                                                                                ; graphics_ghost      ; work         ;
-;       |graphics_ghost:CLYDE|                 ; 178 (178)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:CLYDE                                                                                 ; graphics_ghost      ; work         ;
-;       |graphics_ghost:INKY|                  ; 178 (178)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:INKY                                                                                  ; graphics_ghost      ; work         ;
+;       |graphics_ghost:CLYDE|                 ; 181 (181)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:CLYDE                                                                                 ; graphics_ghost      ; work         ;
+;       |graphics_ghost:INKY|                  ; 175 (175)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:INKY                                                                                  ; graphics_ghost      ; work         ;
 ;       |graphics_ghost:PINKY|                 ; 176 (176)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost:PINKY                                                                                 ; graphics_ghost      ; work         ;
-;       |graphics_ghost_LUT:GLUT|              ; 545 (545)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost_LUT:GLUT                                                                              ; graphics_ghost_LUT  ; work         ;
-;       |graphics_pacman:PACMAN|               ; 263 (263)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_pacman:PACMAN                                                                               ; graphics_pacman     ; work         ;
-;    |maze:MAZEPIN|                            ; 16413 (16413)       ; 947 (947)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|maze:MAZEPIN                                                                                                      ; maze                ; work         ;
-;    |pacman:PACMAN|                           ; 58 (58)             ; 37 (37)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|pacman:PACMAN                                                                                                     ; pacman              ; work         ;
+;       |graphics_ghost_LUT:GLUT|              ; 544 (544)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_ghost_LUT:GLUT                                                                              ; graphics_ghost_LUT  ; work         ;
+;       |graphics_pacman:PACMAN|               ; 321 (321)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics:BOO|graphics_pacman:PACMAN                                                                               ; graphics_pacman     ; work         ;
+;    |maze:MAZEPIN|                            ; 16423 (16423)       ; 947 (947)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|maze:MAZEPIN                                                                                                      ; maze                ; work         ;
+;    |pacman:PACMAN|                           ; 95 (95)             ; 40 (40)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|pacman:PACMAN                                                                                                     ; pacman              ; work         ;
 ;    |vga:DISPLAY|                             ; 123 (123)           ; 20 (20)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga:DISPLAY                                                                                                       ; vga                 ; work         ;
 ;    |vga_ram:PONG|                            ; 101 (75)            ; 7 (1)                     ; 1048576     ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG                                                                                                      ; vga_ram             ; work         ;
 ;       |ram_ip:PING|                          ; 18 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING                                                                                          ; ram_ip              ; work         ;
 ;          |altsyncram:altsyncram_component|   ; 18 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component                                                          ; altsyncram          ; work         ;
 ;             |altsyncram_end1:auto_generated| ; 18 (0)              ; 6 (6)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                           ; altsyncram_end1     ; work         ;
-;                |decode_aj9:rden_decode|      ; 9 (9)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode    ; decode_aj9          ; work         ;
-;                |decode_h7a:decode3|          ; 9 (9)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3        ; decode_h7a          ; work         ;
+;                |decode_aj9:rden_decode|      ; 10 (10)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode    ; decode_aj9          ; work         ;
+;                |decode_h7a:decode3|          ; 8 (8)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3        ; decode_h7a          ; work         ;
 ;       |ram_ip:PONG|                          ; 8 (0)               ; 0 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PONG                                                                                          ; ram_ip              ; work         ;
 ;          |altsyncram:altsyncram_component|   ; 8 (0)               ; 0 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component                                                          ; altsyncram          ; work         ;
 ;             |altsyncram_end1:auto_generated| ; 8 (0)               ; 0 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                           ; altsyncram_end1     ; work         ;
@@ -1998,12 +1998,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1436  ;
+; Total registers                              ; 1439  ;
 ; Number of registers using Synchronous Clear  ; 676   ;
-; Number of registers using Synchronous Load   ; 68    ;
+; Number of registers using Synchronous Load   ; 48    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 223   ;
+; Number of registers using Clock Enable       ; 203   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -2015,12 +2015,12 @@ Encoding Type:  One-Hot
 +-----------------------------------------+---------+
 ; maze:MAZEPIN|pellets[435][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[434][1]            ; 12      ;
-; maze:MAZEPIN|pellets[463][1]            ; 12      ;
-; maze:MAZEPIN|pellets[462][1]            ; 12      ;
-; maze:MAZEPIN|pellets[467][1]            ; 13      ;
+; maze:MAZEPIN|pellets[463][1]            ; 14      ;
+; maze:MAZEPIN|pellets[462][1]            ; 14      ;
+; maze:MAZEPIN|pellets[467][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[464][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[465][1]            ; 12      ;
-; maze:MAZEPIN|pellets[466][1]            ; 13      ;
+; maze:MAZEPIN|pellets[466][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[524][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[527][1]            ; 12      ;
 ; maze:MAZEPIN|pellets[525][1]            ; 12      ;
@@ -2042,66 +2042,64 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                    ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|lfsr_state[10]   ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|lfsr_state[1]     ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|lfsr_state[1]    ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|lfsr_state[0]   ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|hc[7]                 ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|vc[1]                 ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:CLYDE|timer_frt[0]     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|lfsr_state[8]    ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|lfsr_state[9]     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|lfsr_state[3]    ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|lfsr_state[5]   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|hc[4]                 ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|vc[9]                 ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:CLYDE|timer_frt[8]     ;
 ; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:INKY|timer_frt[3]      ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:PINKY|timer_frt[5]     ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:BLINKY|timer_frt[9]    ;
-; 6:1                ; 10 bits   ; 40 LEs        ; 10 LEs               ; 30 LEs                 ; Yes        ; |pacman_top|pacman:PACMAN|yloc[0]             ;
-; 6:1                ; 10 bits   ; 40 LEs        ; 10 LEs               ; 30 LEs                 ; Yes        ; |pacman_top|pacman:PACMAN|xloc[2]             ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:PINKY|timer_frt[0]     ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:BLINKY|timer_frt[6]    ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|pacman:PACMAN|dir_queue[1]        ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|dir[1]           ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|dir[0]           ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|dir[0]            ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|dir[0]           ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|dir[1]          ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[434][1]      ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|dir[0]          ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[434][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[435][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[462][0]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[463][1]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[463][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[464][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[465][0]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[466][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[467][1]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[466][0]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[467][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[492][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[493][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[494][1]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[493][0]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[494][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[495][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[496][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[497][0]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[522][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[523][1]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[522][0]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[523][0]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[524][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[525][0]      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[525][1]      ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[526][1]      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[527][1]      ;
-; 3:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|target_xtile[2] ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[527][0]      ;
+; 3:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|target_ytile[5] ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|pacman:PACMAN|next_state          ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|state_prev       ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|state_prev        ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|state_prev       ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|state_prev      ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|pacman:PACMAN|Mux0                ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|pacman:PACMAN|Mux1                ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|pacman:PACMAN|dir_d[0]            ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |pacman_top|vga_ram:PONG|xpos[2]              ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics:BOO|color[4]             ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|movespeed[0]     ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics:BOO|color[2]             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|movespeed[1]     ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|movespeed[1]      ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|movespeed[0]     ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|movespeed[0]    ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|vga:DISPLAY|red[2]                ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[5]   ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[12]  ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[1]    ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[11]   ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[4]   ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[12]  ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[0]  ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[7]  ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|vga:DISPLAY|red[1]                ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[2]   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[8]   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[4]    ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[10]   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[0]   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[8]   ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[3]  ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[13] ;
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_rt      ;
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_dn      ;
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_lt      ;
@@ -2114,8 +2112,10 @@ Encoding Type:  One-Hot
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_rt     ;
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_dn     ;
 ; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_lt     ;
-; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|target_ytile[6]  ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics:BOO|color[3]             ;
+; 4:1                ; 14 bits   ; 28 LEs        ; 28 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|target_ytile[1]  ;
+; 6:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|pacman:PACMAN|yloc_d[4]           ;
+; 6:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|pacman:PACMAN|xloc_d[0]           ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics:BOO|color[5]             ;
 ; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add66            ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|Add66            ;
 ; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add65            ;
@@ -2132,27 +2132,27 @@ Encoding Type:  One-Hot
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add66           ;
 ; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|Add65           ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add65           ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|yloc_d[9]        ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[3]        ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|yloc_d[8]        ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[9]        ;
 ; 7:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[5]        ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:INKY|yloc_d[2]         ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:INKY|xloc_d[6]         ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|yloc_d[5]        ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:INKY|yloc_d[7]         ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:INKY|xloc_d[5]         ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|yloc_d[3]        ;
 ; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|xloc_d[9]        ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[5]       ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[4]       ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|xloc_d[1]       ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[2]       ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[3]       ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|xloc_d[3]       ;
 ; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[1]  ;
-; 8:1                ; 5 bits    ; 25 LEs        ; 20 LEs               ; 5 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[2]  ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[0]  ;
-; 8:1                ; 5 bits    ; 25 LEs        ; 20 LEs               ; 5 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[2]  ;
+; 8:1                ; 5 bits    ; 25 LEs        ; 20 LEs               ; 5 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[4]  ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[1]  ;
+; 8:1                ; 5 bits    ; 25 LEs        ; 20 LEs               ; 5 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[6]  ;
 ; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |pacman_top|graphics:BOO|color[1]             ;
-; 8:1                ; 7 bits    ; 35 LEs        ; 35 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_xtile[6]   ;
-; 10:1               ; 7 bits    ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_ytile[0]   ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:CLYDE|Selector11       ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:INKY|Selector8         ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:PINKY|Selector15       ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:BLINKY|Selector16      ;
+; 8:1                ; 7 bits    ; 35 LEs        ; 35 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_xtile[4]   ;
+; 10:1               ; 7 bits    ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_ytile[2]   ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:CLYDE|Selector12       ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:INKY|Selector16        ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:PINKY|Selector12       ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:BLINKY|Selector14      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
 
 
@@ -4149,8 +4149,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 +------------------+-------+----------+--------------+
 ; Port             ; Type  ; Severity ; Details      ;
 +------------------+-------+----------+--------------+
-; pacman_inputs[2] ; Input ; Info     ; Stuck at GND ;
-; pacman_inputs[1] ; Input ; Info     ; Stuck at VCC ;
 ; pacman_inputs[0] ; Input ; Info     ; Stuck at GND ;
 +------------------+-------+----------+--------------+
 
@@ -4170,31 +4168,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 37                          ;
-; cycloneiii_ff         ; 1436                        ;
+; cycloneiii_ff         ; 1439                        ;
 ;     ENA               ; 145                         ;
 ;     ENA SCLR          ; 15                          ;
-;     ENA SLD           ; 63                          ;
+;     ENA SLD           ; 43                          ;
 ;     SCLR              ; 661                         ;
 ;     SLD               ; 5                           ;
-;     plain             ; 547                         ;
-; cycloneiii_lcell_comb ; 21690                       ;
+;     plain             ; 570                         ;
+; cycloneiii_lcell_comb ; 21787                       ;
 ;     arith             ; 2503                        ;
 ;         1 data inputs ; 9                           ;
 ;         2 data inputs ; 836                         ;
 ;         3 data inputs ; 1658                        ;
-;     normal            ; 19187                       ;
+;     normal            ; 19284                       ;
 ;         0 data inputs ; 109                         ;
 ;         1 data inputs ; 85                          ;
-;         2 data inputs ; 1076                        ;
-;         3 data inputs ; 3636                        ;
-;         4 data inputs ; 14281                       ;
+;         2 data inputs ; 1024                        ;
+;         3 data inputs ; 3655                        ;
+;         4 data inputs ; 14411                       ;
 ; cycloneiii_mac_mult   ; 26                          ;
 ; cycloneiii_mac_out    ; 26                          ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 128                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 29.30                       ;
-; Average LUT depth     ; 18.61                       ;
+; Max LUT depth         ; 30.30                       ;
+; Average LUT depth     ; 18.71                       ;
 +-----------------------+-----------------------------+
 
 
@@ -4203,7 +4201,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:41     ;
+; Top            ; 00:00:42     ;
 +----------------+--------------+
 
 
@@ -4213,7 +4211,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
-    Info: Processing started: Fri May  3 22:44:49 2024
+    Info: Processing started: Fri May  3 23:31:50 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pacman -c pacman_top
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
@@ -4267,12 +4265,12 @@ Warning (10236): Verilog HDL Implicit Net warning at game_tb.sv(47): created imp
 Warning (10236): Verilog HDL Implicit Net warning at game_tb.sv(48): created implicit net for "pinky_tile_info" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv Line: 48
 Warning (10236): Verilog HDL Implicit Net warning at game_tb.sv(49): created implicit net for "inky_tile_info" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv Line: 49
 Warning (10236): Verilog HDL Implicit Net warning at game_tb.sv(50): created implicit net for "clyde_tile_info" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv Line: 50
-Warning (10037): Verilog HDL or VHDL warning at pacman.sv(71): conditional expression evaluates to a constant File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 71
+Warning (10037): Verilog HDL or VHDL warning at pacman.sv(77): conditional expression evaluates to a constant File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 77
 Info (12127): Elaborating entity "pacman_top" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at pacman_top.sv(304): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 304
 Warning (10230): Verilog HDL assignment warning at pacman_top.sv(305): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 305
-Warning (10230): Verilog HDL assignment warning at pacman_top.sv(308): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 308
+Warning (10230): Verilog HDL assignment warning at pacman_top.sv(306): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 306
 Warning (10230): Verilog HDL assignment warning at pacman_top.sv(309): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 309
+Warning (10230): Verilog HDL assignment warning at pacman_top.sv(310): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 310
 Info (12128): Elaborating entity "clk_vga" for hierarchy "clk_vga:TICK" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 160
 Info (12128): Elaborating entity "altpll" for hierarchy "clk_vga:TICK|altpll:altpll_component" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga.v Line: 91
 Info (12130): Elaborated megafunction instantiation "clk_vga:TICK|altpll:altpll_component" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga.v Line: 91
@@ -4388,9 +4386,9 @@ Info (12128): Elaborating entity "graphics_ghost" for hierarchy "graphics:BOO|gr
 Warning (12125): Using design file graphics_pacman.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: graphics_pacman File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 1
 Info (12128): Elaborating entity "graphics_pacman" for hierarchy "graphics:BOO|graphics_pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics.sv Line: 183
-Warning (10030): Net "pacman_frames.data_a" at graphics_pacman.sv(29) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 29
-Warning (10030): Net "pacman_frames.waddr_a" at graphics_pacman.sv(29) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 29
-Warning (10030): Net "pacman_frames.we_a" at graphics_pacman.sv(29) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 29
+Warning (10030): Net "pacman_frames.data_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
+Warning (10030): Net "pacman_frames.waddr_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
+Warning (10030): Net "pacman_frames.we_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
 Info (12128): Elaborating entity "clockDivider" for hierarchy "clockDivider:TOCK" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 183
 Info (12128): Elaborating entity "maze" for hierarchy "maze:MAZEPIN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 205
 Warning (10230): Verilog HDL assignment warning at maze.sv(147): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 147
@@ -4413,13 +4411,13 @@ Warning (10230): Verilog HDL assignment warning at game_ghost.sv(146): truncated
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(147): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 147
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(169): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 169
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(170): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 170
-Info (12128): Elaborating entity "pacman" for hierarchy "pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 286
-Warning (10230): Verilog HDL assignment warning at pacman.sv(47): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 47
-Warning (10230): Verilog HDL assignment warning at pacman.sv(48): truncated value with size 32 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 48
-Warning (10230): Verilog HDL assignment warning at pacman.sv(175): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 175
+Info (12128): Elaborating entity "pacman" for hierarchy "pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 287
+Warning (10230): Verilog HDL assignment warning at pacman.sv(53): truncated value with size 10 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 53
+Warning (10230): Verilog HDL assignment warning at pacman.sv(54): truncated value with size 32 to match size of target (7) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 54
 Warning (10230): Verilog HDL assignment warning at pacman.sv(181): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 181
-Warning (10230): Verilog HDL assignment warning at pacman.sv(185): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 185
+Warning (10230): Verilog HDL assignment warning at pacman.sv(187): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 187
 Warning (10230): Verilog HDL assignment warning at pacman.sv(191): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 191
+Warning (10230): Verilog HDL assignment warning at pacman.sv(197): truncated value with size 32 to match size of target (10) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv Line: 197
 Warning (13046): Tri-state node(s) do not directly drive top-level pin(s)
     Warning (13049): Converted tri-state buffer "vga_ram:PONG|ram1_in[7]" feeding internal logic into a wire File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 18
     Warning (13049): Converted tri-state buffer "vga_ram:PONG|ram1_in[6]" feeding internal logic into a wire File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 18
@@ -4439,12 +4437,11 @@ Warning (13046): Tri-state node(s) do not directly drive top-level pin(s)
     Warning (13049): Converted tri-state buffer "vga_ram:PONG|ram2_in[0]" feeding internal logic into a wire File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 20
 Critical Warning (127005): Memory depth (8) in the design file differs from memory depth (6) in the Memory Initialization File "C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/pacman_top.ram1_maze_3ddc11.hdl.mif" -- setting initial value for remaining addresses to 0
 Critical Warning (127005): Memory depth (1024) in the design file differs from memory depth (990) in the Memory Initialization File "C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/pacman_top.ram2_maze_3ddc11.hdl.mif" -- setting initial value for remaining addresses to 0
-Critical Warning (127005): Memory depth (4) in the design file differs from memory depth (3) in the Memory Initialization File "C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/pacman_top.ram0_graphics_pacman_1ba68bea.hdl.mif" -- setting initial value for remaining addresses to 0
 Info (276014): Found 4 instances of uninferred RAM logic
     Info (276013): RAM logic "maze:MAZEPIN|maze_walls" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 93
     Info (276013): RAM logic "maze:MAZEPIN|house_walls" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 102
     Info (276013): RAM logic "maze:MAZEPIN|maze" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 142
-    Info (276013): RAM logic "graphics:BOO|graphics_pacman:PACMAN|pacman_frames" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 29
+    Info (276013): RAM logic "graphics:BOO|graphics_pacman:PACMAN|pacman_frames" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
 Info (278001): Inferred 30 megafunctions from design logic
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "game_ghost:PINKY|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 395
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "game_ghost:CLYDE|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 395
@@ -4540,18 +4537,18 @@ Info (17049): 72 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/output_files/pacman_top.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 22096 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 22209 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 13 input pins
     Info (21059): Implemented 24 output pins
-    Info (21061): Implemented 21904 logic cells
+    Info (21061): Implemented 22017 logic cells
     Info (21064): Implemented 128 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 26 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 92 warnings
-    Info: Peak virtual memory: 5023 megabytes
-    Info: Processing ended: Fri May  3 22:45:40 2024
-    Info: Elapsed time: 00:00:51
-    Info: Total CPU time (on all processors): 00:00:21
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 91 warnings
+    Info: Peak virtual memory: 5016 megabytes
+    Info: Processing ended: Fri May  3 23:32:38 2024
+    Info: Elapsed time: 00:00:48
+    Info: Total CPU time (on all processors): 00:00:25
 
 
 +------------------------------------------+

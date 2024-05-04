@@ -126,7 +126,7 @@ wire writeEnable;   // HIGH when writing to ram1
 
 // assign pacman_anim = switches[3:2]; 
 // assign pacman_alive = 2'b00;
-assign pacman_anim = 2'b01;
+// assign pacman_anim = 2'b01;
 assign pacman_alive = 1'b0;
     
 // 
@@ -281,6 +281,7 @@ pacman PACMAN (
     .xloc (pacman_xloc), 
     .yloc (pacman_yloc), 
     .dir (pacman_dir), 
+    .anim_cycle (pacman_anim),
     .curr_xtile (pacman_xtile), 
     .curr_ytile (pacman_ytile)
 );

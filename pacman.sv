@@ -12,6 +12,7 @@ module pacman (
     output logic [9:0] xloc,
     output logic [9:0] yloc,
     output logic [1:0] dir,
+    output logic [1:0] anim_cycle,
 
     output logic [6:0] curr_xtile,
     output logic [6:0] curr_ytile
@@ -40,6 +41,11 @@ module pacman (
     logic [9:0] xloc_d;
     logic [9:0] yloc_d;
     logic [1:0] dir_d;
+    logic [1:0] anim_cycle_d;
+    logic anim_clock;
+    logic anim_clock_d;
+    logic [1:0] anim_count;
+
 
     logic [1:0] dir_queue; // stores direction to turn; turns this direction as soon as physically possible
     logic [1:0] dir_queue_d;
@@ -201,12 +207,33 @@ module pacman (
         end
     end
 
+    /* ANIMATION CYCLE */
+    // currently changes frame at 30 hz, maybe slow down a tad
+    always_comb begin
+        if (xloc_d != xloc || yloc_d != yloc) begin
+            anim_clock_d = ~anim_clock;
+        end else begin
+            anim_clock_d = 1'b0;
+        end
+        if (curr_state == NORMAL) begin
+            if (anim_clock) begin
+                anim_cycle_d = anim_cycle + 1'b1;
+            end else begin
+                anim_cycle_d = anim_cycle;
+            end
+        end else begin
+            anim_cycle_d = 2'b01;
+        end
+    end
+
     always @(posedge clk60) begin
         curr_state <= next_state;
         xloc <= xloc_d;
         yloc <= yloc_d;
         dir <= dir_d;
         dir_queue <= dir_queue_d;
+        anim_cycle <= anim_cycle_d;
+        anim_clock <= anim_clock_d;
 
         left_sr  <= {left_sr[0], left};
         right_sr <= {right_sr[0], right};

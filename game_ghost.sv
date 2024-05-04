@@ -11,7 +11,8 @@
 //      this is done: STATE_EXTGH hardcodes exit lmao
 // implement STATE_SCORE
 //      WHY IS THIS SO HARD
-//      mostly working now, with global ghost pause (pacman currently does not pause) 
+//      mostly working now, with global pause
+//      bug may occur when eating ghost very close to frighten timer ending, ends up showing 1600 as score even if not supposed to, not sure why
 //      
 
 module game_ghost (
