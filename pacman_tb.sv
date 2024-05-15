@@ -27,12 +27,12 @@ module pacman_tb (
     reg [7:0] color;
 
     maze UUT_MAZE(clk, 0, /*xpos*/1'bz, /*ypos*/1'bz, {pac_xtile, pac_ytile}, 0, 0, 0, 0, 1'b1, pac_pellet, power_pellet, pac_tile_info, blinky_tile_info, pinky_tile_info, inky_tile_info, clyde_tile_info, color);
-    pacman player(clk, left, right, uturn, start, 0, pac_tile_info, pac_x, pac_y, pac_dir, pac_xtile, pac_ytile);
+    // pacman player(clk, left, right, uturn, start, 0, 0, pac_tile_info, pac_x, pac_y, pac_dir, 2'b00, pac_xtile, pac_ytile);
 
     initial begin
         start = 0;
         #10 start = 1;
-        left = 1;
+        left = 1;   
         #10 start = 0;
         // #200 uturn = 1;
         // #10 uturn = 0;

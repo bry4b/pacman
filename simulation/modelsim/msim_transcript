@@ -27,783 +27,232 @@
 # Copying C:/intelFPGA_lite/21.1/questa_fse/win64/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:46:24 on May 02,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv 
-# -- Compiling module pacman_tb
+# Start time: 13:32:33 on May 14,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
 # 
 # Top level modules:
-# 	pacman_tb
-# End time: 19:46:24 on May 02,2024, Elapsed time: 0:00:00
+# 	controller_nes
+# End time: 13:32:33 on May 14,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_tb.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:46:24 on May 02,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv 
-# -- Compiling module pacman
+# Start time: 13:32:33 on May 14,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_tb.sv 
+# -- Compiling module controller_tb
 # 
 # Top level modules:
-# 	pacman
-# End time: 19:46:24 on May 02,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:46:24 on May 02,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv 
-# -- Compiling module maze
-# 
-# Top level modules:
-# 	maze
-# End time: 19:46:24 on May 02,2024, Elapsed time: 0:00:00
+# 	controller_tb
+# End time: 13:32:33 on May 14,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-vsim -voptargs=+acc work.pacman_tb
-# vsim -voptargs="+acc" work.pacman_tb 
-# Start time: 19:46:35 on May 02,2024
+vsim -voptargs=+acc work.controller_tb
+# vsim -voptargs="+acc" work.controller_tb 
+# Start time: 13:32:47 on May 14,2024
 # ** Note: (vsim-3812) Design is being optimized...
-# ** Note: (vopt-143) Recognized 1 FSM in module "pacman(fast)".
 # Loading sv_std.std
-# Loading work.pacman_tb(fast)
-# Loading work.maze(fast)
-# Loading work.pacman(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(3).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'xpos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(5).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'ypos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(6).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'blinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(10).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'pinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'inky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(12).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'clyde_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(13).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
-add wave -position insertpoint  \
-sim:/pacman_tb/player/clk60 \
-sim:/pacman_tb/player/left \
-sim:/pacman_tb/player/right \
-sim:/pacman_tb/player/uturn \
-sim:/pacman_tb/player/start \
-sim:/pacman_tb/player/reset \
-sim:/pacman_tb/player/tile_info \
-sim:/pacman_tb/player/xloc \
-sim:/pacman_tb/player/yloc \
-sim:/pacman_tb/player/dir \
-sim:/pacman_tb/player/curr_xtile \
-sim:/pacman_tb/player/curr_ytile \
-sim:/pacman_tb/player/curr_state \
-sim:/pacman_tb/player/next_state \
-sim:/pacman_tb/player/left_sr \
-sim:/pacman_tb/player/right_sr \
-sim:/pacman_tb/player/uturn_sr \
-sim:/pacman_tb/player/xloc_d \
-sim:/pacman_tb/player/yloc_d \
-sim:/pacman_tb/player/dir_d \
-sim:/pacman_tb/player/dir_queue \
-sim:/pacman_tb/player/dir_queue_d \
-sim:/pacman_tb/player/wall_in_front \
-sim:/pacman_tb/player/in_center_of_tile
-run 10ns
-run 90ns
-run 500ns
-run 300ns
-#############  Autofindloop Analysis  ###############
-#############  Loop found at time 605 ns ###############
-#   Active process: /pacman_tb/player/#ASSIGN#53 @ sub-iteration 0
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#53 @ sub-iteration 1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#53 @ sub-iteration 2
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-################# END OF LOOP #################
-# ** Error (suppressible): (vsim-3601) Iteration limit 10000000 reached at time 605 ns.
-######## Additional Loop Analysis Started ##########
-####################################################
-# Simulation time has advanced while attempting to find the loop.
-# This may mean that the simulation iteration limit is set too low.
-####################################################
-##############  Autofindloop Step ##################
-#   Active process: /pacman_tb/player/#ASSIGN#53
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(curr_xtile)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#343
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#IMPLICIT-WIRE(pacman_outputs)#35
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ASSIGN#50
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#138
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(curr_xtile)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#343
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#IMPLICIT-WIRE(pacman_outputs)#35
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ASSIGN#50
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#138
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(curr_xtile)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#343
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#IMPLICIT-WIRE(pacman_outputs)#35
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ASSIGN#50
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#138
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#344
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#345
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#346
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#347
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#IMPLICIT-WIRE(pellet_out)#32
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#344
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#345
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#346
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#ASSIGN#347
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#306
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/UUT_MAZE/#IMPLICIT-WIRE(pellet_out)#32
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/UUT_MAZE/#ALWAYS#253
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#IMPLICIT-WIRE(xloc)#11
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/player/#ASSIGN#46
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(pac_x)#1
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:1
-#   Active process: /pacman_tb/player/#ALWAYS#155
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#ALWAYS#44
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:44
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#30
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-#   Active process: /pacman_tb/#IMPLICIT-WIRE(clk)#29
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:29
-#   Active process: /pacman_tb/player/#ALWAYS#192
-#     Source: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv:30
-###################################################
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:54:57 on May 02,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv 
-# -- Compiling module pacman
-# 
-# Top level modules:
-# 	pacman
-# End time: 19:54:57 on May 02,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "pacman(fast)".
-# Loading sv_std.std
-# Loading work.pacman_tb(fast)
-# Loading work.maze(fast)
-# Loading work.pacman(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(3).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'xpos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(5).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'ypos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(6).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'blinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(10).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'pinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'inky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(12).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'clyde_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(13).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
-run 1us
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.pacman_tb(fast)
-# Loading work.maze(fast)
-# Loading work.pacman(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(3).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'xpos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(5).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'ypos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(6).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'blinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(10).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'pinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'inky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(12).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'clyde_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(13).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
-run 620ns
-force -deposit sim:/pacman_tb/player/left 1'h1 0
-run 10ns
-run 90ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:03:21 on May 02,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv 
-# -- Compiling module pacman_tb
-# 
-# Top level modules:
-# 	pacman_tb
-# End time: 20:03:21 on May 02,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.pacman_tb(fast)
-# Loading work.maze(fast)
-# Loading work.pacman(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(3).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'xpos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(5).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'ypos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(6).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'blinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(10).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'pinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'inky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(12).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'clyde_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(13).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
 run 100ns
-run 200
-run 200
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv}
+add wave -position insertpoint  \
+sim:/controller_tb/clk \
+sim:/controller_tb/start \
+sim:/controller_tb/data_in \
+sim:/controller_tb/latch_out \
+sim:/controller_tb/pulse_out \
+sim:/controller_tb/buttons_pressed
+add wave -position insertpoint  \
+sim:/controller_tb/UUT/counter
+restaryt
+# invalid command name "restaryt"
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 100ns
+run 900ns
+force -deposit sim:/controller_tb/start 1'h1 0
+run 100ns
+run 100ns
+run 100ns
+run 100ns
+force -deposit sim:/controller_tb/start 1'h0 0
+run 100ns
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 20:14:25 on May 02,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv 
-# -- Compiling module pacman
+# Start time: 13:45:47 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
 # 
 # Top level modules:
-# 	pacman
-# End time: 20:14:25 on May 02,2024, Elapsed time: 0:00:00
+# 	controller_nes
+# End time: 13:45:47 on May 14,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 # ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# ** Note: (vopt-143) Recognized 1 FSM in module "pacman(fast)".
 # Loading sv_std.std
-# Loading work.pacman_tb(fast)
-# Loading work.maze(fast)
-# Loading work.pacman(fast)
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'rst'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(3).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'xpos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(5).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (10) does not match connection size (1) for port 'ypos'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(6).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'blinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(10).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'pinky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(11).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'inky_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(12).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (14) does not match connection size (32) for port 'clyde_inputs'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv(13).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/UUT_MAZE File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 29
-# ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (32) for port 'reset'. The port definition is at: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv(7).
-#    Time: 0 ns  Iteration: 0  Instance: /pacman_tb/player File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv Line: 30
-run 500ns
-# End time: 21:41:29 on May 02,2024, Elapsed time: 1:54:54
-# Errors: 0, Warnings: 8
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 13:47:24 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 13:47:24 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 13:53:49 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 13:53:49 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 13:55:45 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 13:55:45 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200ns
+run 200ns
+force -freeze sim:/controller_tb/data_in 1'h1 0
+force -deposit sim:/controller_tb/start 1'h1 0 -cancel 10
+run 20ns
+run 10ns
+force -deposit sim:/controller_tb/start 1'h0 0
+run 10ns
+run 20ns
+force -deposit sim:/controller_tb/data_in 1'h0 0
+run 20ns
+run 20ns
+force -freeze sim:/controller_tb/data_in 1'h0 0
+run 10ns
+run 10ns
+run 10ns
+run 10ns
+force -freeze sim:/controller_tb/data_in 1'h1 0
+run 10ns
+run 10ns
+run 10ns
+run 10ns
+run 10ns
+run 10ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 19:07:43 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 19:07:43 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200ns
+force -deposit sim:/controller_tb/start 1'h1 0
+run 10ns
+add wave -position insertpoint  \
+sim:/controller_tb/UUT/start_sr
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200ns
+force -deposit sim:/controller_tb/start 1'h1 0
+run 10ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 19:08:50 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 19:08:50 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200ns
+force -deposit sim:/controller_tb/start 1'h1 0
+run 10ns
+force -deposit sim:/controller_tb/start 1'h0 0
+run 100ns
+run 100ns
+force -deposit sim:/controller_tb/start 1'h1 0 -cancel 200ns
+run 200ns
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 19:27:44 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 19:27:44 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 300ns
+force -deposit sim:/controller_tb/start 1'h1 0 -cancel 200ns
+run 200ns
+run 100ns
+vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
+# Start time: 19:46:24 on May 14,2024
+# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
+# -- Compiling module controller_nes
+# 
+# Top level modules:
+# 	controller_nes
+# End time: 19:46:24 on May 14,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+restart
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.controller_tb(fast)
+# Loading work.controller_nes(fast)
+run 200ns
+# End time: 21:26:21 on May 14,2024, Elapsed time: 7:53:34
+# Errors: 0, Warnings: 0

@@ -12,8 +12,9 @@
 // implement STATE_SCORE
 //      WHY IS THIS SO HARD
 //      mostly working now, with global pause
-//      bug may occur when eating ghost very close to frighten timer ending, ends up showing 1600 as score even if not supposed to, not sure why
-//      
+//      bug may occur when eating ghost very close to frighten timer ending, ends up showing 1600 as score even if not supposed to, not sure why bc the pause thing should prevent this
+// implement ghost animation
+//      i did it yay it's in the top module 
 
 module game_ghost (
     input clk, 
@@ -60,25 +61,25 @@ wire [9:0] blinky_xloc = blinky_pos [19:10];
 wire [9:0] blinky_yloc = blinky_pos [9:0];
 
 // output packing
-reg [6:0] xtile_next; 
-reg [6:0] ytile_next;
+wire [6:0] xtile_next; 
+wire [6:0] ytile_next;
 
-reg [9:0] xloc;
-reg [9:0] yloc;
-reg [1:0] dir;
-reg [1:0] mode;
-reg flash;          
+wire [9:0] xloc;
+wire [9:0] yloc;
+wire [1:0] dir;
+wire [1:0] mode;
+wire flash;          
 
-reg [9:0] xloc_d;
-reg [9:0] yloc_d;
-reg [1:0] dir_d;
-reg [1:0] mode_d;
-reg flash_d;
+wire [9:0] xloc_d;
+wire [9:0] yloc_d;
+wire [1:0] dir_d;
+wire [1:0] mode_d;
+wire flash_d;
 
 assign tile_checks = {xtile_next, ytile_next};
 assign ghost_outputs = {xloc, yloc, dir, mode, flash};
 
-reg eaten_d;
+wire eaten_d;
 
 // ghost personality definitions
 localparam BLINKY   = 2'b00;
@@ -126,20 +127,20 @@ localparam YTILES = 6'd33;  // vertical height in tiles
 
 // state registers
 reg [2:0] state;
-reg [2:0] state_d;
+wire [2:0] state_d;
 reg [2:0] state_prev;
 reg [2:0] state_cont;
 reg [2:0] state_exit;
 
 // timer registers
 reg [10:0] timer_reg;
-reg [10:0] timer_reg_d;
+wire [10:0] timer_reg_d;
 reg [9:0] timer_frt;
-reg [9:0] timer_frt_d;
+wire [9:0] timer_frt_d;
 
 // location information
-reg [9:0] start_xloc; 
-reg [9:0] start_yloc;
+wire [9:0] start_xloc; 
+wire [9:0] start_yloc;
 
 reg [6:0] xtile;
 reg [6:0] ytile;
@@ -147,14 +148,16 @@ reg [6:0] ytile;
 wire [6:0] xtile_d = xloc_d >> 2'd3;   
 wire [6:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
 
-// targeting software
-reg [6:0] target_xtile;
-reg [6:0] target_ytile;
+wire [1:0] movespeed; 
 
-reg [12:0] distance_rt;
-reg [12:0] distance_up; 
-reg [12:0] distance_dn;
-reg [12:0] distance_lt;
+// targeting software
+wire [6:0] target_xtile;
+wire [6:0] target_ytile;
+
+wire [12:0] distance_rt;
+wire [12:0] distance_up; 
+wire [12:0] distance_dn;
+wire [12:0] distance_lt;
 
 reg [1:0] dir_exit;         // direction that ghost should exit current tile from
 reg [1:0] dir_plan;         // direction that ghost should exit next tile from
@@ -165,7 +168,6 @@ reg [15:0] lfsr_state;
 reg [1:0] rand_dir;
 assign rand_dir = lfsr_state[1:0];
 
-reg [1:0] movespeed; 
 // targeting for inky
 wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;  
 wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
@@ -586,7 +588,6 @@ always @(posedge clk) begin
             dir_exit <= dir_plan;
         end
     end
-
 end
 
 // DETERMINE NEXT TILE TO CHECK FOR WALLS
@@ -708,7 +709,6 @@ always_comb begin
             dir_plan = RT;
         end
     end
-
 end
 
 // TARGETING SOFTWARE © 

@@ -1,5 +1,5 @@
 |pacman_top
-clk => clk.IN2
+clk => clk.IN3
 rst => _.IN1
 rst => _.IN1
 rst => maze:MAZEPIN.rst
@@ -7,37 +7,11 @@ rst => game_ghost:BLINKY.rst
 rst => game_ghost:PINKY.rst
 rst => game_ghost:INKY.rst
 rst => game_ghost:CLYDE.rst
-rst => pacman:PACMAN.reset
+rst => game_pacman:PACMAN.reset
 btn => maze:MAZEPIN.pellet_anim
-btn => ghost_animation.IN1
-btn => game_ghost:BLINKY.start
-btn => game_ghost:PINKY.start
-btn => game_ghost:INKY.start
-btn => game_ghost:CLYDE.start
-btn => pacman:PACMAN.start
-switches[0] => leds[0].DATAIN
-switches[1] => leds[1].DATAIN
-switches[2] => leds[2].DATAIN
-switches[3] => leds[3].DATAIN
-switches[4] => leds[4].DATAIN
-switches[5] => leds[5].DATAIN
-switches[6] => leds[6].DATAIN
-switches[7] => pacman:PACMAN.uturn
-switches[7] => leds[7].DATAIN
-switches[8] => pacman:PACMAN.right
-switches[8] => leds[8].DATAIN
-switches[9] => pacman:PACMAN.left
-switches[9] => leds[9].DATAIN
-leds[0] <= switches[0].DB_MAX_OUTPUT_PORT_TYPE
-leds[1] <= switches[1].DB_MAX_OUTPUT_PORT_TYPE
-leds[2] <= switches[2].DB_MAX_OUTPUT_PORT_TYPE
-leds[3] <= switches[3].DB_MAX_OUTPUT_PORT_TYPE
-leds[4] <= switches[4].DB_MAX_OUTPUT_PORT_TYPE
-leds[5] <= switches[5].DB_MAX_OUTPUT_PORT_TYPE
-leds[6] <= switches[6].DB_MAX_OUTPUT_PORT_TYPE
-leds[7] <= switches[7].DB_MAX_OUTPUT_PORT_TYPE
-leds[8] <= switches[8].DB_MAX_OUTPUT_PORT_TYPE
-leds[9] <= switches[9].DB_MAX_OUTPUT_PORT_TYPE
+ctrl_data => ctrl_data.IN1
+ctrl_latch <= controller_nes:NESCTRL.latch_out
+ctrl_pulse <= controller_nes:NESCTRL.pulse_out
 hsync <= vga:DISPLAY.port7
 vsync <= vga:DISPLAY.port8
 red[0] <= vga:DISPLAY.port9
@@ -52,6 +26,129 @@ blue[0] <= vga:DISPLAY.port11
 blue[1] <= vga:DISPLAY.port11
 blue[2] <= vga:DISPLAY.port11
 blue[3] <= vga:DISPLAY.port11
+leds[0] <= <GND>
+leds[1] <= <GND>
+leds[2] <= controller_nes:NESCTRL.buttons_pressed
+leds[3] <= controller_nes:NESCTRL.buttons_pressed
+leds[4] <= controller_nes:NESCTRL.buttons_pressed
+leds[5] <= controller_nes:NESCTRL.buttons_pressed
+leds[6] <= controller_nes:NESCTRL.buttons_pressed
+leds[7] <= controller_nes:NESCTRL.buttons_pressed
+leds[8] <= controller_nes:NESCTRL.buttons_pressed
+leds[9] <= controller_nes:NESCTRL.buttons_pressed
+
+
+|pacman_top|clk_controller:NESCLK
+inclk0 => sub_wire1[0].IN1
+c0 <= altpll:altpll_component.clk
+
+
+|pacman_top|clk_controller:NESCLK|altpll:altpll_component
+inclk[0] => clk_controller_altpll:auto_generated.inclk[0]
+inclk[1] => clk_controller_altpll:auto_generated.inclk[1]
+fbin => ~NO_FANOUT~
+pllena => ~NO_FANOUT~
+clkswitch => ~NO_FANOUT~
+areset => ~NO_FANOUT~
+pfdena => ~NO_FANOUT~
+clkena[0] => ~NO_FANOUT~
+clkena[1] => ~NO_FANOUT~
+clkena[2] => ~NO_FANOUT~
+clkena[3] => ~NO_FANOUT~
+clkena[4] => ~NO_FANOUT~
+clkena[5] => ~NO_FANOUT~
+extclkena[0] => ~NO_FANOUT~
+extclkena[1] => ~NO_FANOUT~
+extclkena[2] => ~NO_FANOUT~
+extclkena[3] => ~NO_FANOUT~
+scanclk => ~NO_FANOUT~
+scanclkena => ~NO_FANOUT~
+scanaclr => ~NO_FANOUT~
+scanread => ~NO_FANOUT~
+scanwrite => ~NO_FANOUT~
+scandata => ~NO_FANOUT~
+phasecounterselect[0] => ~NO_FANOUT~
+phasecounterselect[1] => ~NO_FANOUT~
+phasecounterselect[2] => ~NO_FANOUT~
+phasecounterselect[3] => ~NO_FANOUT~
+phaseupdown => ~NO_FANOUT~
+phasestep => ~NO_FANOUT~
+configupdate => ~NO_FANOUT~
+fbmimicbidir <> <GND>
+clk[0] <= clk[0].DB_MAX_OUTPUT_PORT_TYPE
+clk[1] <= clk[1].DB_MAX_OUTPUT_PORT_TYPE
+clk[2] <= clk[2].DB_MAX_OUTPUT_PORT_TYPE
+clk[3] <= clk[3].DB_MAX_OUTPUT_PORT_TYPE
+clk[4] <= clk[4].DB_MAX_OUTPUT_PORT_TYPE
+extclk[0] <= <GND>
+extclk[1] <= <GND>
+extclk[2] <= <GND>
+extclk[3] <= <GND>
+clkbad[0] <= <GND>
+clkbad[1] <= <GND>
+enable1 <= <GND>
+enable0 <= <GND>
+activeclock <= <GND>
+clkloss <= <GND>
+locked <= <GND>
+scandataout <= <GND>
+scandone <= <GND>
+sclkout0 <= <GND>
+sclkout1 <= <GND>
+phasedone <= <GND>
+vcooverrange <= <GND>
+vcounderrange <= <GND>
+fbout <= <GND>
+fref <= <GND>
+icdrclk <= <GND>
+
+
+|pacman_top|clk_controller:NESCLK|altpll:altpll_component|clk_controller_altpll:auto_generated
+clk[0] <= pll1.CLK
+clk[1] <= pll1.CLK1
+clk[2] <= pll1.CLK2
+clk[3] <= pll1.CLK3
+clk[4] <= pll1.CLK4
+inclk[0] => pll1.CLK
+inclk[1] => pll1.CLK1
+
+
+|pacman_top|controller_nes:NESCTRL
+clk => buttons_pressed[7]~reg0.CLK
+clk => buttons_pressed[6]~reg0.CLK
+clk => buttons_pressed[5]~reg0.CLK
+clk => buttons_pressed[4]~reg0.CLK
+clk => buttons_pressed[3]~reg0.CLK
+clk => buttons_pressed[2]~reg0.CLK
+clk => buttons_pressed[1]~reg0.CLK
+clk => buttons_pressed[0]~reg0.CLK
+clk => start_sr[0].CLK
+clk => start_sr[1].CLK
+clk => pulse_out~reg0.CLK
+clk => counter[0].CLK
+clk => counter[1].CLK
+clk => counter[2].CLK
+clk => counter[3].CLK
+clk => counter[4].CLK
+start => start_sr[0].DATAIN
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+data_in => buttons_pressed.DATAB
+latch_out <= always1.DB_MAX_OUTPUT_PORT_TYPE
+pulse_out <= pulse_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[7] <= buttons_pressed[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[6] <= buttons_pressed[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[5] <= buttons_pressed[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[4] <= buttons_pressed[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[3] <= buttons_pressed[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[2] <= buttons_pressed[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[1] <= buttons_pressed[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_pressed[0] <= buttons_pressed[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |pacman_top|clk_vga:TICK
@@ -11931,7 +12028,7 @@ ghost_outputs[23] <= xloc[8].DB_MAX_OUTPUT_PORT_TYPE
 ghost_outputs[24] <= xloc[9].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|pacman:PACMAN
+|pacman_top|game_pacman:PACMAN
 clk60 => uturn_sr[0].CLK
 clk60 => uturn_sr[1].CLK
 clk60 => right_sr[0].CLK

@@ -3,18 +3,27 @@ module pacman_top (
     input rst,
     input btn,
     
-    input [9:0] switches,
-	output [9:0] leds,
+    // input [9:0] switches,
+    
+    // controller i/o
+    input ctrl_data,        // red      -> Arduino I/O 0
+    output ctrl_latch,      // yellow   -> Arduino I/O 1
+    output ctrl_pulse,      // orange   -> Arduino I/O 2
 
     // vga outputs
     output hsync, 
     output vsync,
     output reg [3:0] red,
     output reg [3:0] green,
-    output reg [3:0] blue
-);
+    output reg [3:0] blue,
 
-assign leds = switches;
+	output [9:0] leds
+);
+wire ctrlclk;
+wire [0:7] inputs;
+assign leds = {inputs, 2'b00};
+wire start;
+assign start = inputs[3];
 
 //
 // GRAPHICS
@@ -78,10 +87,8 @@ wire [24:0] clyde_outputs;
 // wire [1:0] clyde_dir; 
 // wire [1:0] clyde_mode;
 
-wire ghost_animation;
 wire pause;
 reg [1:0] ghosts_eaten;
-reg [1:0] ghosts_eaten_d;
 wire blinky_eaten; 
 wire pinky_eaten;
 wire inky_eaten;
@@ -153,13 +160,22 @@ assign pacman_alive = 1'b0;
 // assign clyde_dir    = 2'b00;
 // assign clyde_mode   = 2'b00;
 
-assign ghost_animation = ~btn;
+// assign ghost_animation = ~btn;
 // assign pause = switches[0];
 // assign ghosts_eaten = switches [1:0]; 
 
+clk_controller NESCLK (clk, ctrlclk); // 166667 Hz
+controller_nes NESCTRL (
+    .clk (ctrlclk),
+    .start (gameclk),
+    .data_in (ctrl_data),
+    .latch_out (ctrl_latch),
+    .pulse_out (ctrl_pulse),
+    .buttons_pressed (inputs)
+);
+
 clk_vga TICK(clk, vgaclk);
 vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
-
 vga_ram PONG(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 
 graphics BOO(
@@ -207,7 +223,7 @@ maze MAZEPIN(
 game_ghost BLINKY (
     .clk (gameclk),
     .rst (~rst),
-    .start (~btn),
+    .start (start),
     .pause (pause),
     .personality (2'b00),
     .pacman_inputs (pacman_outputs [24:3]),
@@ -223,7 +239,7 @@ game_ghost BLINKY (
 game_ghost PINKY ( 
     .clk (gameclk),
     .rst (~rst),
-    .start (~btn),
+    .start (start),
     .pause (pause),
     .personality (2'b01),
     .pacman_inputs (pacman_outputs [24:3]),
@@ -239,7 +255,7 @@ game_ghost PINKY (
 game_ghost INKY ( 
     .clk (gameclk),
     .rst (~rst),
-    .start (~btn),
+    .start (start),
     .pause (pause),
     .personality (2'b10),
     .pacman_inputs (pacman_outputs [24:3]),
@@ -255,7 +271,7 @@ game_ghost INKY (
 game_ghost CLYDE (
     .clk (gameclk),
     .rst (~rst),
-    .start (~btn),
+    .start (start),
     .pause (pause),
     .personality (2'b11),
     .pacman_inputs (pacman_outputs [24:3]),
@@ -268,15 +284,15 @@ game_ghost CLYDE (
     .ghost_outputs (clyde_outputs)
 );
     
-pacman PACMAN ( 
+game_pacman PACMAN ( 
     .clk60 (gameclk), 
     .reset (~rst), 
-    .start (~btn),
+    .start (start),
     .pause (pause),
-    .left (switches[9]),
-    .right (switches[8]),
-    .uturn (switches[7]),
-    .tile_info (pacman_tile_info), 
+    .left (inputs[1]),
+    .right (inputs[0]),
+    .uturn (inputs[2]),
+    .tile_info (pacman_tile_info),
 
     .xloc (pacman_xloc), 
     .yloc (pacman_yloc), 
@@ -286,12 +302,33 @@ pacman PACMAN (
     .curr_ytile (pacman_ytile)
 );
 
+
 localparam SCOR = 2'b10;
 
 always_comb begin
     ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
     pause = blinky_outputs[2:1] == SCOR || pinky_outputs [2:1] == SCOR || inky_outputs [2:1] == SCOR || clyde_outputs [2:1] == SCOR;
 end
+
+// ghost animation
+always_comb begin
+    if (gameclk && ~pause) begin
+        ghost_anim_counter_d = ghost_anim_counter + 1'b1;
+    end else begin
+        ghost_anim_counter_d = ghost_anim_counter;
+    end
+    if (ghost_anim_counter == 1'b0 && ~pause) begin
+        ghost_animation_d = ~ghost_animation;
+    end else begin
+        ghost_animation_d = ghost_animation;
+    end
+end
+
+always @(posedge gameclk) begin
+    ghost_anim_counter <= ghost_anim_counter_d;
+    ghost_animation <= ghost_animation_d;
+end
+
 // 
 // COORDINATE BLOCKING & ROTATION
 // localparam XMAX  = 160;  // horizontal pixels

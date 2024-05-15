@@ -1,12 +1,12 @@
 
-State Machine - |pacman_top|pacman:PACMAN|prev_state
+State Machine - |pacman_top|game_pacman:PACMAN|prev_state
 Name prev_state.PAUSE prev_state.DEATH prev_state.NORMAL prev_state.START 
 prev_state.START 0 0 0 0 
 prev_state.NORMAL 0 0 1 1 
 prev_state.DEATH 0 1 0 1 
 prev_state.PAUSE 1 0 0 1 
 
-State Machine - |pacman_top|pacman:PACMAN|curr_state
+State Machine - |pacman_top|game_pacman:PACMAN|curr_state
 Name curr_state.PAUSE curr_state.DEATH curr_state.NORMAL curr_state.START 
 curr_state.START 0 0 0 0 
 curr_state.NORMAL 0 0 1 1 

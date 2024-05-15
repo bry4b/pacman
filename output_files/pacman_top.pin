@@ -81,9 +81,9 @@ leds[0]                      : A8        : output : 3.3-V LVTTL       :         
 leds[1]                      : A9        : output : 3.3-V LVTTL       :         : 7         : Y              
 leds[2]                      : A10       : output : 3.3-V LVTTL       :         : 7         : Y              
 leds[8]                      : A11       : output : 3.3-V LVTTL       :         : 7         : Y              
-switches[4]                  : A12       : input  : 3.3-V LVTTL       :         : 7         : Y              
-switches[6]                  : A13       : input  : 3.3-V LVTTL       :         : 7         : Y              
-switches[7]                  : A14       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : A12       :        :                   :         : 7         :                
+RESERVED_INPUT_WITH_WEAK_PULLUP : A13       :        :                   :         : 7         :                
+RESERVED_INPUT_WITH_WEAK_PULLUP : A14       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : A15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : A16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : A17       :        :                   :         : 7         :                
@@ -118,9 +118,9 @@ GND                          : AB1       : gnd    :                   :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB2       :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB3       :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB4       :        :                   :         : 3         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AB5       :        :                   :         : 3         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AB6       :        :                   :         : 3         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AB7       :        :                   :         : 3         :                
+ctrl_data                    : AB5       : input  : 3.3-V LVTTL       :         : 3         : Y              
+ctrl_latch                   : AB6       : output : 3.3-V LVTTL       :         : 3         : Y              
+ctrl_pulse                   : AB7       : output : 3.3-V LVTTL       :         : 3         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB8       :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB9       :        :                   :         : 3         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB10      :        :                   :         : 4         :                
@@ -147,9 +147,9 @@ btn                          : B8        : input  : 3.3 V Schmitt Trigger :     
 GND                          : B9        : gnd    :                   :         :           :                
 leds[3]                      : B10       : output : 3.3-V LVTTL       :         : 7         : Y              
 leds[9]                      : B11       : output : 3.3-V LVTTL       :         : 7         : Y              
-switches[5]                  : B12       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : B12       :        :                   :         : 7         :                
 GND                          : B13       : gnd    :                   :         :           :                
-switches[8]                  : B14       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : B14       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B17       :        :                   :         : 7         :                
@@ -167,9 +167,9 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : C6        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : C7        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C8        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C9        :        :                   :         : 7         :                
-switches[0]                  : C10       : input  : 3.3-V LVTTL       :         : 7         : Y              
-switches[1]                  : C11       : input  : 3.3-V LVTTL       :         : 7         : Y              
-switches[3]                  : C12       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : C10       :        :                   :         : 7         :                
+RESERVED_INPUT_WITH_WEAK_PULLUP : C11       :        :                   :         : 7         :                
+RESERVED_INPUT_WITH_WEAK_PULLUP : C12       :        :                   :         : 7         :                
 leds[5]                      : C13       : output : 3.3-V LVTTL       :         : 7         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : C14       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : C15       :        :                   :         : 7         :                
@@ -191,7 +191,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : D8        :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : D9        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : D10       :        :                   :         : 8         :                
 GND                          : D11       : gnd    :                   :         :           :                
-switches[2]                  : D12       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : D12       :        :                   :         : 7         :                
 leds[4]                      : D13       : output : 3.3-V LVTTL       :         : 7         : Y              
 leds[7]                      : D14       : output : 3.3-V LVTTL       :         : 7         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : D15       :        :                   :         : 7         :                
@@ -238,7 +238,7 @@ VCCIO8                       : F11       : power  :                   : 2.5V    
 VCCIO7                       : F12       : power  :                   : 3.3V    : 7         :                
 GND                          : F13       : gnd    :                   :         :           :                
 VCCIO7                       : F14       : power  :                   : 3.3V    : 7         :                
-switches[9]                  : F15       : input  : 3.3-V LVTTL       :         : 7         : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : F15       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F16       :        :                   :         : 7         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F17       :        :                   :         : 6         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : F18       :        :                   :         : 6         :                

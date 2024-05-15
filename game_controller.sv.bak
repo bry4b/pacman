@@ -1,0 +1,137 @@
+module game_controller (
+    input clk, // input 50 MHz clock
+    input left,
+    input right,
+    input uturn,
+    input start,
+    input reset,
+    output logic [9:0] pacman_xloc,
+    output logic [9:0] pacman_yloc,
+    output logic [1:0] pacman_dir,
+    output logic [9:0] ghosts_xloc [0:3],
+    output logic [9:0] ghosts_yloc [0:3],
+    output logic [1:0] ghosts_dir [0:3],
+    output logic [1:0] ghosts_graphics_state [0:3]
+);
+    
+    logic clk60; // 60 Hz clock
+    clockDivider div(clk, 60, 0, clk60);
+
+    // Game variables
+    logic [1:0] revives, revives_d;
+    logic [13:0] score, score_d;
+
+    // Game states
+    typedef enum logic [2:0] {RESET, START, PLAY, DEATH, LOSE, WIN} State;
+    State currState, nextState;
+
+    /* GHOSTS */
+    game_ghost blinky(/* FILL IN */);
+    game_ghost pinky();
+    game_ghost inky();
+    game_ghost clyde();
+
+    // Ghost graphics states
+    localparam NORMAL   = 2'b00;
+    localparam FRIGHTEN = 2'b01;
+    localparam SCORE    = 2'b10;
+    localparam EYES     = 2'b11;
+
+    /* PACMAN */
+    logic [6:0] pacman_curr_xtile, pacman_curr_ytile;
+    logic [1:0] pacman_animation_state;
+    pacman pacman(  .clk60(clk60), 
+                    .left(left), 
+                    .right(right), 
+                    .uturn(uturn), 
+                    .start(start), 
+                    .reset(reset), 
+                    .xloc(pacman_xloc),
+                    .yloc(pacman_yloc),
+                    .dir(pacman_dir),
+                    .curr_xtile(pacman_curr_xtile),
+                    .curr_ytile(pacman_curr_ytile),
+                    .animation_state(pacman_animation_state))
+
+    initial begin
+        currState = RESET;
+        revives = 2;
+        score = 0;
+    end
+
+    always_comb begin
+        case (currState)
+            RESET : begin
+                revives_d = revives;
+                if (start) begin
+                    nextState = PLAY;
+                end else begin
+                    nextState = RESET;
+                end
+            end
+            START : begin
+                revives_d = revives;
+                if (start) begin
+                    nextState = PLAY;
+                end else begin
+                    nextState = START;
+                end
+            end
+            PLAY : begin
+                revives_d = revives;
+                if (reset) begin
+                    nextState = RESET;
+                end else if (curr_pacman_xloc == ghosts_xloc[0] && curr_pacman_yloc == ghosts_yloc[0] && ghosts_graphics_state[0] == NORMAL) || 
+                            (curr_pacman_xloc == ghosts_xloc[1] && curr_pacman_yloc == ghosts_yloc[1] && ghosts_graphics_state[1] == NORMAL) ||
+                            (curr_pacman_xloc == ghosts_xloc[2] && curr_pacman_yloc == ghosts_yloc[2] && ghosts_graphics_state[2] == NORMAL) ||
+                            (curr_pacman_xloc == ghosts_xloc[3] && curr_pacman_yloc == ghosts_yloc[3] && ghosts_graphics_state[3] == NORMAL) begin
+                            // Pacman hits a ghost and dies
+                    nextState = DEATH;
+                end else if (/* all pellets eaten */) begin
+                    nextState = WIN;
+                end else begin
+                    nextState = PLAY;
+                end
+            end
+            DEATH : begin
+                if (revives == 0) begin
+                    revives_d = revives;
+                    nextState = LOSE;
+                end else begin
+                    revives_d = revives - 1; // Use extra life; start again
+                    nextState = START;
+                end
+            end
+            LOSE : begin
+                revives_d = revives;
+                if (reset) begin
+                    nextState = RESET;
+                end else begin
+                    nextState = LOSE;
+                end
+            end
+            WIN : begin
+                revives_d = revives;
+                if (reset) begin
+                    nextState = RESET;
+                end else begin
+                    nextState = WIN;
+                end
+            end
+        endcase
+    end
+
+    always @(posedge clk60) begin
+        currState <= nextState;
+        revives <= revives_d;
+        score <= score_d;
+    end
+
+    localparam SCOR = 2'b10;
+
+    always_comb begin
+        ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
+        pause = blinky_outputs[2:1] == SCOR || pinky_outputs [2:1] == SCOR || inky_outputs [2:1] == SCOR || clyde_outputs [2:1] == SCOR;
+    end
+
+endmodule

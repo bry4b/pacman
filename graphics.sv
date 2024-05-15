@@ -138,7 +138,7 @@ graphics_ghost BLINKY (
     .pixel (blinky_pixel),
 
     .pixel_address (blinky_address), 
-    .color (blinky_color),
+    .color (blinky_color)
 );
     
 graphics_ghost PINKY (
@@ -150,7 +150,7 @@ graphics_ghost PINKY (
     .pixel (pinky_pixel),
 
     .pixel_address (pinky_address), 
-    .color (pinky_color),
+    .color (pinky_color)
 );
 
 graphics_ghost INKY (
@@ -162,7 +162,7 @@ graphics_ghost INKY (
     .pixel (inky_pixel),
 
     .pixel_address (inky_address), 
-    .color (inky_color),
+    .color (inky_color)
 );
 
 graphics_ghost CLYDE (
@@ -174,7 +174,7 @@ graphics_ghost CLYDE (
     .pixel (clyde_pixel),
 
     .pixel_address (clyde_address), 
-    .color (clyde_color),
+    .color (clyde_color)
 );
 
 // 
