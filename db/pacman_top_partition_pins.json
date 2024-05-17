@@ -4,14 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "ctrl_latch",
-					"strict" : false
-				},
-				{
-					"name" : "ctrl_pulse",
-					"strict" : false
-				},
-				{
 					"name" : "hsync",
 					"strict" : false
 				},
@@ -52,35 +44,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "leds[2]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[3]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[4]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[5]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[6]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[7]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[8]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[9]",
+					"name" : "ctrl_data",
 					"strict" : false
 				},
 				{
@@ -89,10 +53,6 @@
 				},
 				{
 					"name" : "btn",
-					"strict" : false
-				},
-				{
-					"name" : "ctrl_data",
 					"strict" : false
 				},
 				{

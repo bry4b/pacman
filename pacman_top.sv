@@ -5,10 +5,13 @@ module pacman_top (
     
     // input [9:0] switches,
     
-    // controller i/o
-    input ctrl_data,        // red      -> Arduino I/O 0
-    output ctrl_latch,      // yellow   -> Arduino I/O 1
-    output ctrl_pulse,      // orange   -> Arduino I/O 2
+    // NES controller I/O
+    // input ctrl_data,        // red      -> Arduino I/O 0
+    // output ctrl_latch,      // yellow   -> Arduino I/O 1
+    // output ctrl_pulse,      // orange   -> Arduino I/O 2
+
+    // bongo controller I/O: 3V3 -> 4th 3V3 pin from the left (the other ones dont work) 
+    inout ctrl_data,        // red      -> Arduino I/O 6
 
     // vga outputs
     output hsync, 
@@ -19,13 +22,27 @@ module pacman_top (
 
 	output [9:0] leds
 );
-wire ctrlclk;
-wire [0:7] inputs;
-assign leds = {inputs, 2'b00};
-wire start;
-assign start = inputs[3];
 
-//
+wire nesclk;
+wire [0:7] nes_btns;
+// wire [0:7] inputs;
+// assign leds = {inputs, 2'b00};
+
+wire gamecubeclk;
+wire [0:15] bongo_btns;
+wire [7:0] bongo_mic;
+
+wire start;
+wire lturn;
+wire rturn;
+wire uturn;
+
+// assign start = nes_btns[3];
+assign start = bongo_btns[3];
+assign lturn = bongo_btns[4] | bongo_btns[6];
+assign rturn = bongo_btns[5] | bongo_btns[7];
+assign uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
+
 // GRAPHICS
 reg [9:0] xpos; 
 reg [9:0] ypos;
@@ -33,11 +50,9 @@ reg [15:0] address;
 wire [7:0] color;
 wire [7:0] vga_data;
 
-// 
 // MAZE
 wire [7:0] maze_color;
 
-// 
 // VGA DRIVER
 wire vgaclk;
 wire [9:0] hc; 
@@ -47,11 +62,9 @@ wire [2:0] input_red = vga_data [7:5];
 wire [2:0] input_green = vga_data [4:2];
 wire [1:0] input_blue = vga_data [1:0];
 
-//
 // GAME
 wire gameclk;
-    
-// 
+
 // CHARACTERS
 wire [9:0] pacman_xloc;
 wire [9:0] pacman_yloc;
@@ -66,6 +79,11 @@ wire [24:0] blinky_outputs;
 wire [24:0] pinky_outputs;
 wire [24:0] inky_outputs;
 wire [24:0] clyde_outputs;
+
+reg ghost_animation;
+wire ghost_animation_d;
+reg [2:0] ghost_anim_counter;
+wire [2:0] ghost_anim_counter_d;
 
 // wire [9:0] blinky_xloc; 
 // wire [9:0] blinky_yloc;
@@ -164,19 +182,32 @@ assign pacman_alive = 1'b0;
 // assign pause = switches[0];
 // assign ghosts_eaten = switches [1:0]; 
 
-clk_controller NESCLK (clk, ctrlclk); // 166667 Hz
-controller_nes NESCTRL (
-    .clk (ctrlclk),
-    .start (gameclk),
-    .data_in (ctrl_data),
-    .latch_out (ctrl_latch),
-    .pulse_out (ctrl_pulse),
-    .buttons_pressed (inputs)
+clk_controller CLK_CTRL (
+    .inclk0 (clk),
+    .c0 (nesclk),
+    .c1 (gamecubeclk)
 );
 
-clk_vga TICK(clk, vgaclk);
+// controller_nes NESCTRL (
+//     .clk (ctrlclk),
+//     .start (gameclk),
+//     .data_in (ctrl_data),
+//     .latch_out (ctrl_latch),
+//     .pulse_out (ctrl_pulse),
+//     .buttons_pressed (inputs)
+// );
+
+controller_bongo BONGOCTRL (
+    .clk (gamecubeclk),
+    .start (gameclk),
+    .buttons_out (bongo_btns),
+    .rbtn_out (bongo_mic),
+    .data (ctrl_data)
+);
+
+clk_vga CLK_VGA(clk, vgaclk);
 vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
-vga_ram PONG(vgaclk, address, hc, vc, color, writeEnable, vga_data);
+vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 
 graphics BOO(
     .clk (vgaclk), 
@@ -196,7 +227,7 @@ graphics BOO(
     .address (address)
 );
 
-clockDivider TOCK(clk, 'd60, 1'b0, gameclk);
+clockDivider CLK_GAME(clk, 'd60, 1'b0, gameclk);
 
 maze MAZEPIN(
     .clk (gameclk),
@@ -289,9 +320,9 @@ game_pacman PACMAN (
     .reset (~rst), 
     .start (start),
     .pause (pause),
-    .left (inputs[1]),
-    .right (inputs[0]),
-    .uturn (inputs[2]),
+    .left (lturn),
+    .right (rturn),
+    .uturn (uturn),
     .tile_info (pacman_tile_info),
 
     .xloc (pacman_xloc), 

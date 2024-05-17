@@ -155,19 +155,19 @@ module game_controller (
 
     // ghost animation
     always_comb begin
-        if (curr_state == PLAY && gameclk && ~pause) begin
+        if (currState == PLAY && clk && ~pause) begin
             ghost_anim_counter_d = ghost_anim_counter + 1'b1;
         end else begin
             ghost_anim_counter_d = ghost_anim_counter;
         end
-        if (curr_state == PLAY && ghost_anim_counter == 1'b0 && ~pause) begin
+        if (currState == PLAY && ghost_anim_counter == 1'b0 && ~pause) begin
             ghost_animation_d = ~ghost_animation;
         end else begin
             ghost_animation_d = ghost_animation;
         end
     end
 
-    always @(posedge gameclk) begin
+    always @(posedge clk) begin
         ghost_anim_counter <= ghost_anim_counter_d;
         ghost_animation <= ghost_animation_d;
     end

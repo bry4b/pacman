@@ -188,3 +188,9 @@ state.STATE_SCORE 0 0 0 1 0 0 0 1
 state.STATE_RSPWN 0 0 1 0 0 0 0 1 
 state.STATE_EXTGH 0 1 0 0 0 0 0 1 
 state.STATE_PAUSE 1 0 0 0 0 0 0 1 
+
+State Machine - |pacman_top|controller_bongo:BONGOCTRL|state
+Name state.00 state.10 state.01 
+state.00 0 0 0 
+state.01 1 0 1 
+state.10 1 1 0 

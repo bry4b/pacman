@@ -9,9 +9,7 @@ rst => game_ghost:INKY.rst
 rst => game_ghost:CLYDE.rst
 rst => game_pacman:PACMAN.reset
 btn => maze:MAZEPIN.pellet_anim
-ctrl_data => ctrl_data.IN1
-ctrl_latch <= controller_nes:NESCTRL.latch_out
-ctrl_pulse <= controller_nes:NESCTRL.pulse_out
+ctrl_data <> controller_bongo:BONGOCTRL.data
 hsync <= vga:DISPLAY.port7
 vsync <= vga:DISPLAY.port8
 red[0] <= vga:DISPLAY.port9
@@ -28,22 +26,23 @@ blue[2] <= vga:DISPLAY.port11
 blue[3] <= vga:DISPLAY.port11
 leds[0] <= <GND>
 leds[1] <= <GND>
-leds[2] <= controller_nes:NESCTRL.buttons_pressed
-leds[3] <= controller_nes:NESCTRL.buttons_pressed
-leds[4] <= controller_nes:NESCTRL.buttons_pressed
-leds[5] <= controller_nes:NESCTRL.buttons_pressed
-leds[6] <= controller_nes:NESCTRL.buttons_pressed
-leds[7] <= controller_nes:NESCTRL.buttons_pressed
-leds[8] <= controller_nes:NESCTRL.buttons_pressed
-leds[9] <= controller_nes:NESCTRL.buttons_pressed
+leds[2] <= <GND>
+leds[3] <= <GND>
+leds[4] <= <GND>
+leds[5] <= <GND>
+leds[6] <= <GND>
+leds[7] <= <GND>
+leds[8] <= <GND>
+leds[9] <= <GND>
 
 
-|pacman_top|clk_controller:NESCLK
+|pacman_top|clk_controller:CLK_CTRL
 inclk0 => sub_wire1[0].IN1
 c0 <= altpll:altpll_component.clk
+c1 <= altpll:altpll_component.clk
 
 
-|pacman_top|clk_controller:NESCLK|altpll:altpll_component
+|pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component
 inclk[0] => clk_controller_altpll:auto_generated.inclk[0]
 inclk[1] => clk_controller_altpll:auto_generated.inclk[1]
 fbin => ~NO_FANOUT~
@@ -103,7 +102,7 @@ fref <= <GND>
 icdrclk <= <GND>
 
 
-|pacman_top|clk_controller:NESCLK|altpll:altpll_component|clk_controller_altpll:auto_generated
+|pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component|clk_controller_altpll:auto_generated
 clk[0] <= pll1.CLK
 clk[1] <= pll1.CLK1
 clk[2] <= pll1.CLK2
@@ -113,50 +112,157 @@ inclk[0] => pll1.CLK
 inclk[1] => pll1.CLK1
 
 
-|pacman_top|controller_nes:NESCTRL
-clk => buttons_pressed[7]~reg0.CLK
-clk => buttons_pressed[6]~reg0.CLK
-clk => buttons_pressed[5]~reg0.CLK
-clk => buttons_pressed[4]~reg0.CLK
-clk => buttons_pressed[3]~reg0.CLK
-clk => buttons_pressed[2]~reg0.CLK
-clk => buttons_pressed[1]~reg0.CLK
-clk => buttons_pressed[0]~reg0.CLK
-clk => start_sr[0].CLK
-clk => start_sr[1].CLK
-clk => pulse_out~reg0.CLK
+|pacman_top|controller_bongo:BONGOCTRL
+clk => rbtn_out[0]~reg0.CLK
+clk => rbtn_out[1]~reg0.CLK
+clk => rbtn_out[2]~reg0.CLK
+clk => rbtn_out[3]~reg0.CLK
+clk => rbtn_out[4]~reg0.CLK
+clk => rbtn_out[5]~reg0.CLK
+clk => rbtn_out[6]~reg0.CLK
+clk => rbtn_out[7]~reg0.CLK
+clk => lbtn_out[0]~reg0.CLK
+clk => lbtn_out[1]~reg0.CLK
+clk => lbtn_out[2]~reg0.CLK
+clk => lbtn_out[3]~reg0.CLK
+clk => lbtn_out[4]~reg0.CLK
+clk => lbtn_out[5]~reg0.CLK
+clk => lbtn_out[6]~reg0.CLK
+clk => lbtn_out[7]~reg0.CLK
+clk => cstick_yout[0]~reg0.CLK
+clk => cstick_yout[1]~reg0.CLK
+clk => cstick_yout[2]~reg0.CLK
+clk => cstick_yout[3]~reg0.CLK
+clk => cstick_yout[4]~reg0.CLK
+clk => cstick_yout[5]~reg0.CLK
+clk => cstick_yout[6]~reg0.CLK
+clk => cstick_yout[7]~reg0.CLK
+clk => cstick_xout[0]~reg0.CLK
+clk => cstick_xout[1]~reg0.CLK
+clk => cstick_xout[2]~reg0.CLK
+clk => cstick_xout[3]~reg0.CLK
+clk => cstick_xout[4]~reg0.CLK
+clk => cstick_xout[5]~reg0.CLK
+clk => cstick_xout[6]~reg0.CLK
+clk => cstick_xout[7]~reg0.CLK
+clk => joystick_yout[0]~reg0.CLK
+clk => joystick_yout[1]~reg0.CLK
+clk => joystick_yout[2]~reg0.CLK
+clk => joystick_yout[3]~reg0.CLK
+clk => joystick_yout[4]~reg0.CLK
+clk => joystick_yout[5]~reg0.CLK
+clk => joystick_yout[6]~reg0.CLK
+clk => joystick_yout[7]~reg0.CLK
+clk => joystick_xout[0]~reg0.CLK
+clk => joystick_xout[1]~reg0.CLK
+clk => joystick_xout[2]~reg0.CLK
+clk => joystick_xout[3]~reg0.CLK
+clk => joystick_xout[4]~reg0.CLK
+clk => joystick_xout[5]~reg0.CLK
+clk => joystick_xout[6]~reg0.CLK
+clk => joystick_xout[7]~reg0.CLK
+clk => buttons_out[15]~reg0.CLK
+clk => buttons_out[14]~reg0.CLK
+clk => buttons_out[13]~reg0.CLK
+clk => buttons_out[12]~reg0.CLK
+clk => buttons_out[11]~reg0.CLK
+clk => buttons_out[10]~reg0.CLK
+clk => buttons_out[9]~reg0.CLK
+clk => buttons_out[8]~reg0.CLK
+clk => buttons_out[7]~reg0.CLK
+clk => buttons_out[6]~reg0.CLK
+clk => buttons_out[5]~reg0.CLK
+clk => buttons_out[4]~reg0.CLK
+clk => buttons_out[3]~reg0.CLK
+clk => buttons_out[2]~reg0.CLK
+clk => buttons_out[1]~reg0.CLK
+clk => buttons_out[0]~reg0.CLK
 clk => counter[0].CLK
 clk => counter[1].CLK
-clk => counter[2].CLK
-clk => counter[3].CLK
-clk => counter[4].CLK
+clk => index[0].CLK
+clk => index[1].CLK
+clk => index[2].CLK
+clk => index[3].CLK
+clk => index[4].CLK
+clk => index[5].CLK
+clk => index[6].CLK
+clk => start_sr[0].CLK
+clk => start_sr[1].CLK
+clk => state~1.DATAIN
 start => start_sr[0].DATAIN
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-data_in => buttons_pressed.DATAB
-latch_out <= always1.DB_MAX_OUTPUT_PORT_TYPE
-pulse_out <= pulse_out~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[7] <= buttons_pressed[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[6] <= buttons_pressed[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[5] <= buttons_pressed[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[4] <= buttons_pressed[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[3] <= buttons_pressed[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[2] <= buttons_pressed[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[1] <= buttons_pressed[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-buttons_pressed[0] <= buttons_pressed[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[15] <= buttons_out[15]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[14] <= buttons_out[14]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[13] <= buttons_out[13]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[12] <= buttons_out[12]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[11] <= buttons_out[11]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[10] <= buttons_out[10]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[9] <= buttons_out[9]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[8] <= buttons_out[8]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[7] <= buttons_out[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[6] <= buttons_out[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[5] <= buttons_out[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[4] <= buttons_out[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[3] <= buttons_out[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[2] <= buttons_out[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[1] <= buttons_out[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+buttons_out[0] <= buttons_out[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[0] <= joystick_xout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[1] <= joystick_xout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[2] <= joystick_xout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[3] <= joystick_xout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[4] <= joystick_xout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[5] <= joystick_xout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[6] <= joystick_xout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_xout[7] <= joystick_xout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[0] <= joystick_yout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[1] <= joystick_yout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[2] <= joystick_yout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[3] <= joystick_yout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[4] <= joystick_yout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[5] <= joystick_yout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[6] <= joystick_yout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+joystick_yout[7] <= joystick_yout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[0] <= cstick_xout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[1] <= cstick_xout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[2] <= cstick_xout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[3] <= cstick_xout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[4] <= cstick_xout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[5] <= cstick_xout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[6] <= cstick_xout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_xout[7] <= cstick_xout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[0] <= cstick_yout[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[1] <= cstick_yout[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[2] <= cstick_yout[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[3] <= cstick_yout[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[4] <= cstick_yout[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[5] <= cstick_yout[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[6] <= cstick_yout[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+cstick_yout[7] <= cstick_yout[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[0] <= lbtn_out[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[1] <= lbtn_out[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[2] <= lbtn_out[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[3] <= lbtn_out[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[4] <= lbtn_out[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[5] <= lbtn_out[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[6] <= lbtn_out[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+lbtn_out[7] <= lbtn_out[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[0] <= rbtn_out[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[1] <= rbtn_out[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[2] <= rbtn_out[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[3] <= rbtn_out[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[4] <= rbtn_out[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[5] <= rbtn_out[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[6] <= rbtn_out[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+rbtn_out[7] <= rbtn_out[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+data <> data
 
 
-|pacman_top|clk_vga:TICK
+|pacman_top|clk_vga:CLK_VGA
 inclk0 => sub_wire1[0].IN1
 c0 <= altpll:altpll_component.clk
 
 
-|pacman_top|clk_vga:TICK|altpll:altpll_component
+|pacman_top|clk_vga:CLK_VGA|altpll:altpll_component
 inclk[0] => clk_vga_altpll:auto_generated.inclk[0]
 inclk[1] => clk_vga_altpll:auto_generated.inclk[1]
 fbin => ~NO_FANOUT~
@@ -216,7 +322,7 @@ fref <= <GND>
 icdrclk <= <GND>
 
 
-|pacman_top|clk_vga:TICK|altpll:altpll_component|clk_vga_altpll:auto_generated
+|pacman_top|clk_vga:CLK_VGA|altpll:altpll_component|clk_vga_altpll:auto_generated
 clk[0] <= pll1.CLK
 clk[1] <= pll1.CLK1
 clk[2] <= pll1.CLK2
@@ -311,7 +417,7 @@ blue[2] <= blue.DB_MAX_OUTPUT_PORT_TYPE
 blue[3] <= blue.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG
+|pacman_top|vga_ram:RAM_VGA
 clk => clk.IN2
 addrWrite[0] => ram1_addr.DATAB
 addrWrite[0] => ram2_addr.DATAA
@@ -448,7 +554,7 @@ dataRead[6] <= dataRead.DB_MAX_OUTPUT_PORT_TYPE
 dataRead[7] <= dataRead.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING
 address[0] => address[0].IN1
 address[1] => address[1].IN1
 address[2] => address[2].IN1
@@ -485,7 +591,7 @@ q[6] <= altsyncram:altsyncram_component.q_a
 q[7] <= altsyncram:altsyncram_component.q_a
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component
 wren_a => altsyncram_end1:auto_generated.wren_a
 rden_a => ~NO_FANOUT~
 wren_b => ~NO_FANOUT~
@@ -542,7 +648,7 @@ eccstatus[1] <= <GND>
 eccstatus[2] <= <GND>
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated
 address_a[0] => ram_block1a0.PORTAADDR
 address_a[0] => ram_block1a1.PORTAADDR
 address_a[0] => ram_block1a2.PORTAADDR
@@ -1529,7 +1635,7 @@ q_a[7] <= mux_12b:mux2.result[7]
 wren_a => decode_h7a:decode3.enable
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3
 data[0] => w_anode431w[1].IN0
 data[0] => w_anode448w[1].IN1
 data[0] => w_anode458w[1].IN0
@@ -1572,7 +1678,7 @@ eq[6] <= w_anode498w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[7] <= w_anode508w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode
 data[0] => w_anode519w[1].IN0
 data[0] => w_anode537w[1].IN1
 data[0] => w_anode548w[1].IN0
@@ -1607,7 +1713,7 @@ eq[6] <= w_anode592w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[7] <= w_anode603w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2
 data[0] => _.IN0
 data[0] => _.IN0
 data[1] => _.IN0
@@ -1890,7 +1996,7 @@ sel[2] => result_node[0].IN0
 sel[2] => _.IN0
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG
 address[0] => address[0].IN1
 address[1] => address[1].IN1
 address[2] => address[2].IN1
@@ -1927,7 +2033,7 @@ q[6] <= altsyncram:altsyncram_component.q_a
 q[7] <= altsyncram:altsyncram_component.q_a
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component
 wren_a => altsyncram_end1:auto_generated.wren_a
 rden_a => ~NO_FANOUT~
 wren_b => ~NO_FANOUT~
@@ -1984,7 +2090,7 @@ eccstatus[1] <= <GND>
 eccstatus[2] <= <GND>
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated
 address_a[0] => ram_block1a0.PORTAADDR
 address_a[0] => ram_block1a1.PORTAADDR
 address_a[0] => ram_block1a2.PORTAADDR
@@ -2971,7 +3077,7 @@ q_a[7] <= mux_12b:mux2.result[7]
 wren_a => decode_h7a:decode3.enable
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3
 data[0] => w_anode431w[1].IN0
 data[0] => w_anode448w[1].IN1
 data[0] => w_anode458w[1].IN0
@@ -3014,7 +3120,7 @@ eq[6] <= w_anode498w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[7] <= w_anode508w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode
 data[0] => w_anode519w[1].IN0
 data[0] => w_anode537w[1].IN1
 data[0] => w_anode548w[1].IN0
@@ -3049,7 +3155,7 @@ eq[6] <= w_anode592w[3].DB_MAX_OUTPUT_PORT_TYPE
 eq[7] <= w_anode603w[3].DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|vga_ram:PONG|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2
+|pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2
 data[0] => _.IN0
 data[0] => _.IN0
 data[1] => _.IN0
@@ -4784,7 +4890,7 @@ color[6] <= color.DB_MAX_OUTPUT_PORT_TYPE
 color[7] <= color.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|clockDivider:TOCK
+|pacman_top|clockDivider:CLK_GAME
 inClock => outClock~reg0.CLK
 inClock => counter[0].CLK
 inClock => counter[1].CLK

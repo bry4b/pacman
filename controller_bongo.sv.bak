@@ -1,0 +1,72 @@
+module bongoBits (
+    input clk, 
+    input start,
+    inout logic out // assign within always block
+);
+
+    // logic clk1; // 1 MHz clock
+
+    // clockDivider div(clk50, 1000000, 0, clk1);
+
+    logic [24:0] bitStream = 25'b1010000001100000000000010; // reversed so LSB as index 0 works, includes high stop bit
+    logic [4:0] index, index_d;
+    logic [1:0] counter, counter_d;
+    logic currBit;
+
+    logic [1:0] start_sr;
+
+    logic currState, nextState;
+
+    initial begin
+        currState = 0;
+        index = 0;
+        counter = 0;
+        start_sr = 2'b11;
+    end
+
+    always_comb begin
+        case (currState)
+            0 : begin
+                currBit = 1'bz;
+                index_d = 0;
+                counter_d = 0;
+                out = 1'bz;
+                if (start_sr == 2'b10) begin
+                    nextState = 1;
+                end else begin
+                    nextState = 0;
+                end
+            end
+            1 : begin
+                currBit = bitStream[index];
+                counter_d = counter + 1;
+                
+                if (counter == 0) begin
+                    out = 0;
+                    index_d = index;
+                end else if (counter == 3) begin
+                    out = 1;
+                    index_d = (index + 1) % 25; // Wrap index to ensure it stays within bounds
+                end else begin
+                    out = currBit;
+                    index_d = index;
+                end
+
+                if (index == 24 && counter == 3) begin
+                    nextState = 0;
+                end else begin
+                    nextState = 1;
+                end
+            end
+        endcase
+    end
+
+    always @(posedge clk) begin
+        start_sr <= {start_sr[0], start};
+
+        index <= index_d;
+        counter <= counter_d;
+        currState <= nextState;
+    end
+
+endmodule

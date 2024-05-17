@@ -27,232 +27,29 @@
 # Copying C:/intelFPGA_lite/21.1/questa_fse/win64/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/bongo_tb.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:32:33 on May 14,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
+# Start time: 22:42:10 on May 15,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/bongo_tb.sv 
+# -- Compiling module bongo_tb
 # 
 # Top level modules:
-# 	controller_nes
-# End time: 13:32:33 on May 14,2024, Elapsed time: 0:00:00
+# 	bongo_tb
+# End time: 22:42:10 on May 15,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_tb.sv}
+# vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv}
 # Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:32:33 on May 14,2024
-# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_tb.sv 
-# -- Compiling module controller_tb
-# 
-# Top level modules:
-# 	controller_tb
-# End time: 13:32:33 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# 
-vsim -voptargs=+acc work.controller_tb
-# vsim -voptargs="+acc" work.controller_tb 
-# Start time: 13:32:47 on May 14,2024
-# ** Note: (vsim-3812) Design is being optimized...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 100ns
-add wave -position insertpoint  \
-sim:/controller_tb/clk \
-sim:/controller_tb/start \
-sim:/controller_tb/data_in \
-sim:/controller_tb/latch_out \
-sim:/controller_tb/pulse_out \
-sim:/controller_tb/buttons_pressed
-add wave -position insertpoint  \
-sim:/controller_tb/UUT/counter
-restaryt
-# invalid command name "restaryt"
-restart
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 100ns
-run 900ns
-force -deposit sim:/controller_tb/start 1'h1 0
-run 100ns
-run 100ns
-run 100ns
-run 100ns
-force -deposit sim:/controller_tb/start 1'h0 0
-run 100ns
-run 100ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:45:47 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 13:45:47 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 100ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:47:24 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 13:47:24 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 100ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:53:49 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 13:53:49 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 13:55:45 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 13:55:45 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200ns
-run 200ns
-force -freeze sim:/controller_tb/data_in 1'h1 0
-force -deposit sim:/controller_tb/start 1'h1 0 -cancel 10
-run 20ns
-run 10ns
-force -deposit sim:/controller_tb/start 1'h0 0
-run 10ns
-run 20ns
-force -deposit sim:/controller_tb/data_in 1'h0 0
-run 20ns
-run 20ns
-force -freeze sim:/controller_tb/data_in 1'h0 0
-run 10ns
-run 10ns
-run 10ns
-run 10ns
-force -freeze sim:/controller_tb/data_in 1'h1 0
-run 10ns
-run 10ns
-run 10ns
-run 10ns
-run 10ns
-run 10ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:07:43 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 19:07:43 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200ns
-force -deposit sim:/controller_tb/start 1'h1 0
-run 10ns
-add wave -position insertpoint  \
-sim:/controller_tb/UUT/start_sr
-restart
-# ** Note: (vsim-8009) Loading existing optimized design _opt1
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200ns
-force -deposit sim:/controller_tb/start 1'h1 0
-run 10ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:08:50 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 19:08:50 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200ns
-force -deposit sim:/controller_tb/start 1'h1 0
-run 10ns
-force -deposit sim:/controller_tb/start 1'h0 0
-run 100ns
-run 100ns
-force -deposit sim:/controller_tb/start 1'h1 0 -cancel 200ns
-run 200ns
-run 100ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:27:44 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 19:27:44 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 300ns
-force -deposit sim:/controller_tb/start 1'h1 0 -cancel 200ns
-run 200ns
-run 100ns
-vlog -reportprogress 300 -work work {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv}
-# Questa Intel Starter FPGA Edition-64 vlog 2021.2 Compiler 2021.04 Apr 14 2021
-# Start time: 19:46:24 on May 14,2024
-# vlog -reportprogress 300 -work work C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv 
-# -- Compiling module controller_nes
-# 
-# Top level modules:
-# 	controller_nes
-# End time: 19:46:24 on May 14,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-restart
-# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
-# Loading sv_std.std
-# Loading work.controller_tb(fast)
-# Loading work.controller_nes(fast)
-run 200ns
-# End time: 21:26:21 on May 14,2024, Elapsed time: 7:53:34
-# Errors: 0, Warnings: 0
+# Start time: 22:42:11 on May 15,2024
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman" C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv 
+# -- Compiling module controller_bongo
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv(32): (vlog-2110) Illegal reference to net "out".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv(43): (vlog-2110) Illegal reference to net "out".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv(46): (vlog-2110) Illegal reference to net "out".
+# ** Error: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv(49): (vlog-2110) Illegal reference to net "out".
+# End time: 22:42:11 on May 15,2024, Elapsed time: 0:00:00
+# Errors: 4, Warnings: 0
+# ** Error: C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
+# Error in macro ./pacman_top_run_msim_rtl_verilog.do line 9
+# C:/intelFPGA_lite/21.1/questa_fse/win64/vlog failed.
+#     while executing
+# "vlog -sv -work work +incdir+C:/Users/bryan/Documents/school/ucla/ieee\ dav\ 2023/pacman {C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/con..."

@@ -4,16 +4,16 @@ module controller_nes (
     input data_in,
     output reg latch_out,
     output reg pulse_out,
-    output reg [0:7] buttons_pressed // A, B, Select, Start, Up, Down, Left, Right
+    output reg [0:7] buttons_out // A, B, Select, Start, Up, Down, Left, Right
 );
 
 /* PINOUT
             +----> Power  (blue)
             |
-    5 +---------+  7
+  5 +---------+  7
     | x  x  o   \
     | o  o  o  o |
-    4 +------------+ 1
+  4 +------------+ 1
       |  |  |  |
       |  |  |  +-> Ground (green) 
       |  |  +----> Pulse  (orange)
@@ -37,7 +37,7 @@ always @(posedge clk) begin
 
     start_sr <= {start_sr[0], start};
     if (counter < 'd18) begin
-        buttons_pressed [counter >> 1] <= ~data_in;
+        buttons_out [counter >> 1] <= ~data_in;
     end
 
 end
