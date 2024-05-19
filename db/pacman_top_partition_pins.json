@@ -4,6 +4,14 @@
 			"name" : "Top",
 			"pins" : [
 				{
+					"name" : "nes_latch",
+					"strict" : false
+				},
+				{
+					"name" : "nes_pulse",
+					"strict" : false
+				},
+				{
 					"name" : "hsync",
 					"strict" : false
 				},
@@ -44,7 +52,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "ctrl_data",
+					"name" : "gamecube_data",
 					"strict" : false
 				},
 				{
@@ -52,11 +60,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "btn",
+					"name" : "clk",
 					"strict" : false
 				},
 				{
-					"name" : "clk",
+					"name" : "nes_data",
 					"strict" : false
 				}
 			]

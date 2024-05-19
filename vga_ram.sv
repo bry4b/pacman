@@ -1,3 +1,6 @@
+// because on-chip RAM is not large enough, we cannot load the entire screen 
+// elected to cut off 3*8 rows of pixels from the top (YOFFSET)
+
 module vga_ram (
     input clk, 
 
@@ -5,14 +8,11 @@ module vga_ram (
     input [9:0] addrRead_h, 
     input [9:0] addrRead_v,
     input [7:0] dataWrite, 
-	 
-	output reg writeEnable,
+    output reg writeEnable,
 
     output reg [7:0] dataRead
 );
-
 // reg writeEnable; // HIGH when writing to ram1
-
 reg [15:0] ram1_addr;
 reg [15:0] ram2_addr;
 reg [7:0] ram1_in;
@@ -33,7 +33,7 @@ end
 always @(posedge clk) begin
     // writeEnable <= writeEnable_d;
 
-    if (addrRead_h == 0 && addrRead_v == 0) begin // finished drawing last frame
+    if (addrRead_h == 'd799 && addrRead_v == 'd524) begin // finished drawing last frame
         writeEnable <= ~writeEnable;
     end
 
@@ -48,17 +48,17 @@ localparam YMAX = 320;      // vertical pixels (640/2)
 localparam YOFFSET = 24;    // vertical RAM offset (3 tiles * 8)
 localparam ADDRESS_MAX = 65535;
 always_comb begin
-    if (addrRead_h < 640 && addrRead_v < 480) begin
+    if (addrRead_h < 'd640 && addrRead_v < 'd480) begin
         // xpos = XMAX - 1 - vc_in / 3;
-        xpos = XMAX - 1'b1 - (addrRead_v >> 1'd1);
-        ypos = addrRead_h / 2;
-    end else if (addrRead_v < 480) begin
+        xpos = XMAX - 1'b1 - (addrRead_v >> 1'b1);
+        ypos = addrRead_h >> 1'b1;
+    end else if (addrRead_v < 'd480) begin
         // xpos = XMAX - 1 - vc_in / 3;
-        xpos = XMAX - 1'b1 - (addrRead_v >> 2'd2);
+        xpos = XMAX - 1'b1 - (addrRead_v >> 1'b1);
         ypos = YMAX - 1'b1;
     end else begin 
-        xpos = 0;
-        ypos = 0;
+        xpos = 1'b0;
+        ypos = 1'b0;
     end
 end
 

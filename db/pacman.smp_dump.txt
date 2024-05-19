@@ -189,6 +189,23 @@ state.STATE_RSPWN 0 0 1 0 0 0 0 1
 state.STATE_EXTGH 0 1 0 0 0 0 0 1 
 state.STATE_PAUSE 1 0 0 0 0 0 0 1 
 
+State Machine - |pacman_top|graphics_async:BOOO|scan_state
+Name scan_state.SCAN_IDLE scan_state.MAZE_SCAN scan_state.CLYDE_NEW scan_state.CLYDE_OLD scan_state.INKY_NEW scan_state.INKY_OLD scan_state.PINKY_NEW scan_state.PINKY_OLD scan_state.BLINKY_NEW scan_state.BLINKY_OLD scan_state.PACMAN_NEW scan_state.PACMAN_OLD scan_state.START_1 scan_state.START_0 
+scan_state.START_0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+scan_state.START_1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+scan_state.PACMAN_OLD 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+scan_state.PACMAN_NEW 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+scan_state.BLINKY_OLD 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+scan_state.BLINKY_NEW 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+scan_state.PINKY_OLD 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+scan_state.PINKY_NEW 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+scan_state.INKY_OLD 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+scan_state.INKY_NEW 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+scan_state.CLYDE_OLD 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+scan_state.CLYDE_NEW 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.MAZE_SCAN 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.SCAN_IDLE 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
 State Machine - |pacman_top|controller_bongo:BONGOCTRL|state
 Name state.00 state.10 state.01 
 state.00 0 0 0 

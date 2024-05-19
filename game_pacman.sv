@@ -9,13 +9,13 @@ module game_pacman (
 
     input [1:0] tile_info [0:3], // maze info
 
-    output logic [9:0] xloc,
-    output logic [9:0] yloc,
+    output logic [8:0] xloc,
+    output logic [8:0] yloc,
     output logic [1:0] dir,
     output logic [1:0] anim_cycle,
 
-    output logic [6:0] curr_xtile,
-    output logic [6:0] curr_ytile
+    output logic [5:0] curr_xtile,
+    output logic [5:0] curr_ytile
 );
     
     // Game states
@@ -38,8 +38,8 @@ module game_pacman (
     logic [1:0] right_sr = 2'b00;
     logic [1:0] uturn_sr = 2'b00;
 
-    logic [9:0] xloc_d;
-    logic [9:0] yloc_d;
+    logic [8:0] xloc_d;
+    logic [8:0] yloc_d;
     logic [1:0] dir_d;
     logic [1:0] anim_cycle_d;
     logic anim_clock;
@@ -50,14 +50,14 @@ module game_pacman (
     logic [1:0] dir_queue; // stores direction to turn; turns this direction as soon as physically possible
     logic [1:0] dir_queue_d;
 
-    assign curr_xtile = xloc >> 3;
-    assign curr_ytile = (yloc >> 3) - 3;
+    assign curr_xtile = xloc >> 'd3;
+    assign curr_ytile = (yloc >> 'd3) - 'd3;
 
     logic wall_in_front;
     assign wall_in_front = (tile_info[dir] == WALL);
 
     logic in_center_of_tile;
-    assign in_center_of_tile = (xloc % 8 == 3 && yloc % 8 == 3);
+    assign in_center_of_tile = (xloc[2:0] == 'd3 && yloc[2:0] == 'd3);
 
     initial begin
         curr_state = START;
@@ -172,29 +172,29 @@ module game_pacman (
     /* PACMAN MOVEMENT */
     always_comb begin
         if (curr_state == START) begin
-            xloc_d = 119;
-            yloc_d = 227;
+            xloc_d = 'd119;
+            yloc_d = 'd227;
         end else if (curr_state == NORMAL) begin
             if ( !(in_center_of_tile && wall_in_front) && ( (dir_d == dir) || (dir_d == ~dir) ) ) begin
                 case (dir)
                     RIGHT: begin
-                        xloc_d = xloc + 1;
+                        xloc_d = xloc + 1'b1;
                         yloc_d = yloc;
                     end
 
                     UP: begin
                         xloc_d = xloc;
-                        yloc_d = yloc - 1;
+                        yloc_d = yloc - 1'b1;
                     end
 
                     LEFT: begin
-                        xloc_d = xloc - 1;
+                        xloc_d = xloc - 1'b1;
                         yloc_d = yloc;
                     end
 
                     DOWN: begin
                         xloc_d = xloc;
-                        yloc_d = yloc + 1;
+                        yloc_d = yloc + 1'b1;
                     end
                 endcase
             end else begin

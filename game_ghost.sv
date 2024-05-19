@@ -24,28 +24,28 @@ module game_ghost (
 
     input [1:0] personality,
 
-    input [21:0] pacman_inputs,
-    // input [6:0] pacman_xtile,
-    // input [6:0] pacman_ytile, 
+    input [19:0] pacman_inputs,
+    // input [8:0] pacman_xloc,
+    // input [8:0] pacman_yloc, 
     // input [1:0] pacman_dir,
 
     input power_pellet,             // HIGH when a power pellet gets eaten
     input [1:0] tile_info [0:3], 
 
-    input [19:0] blinky_pos, 
-    // input [9:0] blinky_xloc,        // only for inky :/
-    // input [9:0] blinky_yloc,        // only for inky :/
+    input [17:0] blinky_pos, 
+    // input [8:0] blinky_xloc,        // only for inky :/
+    // input [8:0] blinky_yloc,        // only for inky :/
 
     output eaten, 
 
-    output [13:0] tile_checks,
+    output [11:0] tile_checks,
     // output reg [6:0] xtile_next,
     // output reg [6:0] ytile_next,
 
-    output [24:0] ghost_outputs
+    output [22:0] ghost_outputs
 
-    // output reg [9:0] xloc,
-    // output reg [9:0] yloc,
+    // output reg [8:0] xloc,
+    // output reg [8:0] yloc,
 
     // output reg [1:0] dir,
     // output reg [1:0] mode,
@@ -53,25 +53,26 @@ module game_ghost (
 );
 
 // input unpacking
-wire [6:0] pacman_xtile = pacman_inputs [21:12] >> 2'd3;
-wire [6:0] pacman_ytile = (pacman_inputs [11:2] >> 2'd3) - 2'd3; 
+
+wire [5:0] pacman_xtile = pacman_inputs [19:11] >> 2'd3;
+wire [5:0] pacman_ytile = (pacman_inputs [10:2] >> 2'd3) - 2'd3; 
 wire [1:0] pacman_dir = pacman_inputs [1:0];
 
-wire [9:0] blinky_xloc = blinky_pos [19:10];
-wire [9:0] blinky_yloc = blinky_pos [9:0];
+wire [8:0] blinky_xloc = blinky_pos [17:9];
+wire [8:0] blinky_yloc = blinky_pos [8:0];
 
 // output packing
-wire [6:0] xtile_next; 
-wire [6:0] ytile_next;
+wire [5:0] xtile_next; 
+wire [5:0] ytile_next;
 
-wire [9:0] xloc;
-wire [9:0] yloc;
+wire [8:0] xloc;
+wire [8:0] yloc;
 wire [1:0] dir;
 wire [1:0] mode;
 wire flash;          
 
-wire [9:0] xloc_d;
-wire [9:0] yloc_d;
+wire [8:0] xloc_d;
+wire [8:0] yloc_d;
 wire [1:0] dir_d;
 wire [1:0] mode_d;
 wire flash_d;
@@ -139,20 +140,20 @@ reg [9:0] timer_frt;
 wire [9:0] timer_frt_d;
 
 // location information
-wire [9:0] start_xloc; 
-wire [9:0] start_yloc;
+wire [8:0] start_xloc; 
+wire [8:0] start_yloc;
 
-reg [6:0] xtile;
-reg [6:0] ytile;
+reg [5:0] xtile;
+reg [5:0] ytile;
 
-wire [6:0] xtile_d = xloc_d >> 2'd3;   
-wire [6:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
+wire [5:0] xtile_d = xloc_d >> 2'd3;   
+wire [5:0] ytile_d = (yloc_d >> 2'd3) - YOFFSET;
 
 wire [1:0] movespeed; 
 
 // targeting software
-wire [6:0] target_xtile;
-wire [6:0] target_ytile;
+wire [5:0] target_xtile;
+wire [5:0] target_ytile;
 
 wire [12:0] distance_rt;
 wire [12:0] distance_up; 
@@ -169,8 +170,8 @@ reg [1:0] rand_dir;
 assign rand_dir = lfsr_state[1:0];
 
 // targeting for inky
-wire [6:0] blinky_xtile = blinky_xloc >> 2'd3;  
-wire [6:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
+wire [5:0] blinky_xtile = blinky_xloc >> 2'd3;  
+wire [5:0] blinky_ytile = (blinky_yloc >> 2'd3) - YOFFSET;
 
 initial begin
     state = STATE_START;
@@ -210,7 +211,7 @@ always_comb begin
     case (state)
         STATE_START: begin
             if (start) begin
-                if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
+                if (xtile > 'd11 && xtile < 'd18 && ytile > 'd14 && ytile < 'd18) begin
                     state_d = STATE_EXTGH;
                 end else begin
                     state_d = STATE_SCTTR;
@@ -264,14 +265,14 @@ always_comb begin
                 timer_reg_d = timer_reg + 1'b1;
                 case (dir_exit) 
                     RT, LT: begin
-                        if (yloc_d % 8 == 3) begin
+                        if (yloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
                         end
                     end
                     UP, DN: begin
-                        if (xloc_d % 8 == 3) begin
+                        if (xloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
@@ -307,14 +308,14 @@ always_comb begin
                 timer_reg_d = timer_reg + 1'b1;
                 case (dir_exit) 
                     RT, LT: begin
-                        if (yloc_d % 8 == 3) begin
+                        if (yloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
                         end
                     end
                     UP, DN: begin
-                        if (xloc_d % 8 == 3) begin
+                        if (xloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
@@ -379,14 +380,14 @@ always_comb begin
 
                 case (dir_exit) 
                     RT, LT: begin
-                        if (yloc_d % 8 == 3) begin
+                        if (yloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
                         end
                     end
                     UP, DN: begin
-                        if (xloc_d % 8 == 3) begin
+                        if (xloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
@@ -437,14 +438,14 @@ always_comb begin
 
             case (dir_exit) 
                 RT, LT: begin
-                    if (yloc_d % 8 == 3) begin
+                    if (yloc_d[2:0] == 'd3) begin
                         dir_d = dir_exit;
                     end else begin
                         dir_d = dir;
                     end
                 end
                 UP, DN: begin
-                    if (xloc_d % 8 == 3) begin
+                    if (xloc_d[2:0] == 'd3) begin
                         dir_d = dir_exit;
                     end else begin
                         dir_d = dir;
@@ -464,18 +465,18 @@ always_comb begin
             end else if (pause) begin
                 state_d = STATE_PAUSE;
                 dir_d = dir;
-            end else if (xtile > 11 && xtile < 18 && ytile > 14 && ytile < 18) begin
+            end else if (xtile > 'd11 && xtile < 'd18 && ytile > 'd14 && ytile < 'd18) begin
                 state_d = STATE_EXTGH;
                 case (dir_exit) 
                     RT, LT: begin
-                        if (yloc_d % 8 == 3) begin
+                        if (yloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
                         end
                     end
                     UP, DN: begin
-                        if (xloc_d % 8 == 3) begin
+                        if (xloc_d[2:0] == 'd3) begin
                             dir_d = dir_exit;
                         end else begin
                             dir_d = dir;
@@ -510,14 +511,14 @@ always_comb begin
 
             case (dir_exit) 
                 RT, LT: begin
-                    if (yloc_d % 8 == 3) begin
+                    if (yloc_d[2:0] == 'd3) begin
                         dir_d = dir_exit;
                     end else begin
                         dir_d = dir;
                     end
                 end
                 UP, DN: begin
-                    if (xloc_d % 8 == 3) begin
+                    if (xloc_d[2:0] == 'd3) begin
                         dir_d = dir_exit;
                     end else begin
                         dir_d = dir;
@@ -623,7 +624,7 @@ end
 // PLAN NEXT DIRECTION
 always_comb begin
     if (state == STATE_EXTGH) begin // hardcode exit ghost house
-        if (xtile < 14) begin
+        if (xtile < 'd14) begin
             dir_plan = RT;
         end else if (xtile > 15) begin
             dir_plan = LT;
@@ -775,7 +776,7 @@ always_comb begin
                         if (pacman_xtile > 3'd4) begin
                             target_xtile = pacman_xtile - 3'd4;
                         end else begin
-                            target_xtile = 0;
+                            target_xtile = 1'b0;
                         end 
                         target_ytile = pacman_ytile;
                     end
@@ -909,7 +910,7 @@ always_comb begin
         movespeed = 1'b1;
     end else begin
         if (state == STATE_RSPWN) begin
-            if (xloc % 2 == 0 || yloc % 2 == 0) begin
+            if (xloc[0] == 0 || yloc[0] == 0) begin
                 movespeed = 1'b1;
             end else begin
                 movespeed = 2'd2;

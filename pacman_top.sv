@@ -2,31 +2,30 @@ module pacman_top (
     input clk, 
     input rst,
     input btn,
-    
+	 
     // input [9:0] switches,
     
     // NES controller I/O
-    // input ctrl_data,        // red      -> Arduino I/O 0
-    // output ctrl_latch,      // yellow   -> Arduino I/O 1
-    // output ctrl_pulse,      // orange   -> Arduino I/O 2
+    input nes_data,         // red      -> Arduino I/O 0
+    output nes_latch,       // yellow   -> Arduino I/O 1
+    output nes_pulse,       // orange   -> Arduino I/O 2
 
     // bongo controller I/O: 3V3 -> 4th 3V3 pin from the left (the other ones dont work) 
-    inout ctrl_data,        // red      -> Arduino I/O 6
-
+    inout gamecube_data,    // red      -> Arduino I/O 6
+	 
     // vga outputs
     output hsync, 
     output vsync,
     output reg [3:0] red,
     output reg [3:0] green,
     output reg [3:0] blue,
-
-	output [9:0] leds
+    
+    output [9:0] leds
 );
 
+// CONTROLLERS
 wire nesclk;
 wire [0:7] nes_btns;
-// wire [0:7] inputs;
-// assign leds = {inputs, 2'b00};
 
 wire gamecubeclk;
 wire [0:15] bongo_btns;
@@ -36,12 +35,6 @@ wire start;
 wire lturn;
 wire rturn;
 wire uturn;
-
-// assign start = nes_btns[3];
-assign start = bongo_btns[3];
-assign lturn = bongo_btns[4] | bongo_btns[6];
-assign rturn = bongo_btns[5] | bongo_btns[7];
-assign uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
 
 // GRAPHICS
 reg [9:0] xpos; 
@@ -66,24 +59,28 @@ wire [1:0] input_blue = vga_data [1:0];
 wire gameclk;
 
 // CHARACTERS
-wire [9:0] pacman_xloc;
-wire [9:0] pacman_yloc;
+wire [8:0] pacman_xloc;
+wire [8:0] pacman_yloc;
 wire [1:0] pacman_dir; 
 wire [1:0] pacman_anim;
 wire pacman_alive;
 
-wire [24:0] pacman_outputs = {pacman_xloc, pacman_yloc, pacman_dir, pacman_anim, pacman_alive};
-wire [13:0] pacman_tiles = {pacman_xtile, pacman_ytile};
+wire [22:0] pacman_outputs = {pacman_xloc, pacman_yloc, pacman_dir, pacman_anim, pacman_alive};
 
-wire [24:0] blinky_outputs;
-wire [24:0] pinky_outputs;
-wire [24:0] inky_outputs;
-wire [24:0] clyde_outputs;
+wire [22:0] blinky_outputs;
+wire [22:0] pinky_outputs;
+wire [22:0] inky_outputs;
+wire [22:0] clyde_outputs;
 
 reg ghost_animation;
 wire ghost_animation_d;
 reg [2:0] ghost_anim_counter;
 wire [2:0] ghost_anim_counter_d;
+
+reg pellet_animation;
+wire pellet_animation_d;
+reg [3:0] pellet_anim_counter;
+wire [3:0] pellet_anim_counter_d;
 
 // wire [9:0] blinky_xloc; 
 // wire [9:0] blinky_yloc;
@@ -121,13 +118,15 @@ wire clyde_eaten;
 // wire [6:0] clyde_xtile_next;
 // wire [6:0] clyde_ytile_next;
 
-wire [13:0] blinky_tiles;
-wire [13:0] pinky_tiles;
-wire [13:0] inky_tiles;
-wire [13:0] clyde_tiles;
+wire [5:0] pacman_xtile;
+wire [5:0] pacman_ytile;
+wire [11:0] pacman_tiles = {pacman_xtile, pacman_ytile};
 
-wire [6:0] pacman_xtile;
-wire [6:0] pacman_ytile;
+wire [11:0] blinky_tiles;
+wire [11:0] pinky_tiles;
+wire [11:0] inky_tiles;
+wire [11:0] clyde_tiles;
+
 wire pacman_pellet;
 wire power_pellet;
 wire [1:0] pacman_tile_info [0:3]; 
@@ -188,30 +187,60 @@ clk_controller CLK_CTRL (
     .c1 (gamecubeclk)
 );
 
-// controller_nes NESCTRL (
-//     .clk (ctrlclk),
-//     .start (gameclk),
-//     .data_in (ctrl_data),
-//     .latch_out (ctrl_latch),
-//     .pulse_out (ctrl_pulse),
-//     .buttons_pressed (inputs)
-// );
+assign start = nes_btns[3];
+assign lturn = nes_btns[1];
+assign rturn = nes_btns[0];
+assign uturn = nes_btns[2];
+
+// assign start = bongo_btns[3];
+// assign lturn = bongo_btns[4] | bongo_btns[6];
+// assign rturn = bongo_btns[5] | bongo_btns[7];
+// assign uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
+
+controller_nes NESCTRL (
+    .clk (nesclk),
+    .start (gameclk),
+    .data_in (nes_data),
+    .latch_out (nes_latch),
+    .pulse_out (nes_pulse),
+    .buttons_out (nes_btns)
+);
 
 controller_bongo BONGOCTRL (
     .clk (gamecubeclk),
     .start (gameclk),
     .buttons_out (bongo_btns),
     .rbtn_out (bongo_mic),
-    .data (ctrl_data)
+    .data (gamecube_data)
 );
 
 clk_vga CLK_VGA(clk, vgaclk);
 vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
 vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 
-graphics BOO(
-    .clk (vgaclk), 
+// graphics BOO(
+//     .clk (vgaclk), 
+//     .rst (~rst), 
+//     .hc (hc), 
+//     .vc (vc), 
+//     .pacman_inputs (pacman_outputs),
+//     .blinky_inputs (blinky_outputs), 
+//     .pinky_inputs (pinky_outputs),
+//     .inky_inputs (inky_outputs),
+//     .clyde_inputs (clyde_outputs),
+//     .ghost_animation (ghost_animation), 
+//     .ghosts_eaten (ghosts_eaten),
+//     .maze_color (maze_color), 
+
+//     .color (color), 
+//     .address (address)
+// );
+
+graphics_async BOOO(
+    .vgaclk (vgaclk), 
+    .gameclk (gameclk),
     .rst (~rst), 
+    .scanall (1'b0), 
     .hc (hc), 
     .vc (vc), 
     .pacman_inputs (pacman_outputs),
@@ -224,6 +253,8 @@ graphics BOO(
     .maze_color (maze_color), 
 
     .color (color), 
+    .xpos (xpos), 
+    .ypos (ypos),
     .address (address)
 );
 
@@ -239,7 +270,7 @@ maze MAZEPIN(
     .pinky_inputs (pinky_tiles), 
     .inky_inputs (inky_tiles),
     .clyde_inputs (clyde_tiles),
-    .pellet_anim (btn),
+    .pellet_anim (pellet_animation),
 
     .pellet_out (pacman_pellet), 
     .power_pellet (power_pellet), 
@@ -257,10 +288,10 @@ game_ghost BLINKY (
     .start (start),
     .pause (pause),
     .personality (2'b00),
-    .pacman_inputs (pacman_outputs [24:3]),
+    .pacman_inputs (pacman_outputs [22:3]),
     .power_pellet (power_pellet),
     .tile_info (blinky_tile_info),
-    .blinky_pos (20'b0),
+    .blinky_pos (1'b0),
 
     .eaten (blinky_eaten),
     .tile_checks (blinky_tiles),
@@ -273,10 +304,10 @@ game_ghost PINKY (
     .start (start),
     .pause (pause),
     .personality (2'b01),
-    .pacman_inputs (pacman_outputs [24:3]),
+    .pacman_inputs (pacman_outputs [22:3]),
     .power_pellet (power_pellet),
     .tile_info (pinky_tile_info), 
-    .blinky_pos (20'b0),
+    .blinky_pos (1'b0),
 
     .eaten (pinky_eaten),
     .tile_checks (pinky_tiles),
@@ -289,10 +320,10 @@ game_ghost INKY (
     .start (start),
     .pause (pause),
     .personality (2'b10),
-    .pacman_inputs (pacman_outputs [24:3]),
+    .pacman_inputs (pacman_outputs [22:3]),
     .power_pellet (power_pellet),
     .tile_info (inky_tile_info), 
-    .blinky_pos (blinky_outputs [23:4]), 
+    .blinky_pos (blinky_outputs [22:5]), 
 
     .eaten (inky_eaten),
     .tile_checks (inky_tiles),
@@ -305,10 +336,10 @@ game_ghost CLYDE (
     .start (start),
     .pause (pause),
     .personality (2'b11),
-    .pacman_inputs (pacman_outputs [24:3]),
+    .pacman_inputs (pacman_outputs [22:3]),
     .power_pellet (power_pellet),
     .tile_info (clyde_tile_info), 
-    .blinky_pos (20'b0),
+    .blinky_pos (1'b0),
 
     .eaten (clyde_eaten),
     .tile_checks (clyde_tiles),
@@ -345,42 +376,53 @@ end
 always_comb begin
     if (gameclk && ~pause) begin
         ghost_anim_counter_d = ghost_anim_counter + 1'b1;
+        pellet_anim_counter_d = pellet_anim_counter + 1'b1;
     end else begin
         ghost_anim_counter_d = ghost_anim_counter;
+        pellet_anim_counter_d = pellet_anim_counter;
     end
+
     if (ghost_anim_counter == 1'b0 && ~pause) begin
         ghost_animation_d = ~ghost_animation;
     end else begin
         ghost_animation_d = ghost_animation;
+    end
+
+    if (pellet_anim_counter == 1'b0 && ~pause) begin
+        pellet_animation_d = ~pellet_animation;
+    end else begin
+        pellet_animation_d = pellet_animation;
     end
 end
 
 always @(posedge gameclk) begin
     ghost_anim_counter <= ghost_anim_counter_d;
     ghost_animation <= ghost_animation_d;
+    pellet_anim_counter <= pellet_anim_counter_d;
+    pellet_animation <= pellet_animation_d;
 end
 
 // 
 // COORDINATE BLOCKING & ROTATION
 // localparam XMAX  = 160;  // horizontal pixels
 // localparam YMAX  = 320;  // vertical pixels
-localparam XMAX = 240;      // horizontal pixels (480/2)
-localparam YMAX = 320;      // vertical pixels (640/2)
+// localparam XMAX = 240;      // horizontal pixels (480/2)
+// localparam YMAX = 320;      // vertical pixels (640/2)
 
-always_comb begin
-    if (hc < 640 && vc < 480) begin
-        // xpos = XMAX - 1 - vc_in / 3;
-        xpos = XMAX - 1 - (vc >> 1);
-        ypos = hc / 2;
-    end else if (vc < 480) begin
-        // xpos = XMAX - 1 - vc_in / 3;
-        xpos = XMAX - 1 - (vc >> 2);
-        ypos = YMAX - 1;
-    end else begin 
-        xpos = 0;
-        ypos = 0;
-    end
-end
+// always_comb begin
+//     if (hc < 640 && vc < 480) begin
+//         // xpos = XMAX - 1 - vc_in / 3;
+//         xpos = XMAX - 1 - (vc >> 1);
+//         ypos = hc / 2;
+//     end else if (vc < 480) begin
+//         // xpos = XMAX - 1 - vc_in / 3;
+//         xpos = XMAX - 1 - (vc >> 2);
+//         ypos = YMAX - 1;
+//     end else begin 
+//         xpos = 0;
+//         ypos = 0;
+//     end
+// end
 
 endmodule
 

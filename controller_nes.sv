@@ -8,7 +8,7 @@ module controller_nes (
 );
 
 /* PINOUT
-            +----> Power  (blue)
+            +----> 5V Power (blue)
             |
   5 +---------+  7
     | x  x  o   \

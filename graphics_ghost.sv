@@ -1,10 +1,10 @@
 module graphics_ghost (
-    input [9:0] xpos,           // current x position read by vga
-    input [9:0] ypos,           // current y position read by vga
+    input [8:0] xpos,           // current x position read by vga
+    input [8:0] ypos,           // current y position read by vga
 
     input [1:0] ghost_color,
 
-    input [24:0] ghost_inputs,
+    input [22:0] ghost_inputs,
     // input [9:0] xloc,           // x coordinate of center of ghost location (7,7 in bitfield)
     // input [9:0] yloc,           // y coordinate of center of ghost location (7,7 in bitfield)
     // input [1:0] ghost_dir,      // RighT, UP, DowN, LefT
@@ -19,8 +19,8 @@ module graphics_ghost (
     output reg [7:0] color
 );
 
-wire [9:0] xloc = ghost_inputs [24:15];
-wire [9:0] yloc = ghost_inputs [14:5];
+wire [8:0] xloc = ghost_inputs [22:14];
+wire [8:0] yloc = ghost_inputs [13:5];
 wire [1:0] ghost_dir = ghost_inputs [4:3];
 wire [1:0] ghost_mode = ghost_inputs [2:1]; 
 wire ghost_flash = ghost_inputs [0];
