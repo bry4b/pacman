@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pacman_top
-Sun May 19 02:39:53 2024
+Sun May 19 02:55:46 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -34,7 +34,7 @@ Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
  26. State Machine - |pacman_top|game_ghost:BLINKY|state_exit
  27. State Machine - |pacman_top|game_ghost:BLINKY|state_prev
  28. State Machine - |pacman_top|game_ghost:BLINKY|state
- 29. State Machine - |pacman_top|graphics_async:BOOO|scan_state
+ 29. State Machine - |pacman_top|graphics_async:BOO|scan_state
  30. State Machine - |pacman_top|controller_bongo:BONGOCTRL|state
  31. Registers Removed During Synthesis
  32. Removed Registers Triggering Further Register Optimizations
@@ -48,8 +48,8 @@ Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
  40. Parameter Settings for User Entity Instance: vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component
  41. Parameter Settings for User Entity Instance: vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component
  42. Parameter Settings for User Entity Instance: clockDivider:CLK_GAME
- 43. Parameter Settings for Inferred Entity Instance: graphics_async:BOOO|lpm_divide:Div0
- 44. Parameter Settings for Inferred Entity Instance: graphics_async:BOOO|lpm_divide:Mod0
+ 43. Parameter Settings for Inferred Entity Instance: graphics_async:BOO|lpm_divide:Div0
+ 44. Parameter Settings for Inferred Entity Instance: graphics_async:BOO|lpm_divide:Mod0
  45. Parameter Settings for Inferred Entity Instance: game_ghost:PINKY|lpm_divide:Mod0
  46. Parameter Settings for Inferred Entity Instance: game_ghost:CLYDE|lpm_divide:Mod0
  47. Parameter Settings for Inferred Entity Instance: game_ghost:INKY|lpm_divide:Mod0
@@ -89,11 +89,11 @@ Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
  81. Port Connectivity Checks: "game_ghost:BLINKY"
  82. Port Connectivity Checks: "maze:MAZEPIN"
  83. Port Connectivity Checks: "clockDivider:CLK_GAME"
- 84. Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:CLYDE"
- 85. Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:INKY"
- 86. Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:PINKY"
- 87. Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:BLINKY"
- 88. Port Connectivity Checks: "graphics_async:BOOO"
+ 84. Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:CLYDE"
+ 85. Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:INKY"
+ 86. Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:PINKY"
+ 87. Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:BLINKY"
+ 88. Port Connectivity Checks: "graphics_async:BOO"
  89. Port Connectivity Checks: "vga_ram:RAM_VGA"
  90. Port Connectivity Checks: "controller_bongo:BONGOCTRL"
  91. Port Connectivity Checks: "controller_nes:NESCTRL"
@@ -127,7 +127,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun May 19 02:39:53 2024       ;
+; Analysis & Synthesis Status        ; Successful - Sun May 19 02:55:46 2024       ;
 ; Quartus Prime Version              ; 21.1.0 Build 842 10/21/2021 SJ Lite Edition ;
 ; Revision Name                      ; pacman_top                                  ;
 ; Top-level Entity Name              ; pacman_top                                  ;
@@ -354,125 +354,125 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------+--------------------------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                                           ;
-+-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
-; Compilation Hierarchy Node                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                                                             ; Entity Name           ; Library Name ;
-+-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
-; |pacman_top                                     ; 22438 (14)          ; 1690 (6)                  ; 1048576     ; 0          ; 26           ; 26      ; 0         ; 31   ; 0            ; 0          ; |pacman_top                                                                                                                     ; pacman_top            ; work         ;
-;    |clk_controller:CLK_CTRL|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL                                                                                             ; clk_controller        ; work         ;
-;       |altpll:altpll_component|                 ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component                                                                     ; altpll                ; work         ;
-;          |clk_controller_altpll:auto_generated| ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component|clk_controller_altpll:auto_generated                                ; clk_controller_altpll ; work         ;
-;    |clk_vga:CLK_VGA|                            ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA                                                                                                     ; clk_vga               ; work         ;
-;       |altpll:altpll_component|                 ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA|altpll:altpll_component                                                                             ; altpll                ; work         ;
-;          |clk_vga_altpll:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA|altpll:altpll_component|clk_vga_altpll:auto_generated                                               ; clk_vga_altpll        ; work         ;
-;    |clockDivider:CLK_GAME|                      ; 59 (59)             ; 33 (33)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clockDivider:CLK_GAME                                                                                               ; clockDivider          ; work         ;
-;    |controller_bongo:BONGOCTRL|                 ; 38 (38)             ; 14 (14)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|controller_bongo:BONGOCTRL                                                                                          ; controller_bongo      ; work         ;
-;    |controller_nes:NESCTRL|                     ; 17 (17)             ; 12 (12)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|controller_nes:NESCTRL                                                                                              ; controller_nes        ; work         ;
-;    |game_ghost:BLINKY|                          ; 758 (641)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY                                                                                                   ; game_ghost            ; work         ;
-;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0                                                                                   ; lpm_divide            ; work         ;
-;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                     ; lpm_divide_pll        ; work         ;
-;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                         ; sign_div_unsign_olh   ; work         ;
-;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider   ; alt_u_div_qhe         ; work         ;
-;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult11                                                                                   ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult11|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
-;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult12                                                                                   ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult12|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
-;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult6                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult6|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult7                                                                                    ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult7|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
-;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult8                                                                                    ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult8|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
-;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;    |game_ghost:CLYDE|                           ; 808 (691)           ; 95 (95)                   ; 0           ; 0          ; 8            ; 8       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE                                                                                                    ; game_ghost            ; work         ;
-;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0                                                                                    ; lpm_divide            ; work         ;
-;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                      ; lpm_divide_pll        ; work         ;
-;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                          ; sign_div_unsign_olh   ; work         ;
-;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider    ; alt_u_div_qhe         ; work         ;
-;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult11                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult11|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult12                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult12|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;       |lpm_mult:Mult14|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult14                                                                                    ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult14|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
-;       |lpm_mult:Mult15|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult15                                                                                    ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult15|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
-;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult6                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult6|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult7                                                                                     ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult7|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
-;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult8                                                                                     ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult8|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
-;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult9                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult9|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;    |game_ghost:INKY|                            ; 896 (779)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY                                                                                                     ; game_ghost            ; work         ;
-;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0                                                                                     ; lpm_divide            ; work         ;
-;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                       ; lpm_divide_pll        ; work         ;
-;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                           ; sign_div_unsign_olh   ; work         ;
-;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider     ; alt_u_div_qhe         ; work         ;
-;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult11                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult11|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult12                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult12|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult6                                                                                      ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult6|mult_tds:auto_generated                                                              ; mult_tds              ; work         ;
-;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult7                                                                                      ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult7|mult_pds:auto_generated                                                              ; mult_pds              ; work         ;
-;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult8                                                                                      ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult8|mult_pds:auto_generated                                                              ; mult_pds              ; work         ;
-;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9                                                                                      ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9|mult_tds:auto_generated                                                              ; mult_tds              ; work         ;
-;    |game_ghost:PINKY|                           ; 781 (664)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY                                                                                                    ; game_ghost            ; work         ;
-;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0                                                                                    ; lpm_divide            ; work         ;
-;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                      ; lpm_divide_pll        ; work         ;
-;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                          ; sign_div_unsign_olh   ; work         ;
-;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider    ; alt_u_div_qhe         ; work         ;
-;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult11                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult11|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult12                                                                                    ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult12|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
-;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult6                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult6|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult7                                                                                     ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult7|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
-;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult8                                                                                     ; lpm_mult              ; work         ;
-;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult8|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
-;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9                                                                                     ; lpm_mult              ; work         ;
-;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
-;    |game_pacman:PACMAN|                         ; 90 (90)             ; 38 (38)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_pacman:PACMAN                                                                                                  ; game_pacman           ; work         ;
-;    |graphics_async:BOOO|                        ; 2264 (573)          ; 227 (227)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO                                                                                                 ; graphics_async        ; work         ;
-;       |graphics_ghost:BLINKY|                   ; 170 (170)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_ghost:BLINKY                                                                           ; graphics_ghost        ; work         ;
-;       |graphics_ghost:CLYDE|                    ; 173 (173)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_ghost:CLYDE                                                                            ; graphics_ghost        ; work         ;
-;       |graphics_ghost:INKY|                     ; 169 (169)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_ghost:INKY                                                                             ; graphics_ghost        ; work         ;
-;       |graphics_ghost:PINKY|                    ; 173 (173)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_ghost:PINKY                                                                            ; graphics_ghost        ; work         ;
-;       |graphics_ghost_LUT:GLUT|                 ; 551 (551)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_ghost_LUT:GLUT                                                                         ; graphics_ghost_LUT    ; work         ;
-;       |graphics_pacman:PACMAN|                  ; 313 (313)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|graphics_pacman:PACMAN                                                                          ; graphics_pacman       ; work         ;
-;       |lpm_divide:Div0|                         ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Div0                                                                                 ; lpm_divide            ; work         ;
-;          |lpm_divide_bsl:auto_generated|        ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated                                                   ; lpm_divide_bsl        ; work         ;
-;             |sign_div_unsign_dkh:divider|       ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated|sign_div_unsign_dkh:divider                       ; sign_div_unsign_dkh   ; work         ;
-;                |alt_u_div_4fe:divider|          ; 69 (69)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated|sign_div_unsign_dkh:divider|alt_u_div_4fe:divider ; alt_u_div_4fe         ; work         ;
-;       |lpm_divide:Mod0|                         ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Mod0                                                                                 ; lpm_divide            ; work         ;
-;          |lpm_divide_ekl:auto_generated|        ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated                                                   ; lpm_divide_ekl        ; work         ;
-;             |sign_div_unsign_dkh:divider|       ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated|sign_div_unsign_dkh:divider                       ; sign_div_unsign_dkh   ; work         ;
-;                |alt_u_div_4fe:divider|          ; 73 (73)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated|sign_div_unsign_dkh:divider|alt_u_div_4fe:divider ; alt_u_div_4fe         ; work         ;
-;    |maze:MAZEPIN|                               ; 16457 (16457)       ; 947 (947)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|maze:MAZEPIN                                                                                                        ; maze                  ; work         ;
-;    |vga:DISPLAY|                                ; 60 (60)             ; 20 (20)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga:DISPLAY                                                                                                         ; vga                   ; work         ;
-;    |vga_ram:RAM_VGA|                            ; 196 (89)            ; 13 (1)                    ; 1048576     ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA                                                                                                     ; vga_ram               ; work         ;
-;       |ram_ip:PING|                             ; 52 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING                                                                                         ; ram_ip                ; work         ;
-;          |altsyncram:altsyncram_component|      ; 52 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component                                                         ; altsyncram            ; work         ;
-;             |altsyncram_end1:auto_generated|    ; 52 (0)              ; 6 (6)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                          ; altsyncram_end1       ; work         ;
-;                |decode_aj9:rden_decode|         ; 11 (11)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode   ; decode_aj9            ; work         ;
-;                |decode_h7a:decode3|             ; 9 (9)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3       ; decode_h7a            ; work         ;
-;                |mux_12b:mux2|                   ; 32 (32)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2             ; mux_12b               ; work         ;
-;       |ram_ip:PONG|                             ; 55 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG                                                                                         ; ram_ip                ; work         ;
-;          |altsyncram:altsyncram_component|      ; 55 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component                                                         ; altsyncram            ; work         ;
-;             |altsyncram_end1:auto_generated|    ; 55 (0)              ; 6 (6)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                          ; altsyncram_end1       ; work         ;
-;                |decode_aj9:rden_decode|         ; 11 (11)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode   ; decode_aj9            ; work         ;
-;                |decode_h7a:decode3|             ; 12 (12)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3       ; decode_h7a            ; work         ;
-;                |mux_12b:mux2|                   ; 32 (32)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2             ; mux_12b               ; work         ;
-+-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                                          ;
++-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+--------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
+; Compilation Hierarchy Node                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                                                            ; Entity Name           ; Library Name ;
++-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+--------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
+; |pacman_top                                     ; 22438 (14)          ; 1690 (6)                  ; 1048576     ; 0          ; 26           ; 26      ; 0         ; 31   ; 0            ; 0          ; |pacman_top                                                                                                                    ; pacman_top            ; work         ;
+;    |clk_controller:CLK_CTRL|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL                                                                                            ; clk_controller        ; work         ;
+;       |altpll:altpll_component|                 ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component                                                                    ; altpll                ; work         ;
+;          |clk_controller_altpll:auto_generated| ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_controller:CLK_CTRL|altpll:altpll_component|clk_controller_altpll:auto_generated                               ; clk_controller_altpll ; work         ;
+;    |clk_vga:CLK_VGA|                            ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA                                                                                                    ; clk_vga               ; work         ;
+;       |altpll:altpll_component|                 ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA|altpll:altpll_component                                                                            ; altpll                ; work         ;
+;          |clk_vga_altpll:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clk_vga:CLK_VGA|altpll:altpll_component|clk_vga_altpll:auto_generated                                              ; clk_vga_altpll        ; work         ;
+;    |clockDivider:CLK_GAME|                      ; 59 (59)             ; 33 (33)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|clockDivider:CLK_GAME                                                                                              ; clockDivider          ; work         ;
+;    |controller_bongo:BONGOCTRL|                 ; 38 (38)             ; 14 (14)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|controller_bongo:BONGOCTRL                                                                                         ; controller_bongo      ; work         ;
+;    |controller_nes:NESCTRL|                     ; 17 (17)             ; 12 (12)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|controller_nes:NESCTRL                                                                                             ; controller_nes        ; work         ;
+;    |game_ghost:BLINKY|                          ; 758 (641)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY                                                                                                  ; game_ghost            ; work         ;
+;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0                                                                                  ; lpm_divide            ; work         ;
+;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                    ; lpm_divide_pll        ; work         ;
+;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                        ; sign_div_unsign_olh   ; work         ;
+;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider  ; alt_u_div_qhe         ; work         ;
+;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult11                                                                                  ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult11|mult_tds:auto_generated                                                          ; mult_tds              ; work         ;
+;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult12                                                                                  ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult12|mult_tds:auto_generated                                                          ; mult_tds              ; work         ;
+;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult6                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult6|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult7                                                                                   ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult7|mult_pds:auto_generated                                                           ; mult_pds              ; work         ;
+;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult8                                                                                   ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult8|mult_pds:auto_generated                                                           ; mult_pds              ; work         ;
+;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:BLINKY|lpm_mult:Mult9|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;    |game_ghost:CLYDE|                           ; 808 (691)           ; 95 (95)                   ; 0           ; 0          ; 8            ; 8       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE                                                                                                   ; game_ghost            ; work         ;
+;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0                                                                                   ; lpm_divide            ; work         ;
+;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                     ; lpm_divide_pll        ; work         ;
+;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                         ; sign_div_unsign_olh   ; work         ;
+;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider   ; alt_u_div_qhe         ; work         ;
+;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult11                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult11|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult12                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult12|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;       |lpm_mult:Mult14|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult14                                                                                   ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult14|mult_pds:auto_generated                                                           ; mult_pds              ; work         ;
+;       |lpm_mult:Mult15|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult15                                                                                   ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult15|mult_pds:auto_generated                                                           ; mult_pds              ; work         ;
+;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult6                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult6|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult7                                                                                    ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult7|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
+;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult8                                                                                    ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult8|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
+;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult9                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:CLYDE|lpm_mult:Mult9|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;    |game_ghost:INKY|                            ; 896 (779)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY                                                                                                    ; game_ghost            ; work         ;
+;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0                                                                                    ; lpm_divide            ; work         ;
+;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                      ; lpm_divide_pll        ; work         ;
+;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                          ; sign_div_unsign_olh   ; work         ;
+;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider    ; alt_u_div_qhe         ; work         ;
+;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult11                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult11|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult12                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult12|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult6                                                                                     ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult6|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
+;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult7                                                                                     ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult7|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
+;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult8                                                                                     ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult8|mult_pds:auto_generated                                                             ; mult_pds              ; work         ;
+;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9                                                                                     ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:INKY|lpm_mult:Mult9|mult_tds:auto_generated                                                             ; mult_tds              ; work         ;
+;    |game_ghost:PINKY|                           ; 781 (664)           ; 95 (95)                   ; 0           ; 0          ; 6            ; 6       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY                                                                                                   ; game_ghost            ; work         ;
+;       |lpm_divide:Mod0|                         ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0                                                                                   ; lpm_divide            ; work         ;
+;          |lpm_divide_pll:auto_generated|        ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated                                                     ; lpm_divide_pll        ; work         ;
+;             |sign_div_unsign_olh:divider|       ; 117 (0)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider                         ; sign_div_unsign_olh   ; work         ;
+;                |alt_u_div_qhe:divider|          ; 117 (117)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_divide:Mod0|lpm_divide_pll:auto_generated|sign_div_unsign_olh:divider|alt_u_div_qhe:divider   ; alt_u_div_qhe         ; work         ;
+;       |lpm_mult:Mult11|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult11                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult11|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;       |lpm_mult:Mult12|                         ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult12                                                                                   ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult12|mult_tds:auto_generated                                                           ; mult_tds              ; work         ;
+;       |lpm_mult:Mult6|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult6                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult6|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;       |lpm_mult:Mult7|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult7                                                                                    ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult7|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
+;       |lpm_mult:Mult8|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult8                                                                                    ; lpm_mult              ; work         ;
+;          |mult_pds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult8|mult_pds:auto_generated                                                            ; mult_pds              ; work         ;
+;       |lpm_mult:Mult9|                          ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9                                                                                    ; lpm_mult              ; work         ;
+;          |mult_tds:auto_generated|              ; 0 (0)               ; 0 (0)                     ; 0           ; 0          ; 1            ; 1       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_ghost:PINKY|lpm_mult:Mult9|mult_tds:auto_generated                                                            ; mult_tds              ; work         ;
+;    |game_pacman:PACMAN|                         ; 90 (90)             ; 38 (38)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|game_pacman:PACMAN                                                                                                 ; game_pacman           ; work         ;
+;    |graphics_async:BOO|                         ; 2264 (573)          ; 227 (227)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO                                                                                                 ; graphics_async        ; work         ;
+;       |graphics_ghost:BLINKY|                   ; 170 (170)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_ghost:BLINKY                                                                           ; graphics_ghost        ; work         ;
+;       |graphics_ghost:CLYDE|                    ; 173 (173)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_ghost:CLYDE                                                                            ; graphics_ghost        ; work         ;
+;       |graphics_ghost:INKY|                     ; 169 (169)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_ghost:INKY                                                                             ; graphics_ghost        ; work         ;
+;       |graphics_ghost:PINKY|                    ; 173 (173)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_ghost:PINKY                                                                            ; graphics_ghost        ; work         ;
+;       |graphics_ghost_LUT:GLUT|                 ; 551 (551)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_ghost_LUT:GLUT                                                                         ; graphics_ghost_LUT    ; work         ;
+;       |graphics_pacman:PACMAN|                  ; 313 (313)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|graphics_pacman:PACMAN                                                                          ; graphics_pacman       ; work         ;
+;       |lpm_divide:Div0|                         ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Div0                                                                                 ; lpm_divide            ; work         ;
+;          |lpm_divide_bsl:auto_generated|        ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated                                                   ; lpm_divide_bsl        ; work         ;
+;             |sign_div_unsign_dkh:divider|       ; 69 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated|sign_div_unsign_dkh:divider                       ; sign_div_unsign_dkh   ; work         ;
+;                |alt_u_div_4fe:divider|          ; 69 (69)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Div0|lpm_divide_bsl:auto_generated|sign_div_unsign_dkh:divider|alt_u_div_4fe:divider ; alt_u_div_4fe         ; work         ;
+;       |lpm_divide:Mod0|                         ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Mod0                                                                                 ; lpm_divide            ; work         ;
+;          |lpm_divide_ekl:auto_generated|        ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated                                                   ; lpm_divide_ekl        ; work         ;
+;             |sign_div_unsign_dkh:divider|       ; 73 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated|sign_div_unsign_dkh:divider                       ; sign_div_unsign_dkh   ; work         ;
+;                |alt_u_div_4fe:divider|          ; 73 (73)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|graphics_async:BOO|lpm_divide:Mod0|lpm_divide_ekl:auto_generated|sign_div_unsign_dkh:divider|alt_u_div_4fe:divider ; alt_u_div_4fe         ; work         ;
+;    |maze:MAZEPIN|                               ; 16457 (16457)       ; 947 (947)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|maze:MAZEPIN                                                                                                       ; maze                  ; work         ;
+;    |vga:DISPLAY|                                ; 60 (60)             ; 20 (20)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga:DISPLAY                                                                                                        ; vga                   ; work         ;
+;    |vga_ram:RAM_VGA|                            ; 196 (89)            ; 13 (1)                    ; 1048576     ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA                                                                                                    ; vga_ram               ; work         ;
+;       |ram_ip:PING|                             ; 52 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING                                                                                        ; ram_ip                ; work         ;
+;          |altsyncram:altsyncram_component|      ; 52 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component                                                        ; altsyncram            ; work         ;
+;             |altsyncram_end1:auto_generated|    ; 52 (0)              ; 6 (6)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                         ; altsyncram_end1       ; work         ;
+;                |decode_aj9:rden_decode|         ; 11 (11)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode  ; decode_aj9            ; work         ;
+;                |decode_h7a:decode3|             ; 9 (9)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3      ; decode_h7a            ; work         ;
+;                |mux_12b:mux2|                   ; 32 (32)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2            ; mux_12b               ; work         ;
+;       |ram_ip:PONG|                             ; 55 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG                                                                                        ; ram_ip                ; work         ;
+;          |altsyncram:altsyncram_component|      ; 55 (0)              ; 6 (0)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component                                                        ; altsyncram            ; work         ;
+;             |altsyncram_end1:auto_generated|    ; 55 (0)              ; 6 (6)                     ; 524288      ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated                         ; altsyncram_end1       ; work         ;
+;                |decode_aj9:rden_decode|         ; 11 (11)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_aj9:rden_decode  ; decode_aj9            ; work         ;
+;                |decode_h7a:decode3|             ; 12 (12)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|decode_h7a:decode3      ; decode_h7a            ; work         ;
+;                |mux_12b:mux2|                   ; 32 (32)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |pacman_top|vga_ram:RAM_VGA|ram_ip:PONG|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2            ; mux_12b               ; work         ;
++-------------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+--------------------------------------------------------------------------------------------------------------------------------+-----------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -816,7 +816,7 @@ Encoding Type:  One-Hot
 
 Encoding Type:  One-Hot
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |pacman_top|graphics_async:BOOO|scan_state                                                                                                                                                                                                                                                                                            ;
+; State Machine - |pacman_top|graphics_async:BOO|scan_state                                                                                                                                                                                                                                                                                             ;
 +-----------------------+----------------------+----------------------+----------------------+----------------------+---------------------+---------------------+----------------------+----------------------+-----------------------+-----------------------+-----------------------+-----------------------+--------------------+--------------------+
 ; Name                  ; scan_state.SCAN_IDLE ; scan_state.MAZE_SCAN ; scan_state.CLYDE_NEW ; scan_state.CLYDE_OLD ; scan_state.INKY_NEW ; scan_state.INKY_OLD ; scan_state.PINKY_NEW ; scan_state.PINKY_OLD ; scan_state.BLINKY_NEW ; scan_state.BLINKY_OLD ; scan_state.PACMAN_NEW ; scan_state.PACMAN_OLD ; scan_state.START_1 ; scan_state.START_0 ;
 +-----------------------+----------------------+----------------------+----------------------+----------------------+---------------------+---------------------+----------------------+----------------------+-----------------------+-----------------------+-----------------------+-----------------------+--------------------+--------------------+
@@ -1691,10 +1691,10 @@ Encoding Type:  One-Hot
 ; game_ghost:BLINKY|state~2                ; Lost fanout                                          ;
 ; game_ghost:BLINKY|state~3                ; Lost fanout                                          ;
 ; game_ghost:BLINKY|state~4                ; Lost fanout                                          ;
-; graphics_async:BOOO|scan_state~2         ; Lost fanout                                          ;
-; graphics_async:BOOO|scan_state~3         ; Lost fanout                                          ;
-; graphics_async:BOOO|scan_state~4         ; Lost fanout                                          ;
-; graphics_async:BOOO|scan_state~5         ; Lost fanout                                          ;
+; graphics_async:BOO|scan_state~2          ; Lost fanout                                          ;
+; graphics_async:BOO|scan_state~3          ; Lost fanout                                          ;
+; graphics_async:BOO|scan_state~4          ; Lost fanout                                          ;
+; graphics_async:BOO|scan_state~5          ; Lost fanout                                          ;
 ; game_ghost:CLYDE|state_prev.STATE_CHASE  ; Lost fanout                                          ;
 ; game_ghost:CLYDE|state_prev.STATE_FRGHT  ; Lost fanout                                          ;
 ; game_ghost:CLYDE|state_prev.STATE_SCORE  ; Lost fanout                                          ;
@@ -2100,132 +2100,132 @@ Encoding Type:  One-Hot
 +-----------------------------------------+---------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                      ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|lfsr_state[6]      ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|lfsr_state[12]      ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|lfsr_state[4]      ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|lfsr_state[7]     ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|controller_nes:NESCTRL|counter[0]   ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|hc[1]                   ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|vc[2]                   ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|game_pacman:PACMAN|anim_cycle[0]    ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:CLYDE|timer_frt[0]       ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:INKY|timer_frt[2]        ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:PINKY|timer_frt[7]       ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:BLINKY|timer_frt[6]      ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|game_pacman:PACMAN|dir_queue[0]     ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 9 LEs                ; 27 LEs                 ; Yes        ; |pacman_top|graphics_async:BOOO|scan_counter[6] ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|dir[1]             ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|dir[1]              ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|dir[1]             ;
-; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|dir[1]            ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[434][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[435][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[462][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[463][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[464][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[465][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[466][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[467][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[492][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[493][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[494][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[495][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[496][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[497][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[522][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[523][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[524][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[525][1]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[526][0]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[527][1]        ;
-; 3:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|target_xtile[2]   ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|next_state       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|state_prev         ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|state_prev          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|state_prev         ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|state_prev        ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|Mux1             ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|dir_d[0]         ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOOO|color[4]        ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; No         ; |pacman_top|controller_bongo:BONGOCTRL|index_d  ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|movespeed[1]       ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|movespeed[0]        ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|movespeed[1]       ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|movespeed[1]      ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[0]     ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[11]    ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[5]      ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[11]     ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[0]     ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[11]    ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[3]    ;
-; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[9]    ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_rt        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_lt        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_up        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_dn        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_rt         ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_lt         ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_up         ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_dn         ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_rt        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_lt        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_up        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_dn        ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_rt       ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_lt       ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_up       ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_dn       ;
-; 4:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|target_ytile[0]    ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|vga:DISPLAY|red[2]                  ;
-; 6:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_pacman:PACMAN|yloc_d[1]        ;
-; 6:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_pacman:PACMAN|xloc_d[2]        ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOOO|color[3]        ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add67              ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|Add67              ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add66              ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|Add66              ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|Add67               ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|Add67               ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|Add66               ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|Add66               ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|Add67              ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|Add67              ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|Add66              ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|Add66              ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|Add67             ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add67             ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|Add66             ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add66             ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|yloc_d[2]          ;
-; 7:1                ; 5 bits    ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[2]          ;
-; 7:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[4]          ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|yloc_d[0]           ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|xloc_d[6]           ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|yloc_d[7]          ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|xloc_d[0]          ;
-; 7:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[8]         ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[3]         ;
-; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|xloc_d[4]         ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[1]    ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[2]    ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[0]    ;
-; 8:1                ; 3 bits    ; 15 LEs        ; 12 LEs               ; 3 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[3]    ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |pacman_top|graphics_async:BOOO|color[1]        ;
-; 8:1                ; 6 bits    ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_xtile[0]     ;
-; 10:1               ; 6 bits    ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_ytile[5]     ;
-; 13:1               ; 3 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOOO|Selector13      ;
-; 14:1               ; 14 bits   ; 126 LEs       ; 112 LEs              ; 14 LEs                 ; No         ; |pacman_top|graphics_async:BOOO|Selector23      ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:CLYDE|Selector8          ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:INKY|Selector17          ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:PINKY|Selector11         ;
-; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:BLINKY|Selector9         ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|lfsr_state[6]     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|lfsr_state[12]     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|lfsr_state[4]     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|lfsr_state[7]    ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|controller_nes:NESCTRL|counter[0]  ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|hc[1]                  ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |pacman_top|vga:DISPLAY|vc[2]                  ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|game_pacman:PACMAN|anim_cycle[0]   ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:CLYDE|timer_frt[0]      ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:INKY|timer_frt[2]       ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:PINKY|timer_frt[7]      ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; Yes        ; |pacman_top|game_ghost:BLINKY|timer_frt[6]     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|game_pacman:PACMAN|dir_queue[0]    ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 9 LEs                ; 27 LEs                 ; Yes        ; |pacman_top|graphics_async:BOO|scan_counter[6] ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:CLYDE|dir[1]            ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:INKY|dir[1]             ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:PINKY|dir[1]            ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |pacman_top|game_ghost:BLINKY|dir[1]           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[434][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[435][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[462][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[463][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[464][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[465][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[466][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[467][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[492][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[493][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[494][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[495][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[496][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[497][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[522][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[523][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[524][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[525][1]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[526][0]       ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |pacman_top|maze:MAZEPIN|pellets[527][1]       ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|target_xtile[2]  ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|next_state      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|state_prev        ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|state_prev         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|state_prev        ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|state_prev       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|Mux1            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_pacman:PACMAN|dir_d[0]        ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOO|color[4]        ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; No         ; |pacman_top|controller_bongo:BONGOCTRL|index_d ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|movespeed[1]      ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|movespeed[0]       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|movespeed[1]      ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|movespeed[1]     ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[0]    ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|tile_checks[11]   ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[5]     ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:INKY|tile_checks[11]    ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[0]    ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|tile_checks[11]   ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[3]   ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|tile_checks[9]   ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_rt       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_lt       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_up       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|distance_dn       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_rt        ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_lt        ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_up        ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:INKY|distance_dn        ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_rt       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_lt       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_up       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|distance_dn       ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_rt      ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_lt      ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_up      ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|distance_dn      ;
+; 4:1                ; 12 bits   ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|target_ytile[0]   ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|vga:DISPLAY|red[2]                 ;
+; 6:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_pacman:PACMAN|yloc_d[1]       ;
+; 6:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_pacman:PACMAN|xloc_d[2]       ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOO|color[3]        ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add67             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|Add67             ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|Add66             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|Add66             ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|Add67              ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|Add67              ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|Add66              ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|Add66              ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|Add67             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|Add67             ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|Add66             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|Add66             ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|Add67            ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add67            ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|Add66            ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|Add66            ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|yloc_d[2]         ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[2]         ;
+; 7:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:CLYDE|xloc_d[4]         ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|yloc_d[0]          ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:INKY|xloc_d[6]          ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|yloc_d[7]         ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; No         ; |pacman_top|game_ghost:PINKY|xloc_d[0]         ;
+; 7:1                ; 7 bits    ; 28 LEs        ; 14 LEs               ; 14 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[8]        ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:BLINKY|yloc_d[3]        ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |pacman_top|game_ghost:BLINKY|xloc_d[4]        ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[1]   ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_ytile[2]   ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 6 LEs                ; 4 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[0]   ;
+; 8:1                ; 3 bits    ; 15 LEs        ; 12 LEs               ; 3 LEs                  ; No         ; |pacman_top|game_ghost:PINKY|target_xtile[3]   ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; |pacman_top|graphics_async:BOO|color[1]        ;
+; 8:1                ; 6 bits    ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_xtile[0]    ;
+; 10:1               ; 6 bits    ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |pacman_top|game_ghost:INKY|target_ytile[5]    ;
+; 13:1               ; 3 bits    ; 24 LEs        ; 24 LEs               ; 0 LEs                  ; No         ; |pacman_top|graphics_async:BOO|Selector13      ;
+; 14:1               ; 14 bits   ; 126 LEs       ; 112 LEs              ; 14 LEs                 ; No         ; |pacman_top|graphics_async:BOO|Selector23      ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:CLYDE|Selector8         ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:INKY|Selector17         ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:PINKY|Selector11        ;
+; 23:1               ; 11 bits   ; 165 LEs       ; 22 LEs               ; 143 LEs                ; No         ; |pacman_top|game_ghost:BLINKY|Selector9        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 
 
 +-------------------------------------------------------------------------------------------------------------------+
@@ -3126,49 +3126,49 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+--------------------------------------------------------------------------------------+
-; Parameter Settings for Inferred Entity Instance: graphics_async:BOOO|lpm_divide:Div0 ;
-+------------------------+----------------+--------------------------------------------+
-; Parameter Name         ; Value          ; Type                                       ;
-+------------------------+----------------+--------------------------------------------+
-; LPM_WIDTHN             ; 9              ; Untyped                                    ;
-; LPM_WIDTHD             ; 5              ; Untyped                                    ;
-; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
-; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
-; LPM_PIPELINE           ; 0              ; Untyped                                    ;
-; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
-; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
-; CBXI_PARAMETER         ; lpm_divide_bsl ; Untyped                                    ;
-; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
-; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
-; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
-; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
-; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
-; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
-+------------------------+----------------+--------------------------------------------+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: graphics_async:BOO|lpm_divide:Div0 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 9              ; Untyped                                   ;
+; LPM_WIDTHD             ; 5              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_bsl ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+--------------------------------------------------------------------------------------+
-; Parameter Settings for Inferred Entity Instance: graphics_async:BOOO|lpm_divide:Mod0 ;
-+------------------------+----------------+--------------------------------------------+
-; Parameter Name         ; Value          ; Type                                       ;
-+------------------------+----------------+--------------------------------------------+
-; LPM_WIDTHN             ; 9              ; Untyped                                    ;
-; LPM_WIDTHD             ; 5              ; Untyped                                    ;
-; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
-; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
-; LPM_PIPELINE           ; 0              ; Untyped                                    ;
-; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
-; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
-; CBXI_PARAMETER         ; lpm_divide_ekl ; Untyped                                    ;
-; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
-; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
-; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
-; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
-; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
-; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
-+------------------------+----------------+--------------------------------------------+
++-------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: graphics_async:BOO|lpm_divide:Mod0 ;
++------------------------+----------------+-------------------------------------------+
+; Parameter Name         ; Value          ; Type                                      ;
++------------------------+----------------+-------------------------------------------+
+; LPM_WIDTHN             ; 9              ; Untyped                                   ;
+; LPM_WIDTHD             ; 5              ; Untyped                                   ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                   ;
+; LPM_PIPELINE           ; 0              ; Untyped                                   ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                   ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                   ;
+; CBXI_PARAMETER         ; lpm_divide_ekl ; Untyped                                   ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                   ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                   ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                              ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                              ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                            ;
++------------------------+----------------+-------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -4587,46 +4587,46 @@ Note: In order to hide this table in the UI and the text report file, please set
 +--------------+-------+----------+-----------------+
 
 
-+----------------------------------------------------------------------+
-; Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:CLYDE" ;
-+-------------+-------+----------+-------------------------------------+
-; Port        ; Type  ; Severity ; Details                             ;
-+-------------+-------+----------+-------------------------------------+
-; ghost_color ; Input ; Info     ; Stuck at VCC                        ;
-+-------------+-------+----------+-------------------------------------+
++---------------------------------------------------------------------+
+; Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:CLYDE" ;
++-------------+-------+----------+------------------------------------+
+; Port        ; Type  ; Severity ; Details                            ;
++-------------+-------+----------+------------------------------------+
+; ghost_color ; Input ; Info     ; Stuck at VCC                       ;
++-------------+-------+----------+------------------------------------+
+
+
++--------------------------------------------------------------------+
+; Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:INKY" ;
++----------------+-------+----------+--------------------------------+
+; Port           ; Type  ; Severity ; Details                        ;
++----------------+-------+----------+--------------------------------+
+; ghost_color[1] ; Input ; Info     ; Stuck at VCC                   ;
+; ghost_color[0] ; Input ; Info     ; Stuck at GND                   ;
++----------------+-------+----------+--------------------------------+
 
 
 +---------------------------------------------------------------------+
-; Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:INKY" ;
+; Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:PINKY" ;
 +----------------+-------+----------+---------------------------------+
 ; Port           ; Type  ; Severity ; Details                         ;
 +----------------+-------+----------+---------------------------------+
-; ghost_color[1] ; Input ; Info     ; Stuck at VCC                    ;
-; ghost_color[0] ; Input ; Info     ; Stuck at GND                    ;
+; ghost_color[1] ; Input ; Info     ; Stuck at GND                    ;
+; ghost_color[0] ; Input ; Info     ; Stuck at VCC                    ;
 +----------------+-------+----------+---------------------------------+
 
 
 +----------------------------------------------------------------------+
-; Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:PINKY" ;
-+----------------+-------+----------+----------------------------------+
-; Port           ; Type  ; Severity ; Details                          ;
-+----------------+-------+----------+----------------------------------+
-; ghost_color[1] ; Input ; Info     ; Stuck at GND                     ;
-; ghost_color[0] ; Input ; Info     ; Stuck at VCC                     ;
-+----------------+-------+----------+----------------------------------+
-
-
-+-----------------------------------------------------------------------+
-; Port Connectivity Checks: "graphics_async:BOOO|graphics_ghost:BLINKY" ;
-+-------------+-------+----------+--------------------------------------+
-; Port        ; Type  ; Severity ; Details                              ;
-+-------------+-------+----------+--------------------------------------+
-; ghost_color ; Input ; Info     ; Stuck at GND                         ;
-+-------------+-------+----------+--------------------------------------+
+; Port Connectivity Checks: "graphics_async:BOO|graphics_ghost:BLINKY" ;
++-------------+-------+----------+-------------------------------------+
+; Port        ; Type  ; Severity ; Details                             ;
++-------------+-------+----------+-------------------------------------+
+; ghost_color ; Input ; Info     ; Stuck at GND                        ;
++-------------+-------+----------+-------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "graphics_async:BOOO"                                                                                                                                                               ;
+; Port Connectivity Checks: "graphics_async:BOO"                                                                                                                                                                ;
 +------------------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Port             ; Type   ; Severity ; Details                                                                                                                                                                ;
 +------------------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4710,7 +4710,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:44     ;
+; Top            ; 00:00:43     ;
 +----------------+--------------+
 
 
@@ -4720,7 +4720,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
-    Info: Processing started: Sun May 19 02:39:02 2024
+    Info: Processing started: Sun May 19 02:54:57 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pacman -c pacman_top
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
@@ -4966,7 +4966,7 @@ Info (12128): Elaborating entity "decode_aj9" for hierarchy "vga_ram:RAM_VGA|ram
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_12b.tdf
     Info (12023): Found entity 1: mux_12b File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/mux_12b.tdf Line: 23
 Info (12128): Elaborating entity "mux_12b" for hierarchy "vga_ram:RAM_VGA|ram_ip:PING|altsyncram:altsyncram_component|altsyncram_end1:auto_generated|mux_12b:mux2" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/altsyncram_end1.tdf Line: 47
-Info (12128): Elaborating entity "graphics_async" for hierarchy "graphics_async:BOOO" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 259
+Info (12128): Elaborating entity "graphics_async" for hierarchy "graphics_async:BOO" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 261
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(277): truncated value with size 32 to match size of target (9) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 277
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(278): truncated value with size 10 to match size of target (9) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 278
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(281): truncated value with size 32 to match size of target (9) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 281
@@ -5005,18 +5005,18 @@ Warning (10230): Verilog HDL assignment warning at graphics_async.sv(502): trunc
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(503): truncated value with size 32 to match size of target (9) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 503
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(548): truncated value with size 32 to match size of target (16) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 548
 Warning (10230): Verilog HDL assignment warning at graphics_async.sv(550): truncated value with size 32 to match size of target (16) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 550
-Info (12128): Elaborating entity "graphics_ghost_LUT" for hierarchy "graphics_async:BOOO|graphics_ghost_LUT:GLUT" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 164
+Info (12128): Elaborating entity "graphics_ghost_LUT" for hierarchy "graphics_async:BOO|graphics_ghost_LUT:GLUT" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 164
 Warning (12125): Using design file graphics_ghost.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: graphics_ghost File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_ghost.sv Line: 1
-Info (12128): Elaborating entity "graphics_ghost" for hierarchy "graphics_async:BOOO|graphics_ghost:BLINKY" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 176
+Info (12128): Elaborating entity "graphics_ghost" for hierarchy "graphics_async:BOO|graphics_ghost:BLINKY" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 176
 Warning (12125): Using design file graphics_pacman.sv, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: graphics_pacman File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 1
-Info (12128): Elaborating entity "graphics_pacman" for hierarchy "graphics_async:BOOO|graphics_pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 217
+Info (12128): Elaborating entity "graphics_pacman" for hierarchy "graphics_async:BOO|graphics_pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 217
 Warning (10030): Net "pacman_frames.data_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
 Warning (10030): Net "pacman_frames.waddr_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
 Warning (10030): Net "pacman_frames.we_a" at graphics_pacman.sv(30) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
-Info (12128): Elaborating entity "clockDivider" for hierarchy "clockDivider:CLK_GAME" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 261
-Info (12128): Elaborating entity "maze" for hierarchy "maze:MAZEPIN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 283
+Info (12128): Elaborating entity "clockDivider" for hierarchy "clockDivider:CLK_GAME" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 263
+Info (12128): Elaborating entity "maze" for hierarchy "maze:MAZEPIN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 285
 Warning (10230): Verilog HDL assignment warning at maze.sv(147): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 147
 Warning (10230): Verilog HDL assignment warning at maze.sv(148): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 148
 Warning (10030): Net "maze_walls.data_a" at maze.sv(93) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 93
@@ -5028,14 +5028,14 @@ Warning (10030): Net "maze.waddr_a" at maze.sv(142) has no driver or initial val
 Warning (10030): Net "maze_walls.we_a" at maze.sv(93) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 93
 Warning (10030): Net "house_walls.we_a" at maze.sv(102) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 102
 Warning (10030): Net "maze.we_a" at maze.sv(142) has no driver or initial value, using a default initial value '0' File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 142
-Info (12128): Elaborating entity "game_ghost" for hierarchy "game_ghost:BLINKY" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 299
+Info (12128): Elaborating entity "game_ghost" for hierarchy "game_ghost:BLINKY" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 301
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(57): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 57
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(58): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 58
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(149): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 149
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(150): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 150
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(173): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 173
 Warning (10230): Verilog HDL assignment warning at game_ghost.sv(174): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 174
-Info (12128): Elaborating entity "game_pacman" for hierarchy "game_pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 365
+Info (12128): Elaborating entity "game_pacman" for hierarchy "game_pacman:PACMAN" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 367
 Warning (10230): Verilog HDL assignment warning at game_pacman.sv(53): truncated value with size 9 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv Line: 53
 Warning (10230): Verilog HDL assignment warning at game_pacman.sv(54): truncated value with size 32 to match size of target (6) File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv Line: 54
 Warning (13046): Tri-state node(s) do not directly drive top-level pin(s)
@@ -5061,10 +5061,10 @@ Info (276014): Found 4 instances of uninferred RAM logic
     Info (276013): RAM logic "maze:MAZEPIN|maze_walls" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 93
     Info (276013): RAM logic "maze:MAZEPIN|house_walls" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 102
     Info (276013): RAM logic "maze:MAZEPIN|maze" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 142
-    Info (276013): RAM logic "graphics_async:BOOO|graphics_pacman:PACMAN|pacman_frames" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
+    Info (276013): RAM logic "graphics_async:BOO|graphics_pacman:PACMAN|pacman_frames" is uninferred because MIF is not supported for the selected family File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv Line: 30
 Info (278001): Inferred 32 megafunctions from design logic
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "graphics_async:BOOO|Div0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "graphics_async:BOOO|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "graphics_async:BOO|Div0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "graphics_async:BOO|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "game_ghost:PINKY|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 399
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "game_ghost:CLYDE|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 399
     Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "game_ghost:INKY|Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 399
@@ -5095,8 +5095,8 @@ Info (278001): Inferred 32 megafunctions from design logic
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "game_ghost:BLINKY|Mult12" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 697
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "game_ghost:CLYDE|Mult14" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 856
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "game_ghost:CLYDE|Mult15" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv Line: 856
-Info (12130): Elaborated megafunction instantiation "graphics_async:BOOO|lpm_divide:Div0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
-Info (12133): Instantiated megafunction "graphics_async:BOOO|lpm_divide:Div0" with the following parameter: File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
+Info (12130): Elaborated megafunction instantiation "graphics_async:BOO|lpm_divide:Div0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
+Info (12133): Instantiated megafunction "graphics_async:BOO|lpm_divide:Div0" with the following parameter: File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 326
     Info (12134): Parameter "LPM_WIDTHN" = "9"
     Info (12134): Parameter "LPM_WIDTHD" = "5"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
@@ -5111,8 +5111,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/add_
     Info (12023): Found entity 1: add_sub_t3c File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/add_sub_t3c.tdf Line: 23
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_u3c.tdf
     Info (12023): Found entity 1: add_sub_u3c File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/db/add_sub_u3c.tdf Line: 23
-Info (12130): Elaborated megafunction instantiation "graphics_async:BOOO|lpm_divide:Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
-Info (12133): Instantiated megafunction "graphics_async:BOOO|lpm_divide:Mod0" with the following parameter: File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
+Info (12130): Elaborated megafunction instantiation "graphics_async:BOO|lpm_divide:Mod0" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
+Info (12133): Instantiated megafunction "graphics_async:BOO|lpm_divide:Mod0" with the following parameter: File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 325
     Info (12134): Parameter "LPM_WIDTHN" = "9"
     Info (12134): Parameter "LPM_WIDTHD" = "5"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
@@ -5200,10 +5200,10 @@ Info (21057): Implemented 23051 device resources after synthesis - the final res
     Info (21065): Implemented 2 PLLs
     Info (21062): Implemented 26 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 135 warnings
-    Info: Peak virtual memory: 5029 megabytes
-    Info: Processing ended: Sun May 19 02:39:53 2024
-    Info: Elapsed time: 00:00:51
-    Info: Total CPU time (on all processors): 00:00:22
+    Info: Peak virtual memory: 5050 megabytes
+    Info: Processing ended: Sun May 19 02:55:46 2024
+    Info: Elapsed time: 00:00:49
+    Info: Total CPU time (on all processors): 00:00:26
 
 
 +------------------------------------------+

@@ -1,4 +1,4 @@
-module graphics (
+module graphics_old (
     input clk, 
     input rst, 
 	 
@@ -46,11 +46,10 @@ module graphics (
     input [7:0] maze_color,
     
     output reg [7:0] color,
+    output reg [8:0] xpos, 
+    output reg [8:0] ypos,
     output reg [15:0] address
 );
-
-reg [8:0] xpos;
-reg [8:0] ypos;
 
 wire [8:0] pacman_xloc  = pacman_inputs [22:14];
 wire [8:0] pacman_yloc  = pacman_inputs [13:5];     

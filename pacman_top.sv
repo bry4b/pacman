@@ -218,7 +218,7 @@ clk_vga CLK_VGA(clk, vgaclk);
 vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
 vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 
-// graphics BOO(
+// graphics_old BOO(
 //     .clk (vgaclk), 
 //     .rst (~rst), 
 //     .hc (hc), 
@@ -233,10 +233,12 @@ vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 //     .maze_color (maze_color), 
 
 //     .color (color), 
+//     .xpos (xpos), 
+//     .ypos (ypos),
 //     .address (address)
 // );
 
-graphics_async BOOO(
+graphics_async BOO(
     .vgaclk (vgaclk), 
     .gameclk (gameclk),
     .rst (~rst), 

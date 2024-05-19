@@ -10,33 +10,33 @@ rst => game_ghost:CLYDE.rst
 rst => game_pacman:PACMAN.reset
 btn => ~NO_FANOUT~
 nes_data => nes_data.IN1
-nes_latch << controller_nes:NESCTRL.latch_out
-nes_pulse << controller_nes:NESCTRL.pulse_out
+nes_latch <= controller_nes:NESCTRL.latch_out
+nes_pulse <= controller_nes:NESCTRL.pulse_out
 gamecube_data <> controller_bongo:BONGOCTRL.data
-hsync << vga:DISPLAY.port7
-vsync << vga:DISPLAY.port8
-red[0] << vga:DISPLAY.port9
-red[1] << vga:DISPLAY.port9
-red[2] << vga:DISPLAY.port9
-red[3] << vga:DISPLAY.port9
-green[0] << vga:DISPLAY.port10
-green[1] << vga:DISPLAY.port10
-green[2] << vga:DISPLAY.port10
-green[3] << vga:DISPLAY.port10
-blue[0] << vga:DISPLAY.port11
-blue[1] << vga:DISPLAY.port11
-blue[2] << vga:DISPLAY.port11
-blue[3] << vga:DISPLAY.port11
-leds[0] << <GND>
-leds[1] << <GND>
-leds[2] << <GND>
-leds[3] << <GND>
-leds[4] << <GND>
-leds[5] << <GND>
-leds[6] << <GND>
-leds[7] << <GND>
-leds[8] << <GND>
-leds[9] << <GND>
+hsync <= vga:DISPLAY.port7
+vsync <= vga:DISPLAY.port8
+red[0] <= vga:DISPLAY.port9
+red[1] <= vga:DISPLAY.port9
+red[2] <= vga:DISPLAY.port9
+red[3] <= vga:DISPLAY.port9
+green[0] <= vga:DISPLAY.port10
+green[1] <= vga:DISPLAY.port10
+green[2] <= vga:DISPLAY.port10
+green[3] <= vga:DISPLAY.port10
+blue[0] <= vga:DISPLAY.port11
+blue[1] <= vga:DISPLAY.port11
+blue[2] <= vga:DISPLAY.port11
+blue[3] <= vga:DISPLAY.port11
+leds[0] <= <GND>
+leds[1] <= <GND>
+leds[2] <= <GND>
+leds[3] <= <GND>
+leds[4] <= <GND>
+leds[5] <= <GND>
+leds[6] <= <GND>
+leds[7] <= <GND>
+leds[8] <= <GND>
+leds[9] <= <GND>
 
 
 |pacman_top|clk_controller:CLK_CTRL
@@ -3480,7 +3480,7 @@ sel[2] => result_node[0].IN0
 sel[2] => _.IN0
 
 
-|pacman_top|graphics_async:BOOO
+|pacman_top|graphics_async:BOO
 vgaclk => clyde_prev[5].CLK
 vgaclk => clyde_prev[6].CLK
 vgaclk => clyde_prev[7].CLK
@@ -3975,7 +3975,7 @@ address[14] <= address.DB_MAX_OUTPUT_PORT_TYPE
 address[15] <= address.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_ghost_LUT:GLUT
+|pacman_top|graphics_async:BOO|graphics_ghost_LUT:GLUT
 blinky_in[0] => LessThan0.IN20
 blinky_in[0] => Mux0.IN1033
 blinky_in[0] => Mux1.IN1033
@@ -4198,7 +4198,7 @@ clyde_out[1] <= clyde_out.DB_MAX_OUTPUT_PORT_TYPE
 clyde_out[2] <= clyde_out.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_ghost:BLINKY
+|pacman_top|graphics_async:BOO|graphics_ghost:BLINKY
 xpos[0] => LessThan1.IN64
 xpos[0] => LessThan2.IN17
 xpos[0] => Add12.IN18
@@ -4401,7 +4401,7 @@ color[6] <= color.DB_MAX_OUTPUT_PORT_TYPE
 color[7] <= color.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_ghost:PINKY
+|pacman_top|graphics_async:BOO|graphics_ghost:PINKY
 xpos[0] => LessThan1.IN64
 xpos[0] => LessThan2.IN17
 xpos[0] => Add12.IN18
@@ -4604,7 +4604,7 @@ color[6] <= color.DB_MAX_OUTPUT_PORT_TYPE
 color[7] <= color.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_ghost:INKY
+|pacman_top|graphics_async:BOO|graphics_ghost:INKY
 xpos[0] => LessThan1.IN64
 xpos[0] => LessThan2.IN17
 xpos[0] => Add12.IN18
@@ -4807,7 +4807,7 @@ color[6] <= color.DB_MAX_OUTPUT_PORT_TYPE
 color[7] <= color.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_ghost:CLYDE
+|pacman_top|graphics_async:BOO|graphics_ghost:CLYDE
 xpos[0] => LessThan1.IN64
 xpos[0] => LessThan2.IN17
 xpos[0] => Add12.IN18
@@ -5010,7 +5010,7 @@ color[6] <= color.DB_MAX_OUTPUT_PORT_TYPE
 color[7] <= color.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|pacman_top|graphics_async:BOOO|graphics_pacman:PACMAN
+|pacman_top|graphics_async:BOO|graphics_pacman:PACMAN
 xpos[0] => LessThan1.IN64
 xpos[0] => LessThan2.IN20
 xpos[0] => Add26.IN18
