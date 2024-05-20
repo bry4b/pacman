@@ -53,7 +53,6 @@ module game_ghost (
 );
 
 // input unpacking
-
 wire [5:0] pacman_xtile = pacman_inputs [19:11] >> 2'd3;
 wire [5:0] pacman_ytile = (pacman_inputs [10:2] >> 2'd3) - 2'd3; 
 wire [1:0] pacman_dir = pacman_inputs [1:0];
@@ -64,21 +63,20 @@ wire [8:0] blinky_yloc = blinky_pos [8:0];
 // output packing
 wire [5:0] xtile_next; 
 wire [5:0] ytile_next;
+assign tile_checks = {xtile_next, ytile_next};
 
 wire [8:0] xloc;
 wire [8:0] yloc;
 wire [1:0] dir;
 wire [1:0] mode;
 wire flash;          
+assign ghost_outputs = {xloc, yloc, dir, mode, flash};
 
 wire [8:0] xloc_d;
 wire [8:0] yloc_d;
 wire [1:0] dir_d;
 wire [1:0] mode_d;
 wire flash_d;
-
-assign tile_checks = {xtile_next, ytile_next};
-assign ghost_outputs = {xloc, yloc, dir, mode, flash};
 
 wire eaten_d;
 
@@ -430,7 +428,7 @@ always_comb begin
         STATE_RSPWN: begin
             if (rst || (xtile == 'd14 && ytile == 'd16) )begin
                 state_d = STATE_START;
-                mode_d = NORM;
+                mode_d = DEAD;
             end else begin
                 state_d = STATE_RSPWN;
                 mode_d = DEAD;

@@ -1,5 +1,5 @@
 Flow report for pacman_top
-Sun May 19 02:57:20 2024
+Mon May 20 16:13:23 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -41,24 +41,24 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Sun May 19 02:57:20 2024       ;
+; Flow Status                        ; Successful - Mon May 20 16:13:23 2024       ;
 ; Quartus Prime Version              ; 21.1.0 Build 842 10/21/2021 SJ Lite Edition ;
 ; Revision Name                      ; pacman_top                                  ;
 ; Top-level Entity Name              ; pacman_top                                  ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DAF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 22,546 / 49,760 ( 45 % )                    ;
-;     Total combinational functions  ; 22,438 / 49,760 ( 45 % )                    ;
-;     Dedicated logic registers      ; 1,690 / 49,760 ( 3 % )                      ;
-; Total registers                    ; 1690                                        ;
-; Total pins                         ; 31 / 360 ( 9 % )                            ;
+; Total logic elements               ; 23,524                                      ;
+;     Total combinational functions  ; 23,147                                      ;
+;     Dedicated logic registers      ; 1,781                                       ;
+; Total registers                    ; 1781                                        ;
+; Total pins                         ; 41                                          ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 1,048,576 / 1,677,312 ( 63 % )              ;
-; Embedded Multiplier 9-bit elements ; 26 / 288 ( 9 % )                            ;
-; Total PLLs                         ; 2 / 4 ( 50 % )                              ;
-; UFM blocks                         ; 0 / 1 ( 0 % )                               ;
-; ADC blocks                         ; 0 / 2 ( 0 % )                               ;
+; Total memory bits                  ; 1,048,576                                   ;
+; Embedded Multiplier 9-bit elements ; 26                                          ;
+; Total PLLs                         ; 2                                           ;
+; UFM blocks                         ; 0                                           ;
+; ADC blocks                         ; 0                                           ;
 +------------------------------------+---------------------------------------------+
 
 
@@ -67,7 +67,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/19/2024 02:54:57 ;
+; Start date & time ; 05/20/2024 16:12:17 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; pacman_top          ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 171983378866755.171611249712944        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 171983378866755.171624673737876        ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -110,10 +110,8 @@ https://fpgasoftware.intel.com/eula.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:48     ; 1.0                     ; 5050 MB             ; 00:00:25                           ;
-; Fitter               ; 00:01:29     ; 1.9                     ; 6458 MB             ; 00:01:37                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 4777 MB             ; 00:00:01                           ;
-; Total                ; 00:02:19     ; --                      ; --                  ; 00:02:03                           ;
+; Analysis & Synthesis ; 00:01:05     ; 1.0                     ; 5050 MB             ; 00:00:10                           ;
+; Total                ; 00:01:05     ; --                      ; --                  ; 00:00:10                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -123,8 +121,6 @@ https://fpgasoftware.intel.com/eula.
 ; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +----------------------+------------------+------------+------------+----------------+
 ; Analysis & Synthesis ; yaet             ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter               ; yaet             ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler            ; yaet             ; Windows 10 ; 10.0       ; x86_64         ;
 +----------------------+------------------+------------+------------+----------------+
 
 
@@ -132,8 +128,6 @@ https://fpgasoftware.intel.com/eula.
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off pacman -c pacman_top
-quartus_fit --read_settings_files=off --write_settings_files=off pacman -c pacman_top
-quartus_asm --read_settings_files=off --write_settings_files=off pacman -c pacman_top
 
 
 

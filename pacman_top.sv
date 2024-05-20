@@ -3,7 +3,7 @@ module pacman_top (
     input rst,
     input btn,
 	 
-    // input [9:0] switches,
+    input [9:0] switches,
     
     // NES controller I/O
     input nes_data,         // red      -> Arduino I/O 0
@@ -43,8 +43,7 @@ reg [15:0] address;
 wire [7:0] color;
 wire [7:0] vga_data;
 
-// MAZE
-wire [7:0] maze_color;
+wire writeEnable;
 
 // VGA DRIVER
 wire vgaclk;
@@ -58,19 +57,21 @@ wire [1:0] input_blue = vga_data [1:0];
 // GAME
 wire gameclk;
 
-// CHARACTERS
-wire [8:0] pacman_xloc;
-wire [8:0] pacman_yloc;
-wire [1:0] pacman_dir; 
-wire [1:0] pacman_anim;
-wire pacman_alive;
+// MAZE
+wire [7:0] maze_color;
 
-wire [22:0] pacman_outputs = {pacman_xloc, pacman_yloc, pacman_dir, pacman_anim, pacman_alive};
-
+// CHARACTERS INPUTS/OUTPUTS
+wire [22:0] pacman_outputs;
 wire [22:0] blinky_outputs;
 wire [22:0] pinky_outputs;
 wire [22:0] inky_outputs;
 wire [22:0] clyde_outputs;
+
+wire [11:0] pacman_tiles;
+wire [11:0] blinky_tiles;
+wire [11:0] pinky_tiles;
+wire [11:0] inky_tiles;
+wire [11:0] clyde_tiles;
 
 reg ghost_animation;
 wire ghost_animation_d;
@@ -82,26 +83,6 @@ wire pellet_animation_d;
 reg [3:0] pellet_anim_counter;
 wire [3:0] pellet_anim_counter_d;
 
-// wire [9:0] blinky_xloc; 
-// wire [9:0] blinky_yloc;
-// wire [1:0] blinky_dir; 
-// wire [1:0] blinky_mode;
-
-// wire [9:0] pinky_xloc; 
-// wire [9:0] pinky_yloc;
-// wire [1:0] pinky_dir; 
-// wire [1:0] pinky_mode;
-
-// wire [9:0] inky_xloc; 
-// wire [9:0] inky_yloc;
-// wire [1:0] inky_dir; 
-// wire [1:0] inky_mode;
-
-// wire [9:0] clyde_xloc; 
-// wire [9:0] clyde_yloc;
-// wire [1:0] clyde_dir; 
-// wire [1:0] clyde_mode;
-
 wire pause;
 reg [1:0] ghosts_eaten;
 wire blinky_eaten; 
@@ -109,77 +90,16 @@ wire pinky_eaten;
 wire inky_eaten;
 wire clyde_eaten;
 
-// wire [6:0] blinky_xtile_next;
-// wire [6:0] blinky_ytile_next;
-// wire [6:0] pinky_xtile_next;
-// wire [6:0] pinky_ytile_next;
-// wire [6:0] inky_xtile_next;
-// wire [6:0] inky_ytile_next;
-// wire [6:0] clyde_xtile_next;
-// wire [6:0] clyde_ytile_next;
-
-wire [5:0] pacman_xtile;
-wire [5:0] pacman_ytile;
-wire [11:0] pacman_tiles = {pacman_xtile, pacman_ytile};
-
-wire [11:0] blinky_tiles;
-wire [11:0] pinky_tiles;
-wire [11:0] inky_tiles;
-wire [11:0] clyde_tiles;
-
 wire pacman_pellet;
 wire power_pellet;
 wire [1:0] pacman_tile_info [0:3]; 
-
 wire [1:0] blinky_tile_info [0:3]; 
 wire [1:0] pinky_tile_info [0:3]; 
 wire [1:0] inky_tile_info [0:3];
 wire [1:0] clyde_tile_info [0:3];
 
-wire writeEnable;   // HIGH when writing to ram1
-
-// TESTING GAME STATE WITH SWTICHES
-// assign pacman_xloc = 10'd119 + (switches[9:7] << 3);
-// assign pacman_yloc = 10'd227 + (switches[6:4] << 3);
-
-// assign pacman_xloc = (pacman_xtile << 2'd3) + 2'd3;
-// assign pacman_yloc = ((pacman_ytile + 2'd3) << 2'd3) + 2'd3;
-// assign pacman_xtile = 'd15 + (switches[9:6]);
-// assign pacman_ytile = 'd25 + (switches[5:4]);
-// assign pacman_dir = switches [1:0]; 
-
-// assign pacman_anim = switches[3:2]; 
-// assign pacman_alive = 2'b00;
-// assign pacman_anim = 2'b01;
-assign pacman_alive = 1'b0;
-    
-// 
-// GHOST STATES (HARDCODED)
-// assign blinky_xloc = switches[9:6] << 3;
-// assign blinky_yloc = switches[5:3] << 3;
-// assign blinky_xloc = 'd119;
-// assign blinky_yloc = 'd227;
-// assign blinky_dir = 2'b00;
-// assign blinky_mode = 2'b00;
-
-// assign pinky_xloc   = 'd103;
-// assign pinky_yloc   = 'd154;
-// assign pinky_dir    = 2'b00;
-// assign pinky_mode   = 2'b00;
-
-// assign inky_xloc    = 'd119;
-// assign inky_yloc    = 'd155;
-// assign inky_dir     = 2'b00;
-// assign inky_mode    = 2'b00;
-
-// assign clyde_xloc   = 'd135;
-// assign clyde_yloc   = 'd155;
-// assign clyde_dir    = 2'b00;
-// assign clyde_mode   = 2'b00;
-
-// assign ghost_animation = ~btn;
-// assign pause = switches[0];
-// assign ghosts_eaten = switches [1:0]; 
+wire [17:0] score;
+assign score[9:0] = switches[9:0];
 
 clk_controller CLK_CTRL (
     .inclk0 (clk),
@@ -245,6 +165,7 @@ graphics_async BOO(
     .scanall (1'b0), 
     .hc (hc), 
     .vc (vc), 
+    .writeEnable (writeEnable),
     .pacman_inputs (pacman_outputs),
     .blinky_inputs (blinky_outputs), 
     .pinky_inputs (pinky_outputs),
@@ -252,6 +173,7 @@ graphics_async BOO(
     .clyde_inputs (clyde_outputs),
     .ghost_animation (ghost_animation), 
     .ghosts_eaten (ghosts_eaten),
+    .score (score),
     .maze_color (maze_color), 
 
     .color (color), 
@@ -358,12 +280,8 @@ game_pacman PACMAN (
     .uturn (uturn),
     .tile_info (pacman_tile_info),
 
-    .xloc (pacman_xloc), 
-    .yloc (pacman_yloc), 
-    .dir (pacman_dir), 
-    .anim_cycle (pacman_anim),
-    .curr_xtile (pacman_xtile), 
-    .curr_ytile (pacman_ytile)
+    .tile_checks (pacman_tiles),
+    .pacman_outputs (pacman_outputs)
 );
 
 
@@ -404,28 +322,4 @@ always @(posedge gameclk) begin
     pellet_animation <= pellet_animation_d;
 end
 
-// 
-// COORDINATE BLOCKING & ROTATION
-// localparam XMAX  = 160;  // horizontal pixels
-// localparam YMAX  = 320;  // vertical pixels
-// localparam XMAX = 240;      // horizontal pixels (480/2)
-// localparam YMAX = 320;      // vertical pixels (640/2)
-
-// always_comb begin
-//     if (hc < 640 && vc < 480) begin
-//         // xpos = XMAX - 1 - vc_in / 3;
-//         xpos = XMAX - 1 - (vc >> 1);
-//         ypos = hc / 2;
-//     end else if (vc < 480) begin
-//         // xpos = XMAX - 1 - vc_in / 3;
-//         xpos = XMAX - 1 - (vc >> 2);
-//         ypos = YMAX - 1;
-//     end else begin 
-//         xpos = 0;
-//         ypos = 0;
-//     end
-// end
-
 endmodule
-
-// vga_graphics -> vga_ram -> vga

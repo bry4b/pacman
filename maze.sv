@@ -41,6 +41,7 @@ module maze (
     output reg [7:0] color              // communicates with graphics
 );
 
+// INPUT UNPACKING
 wire [5:0] pacman_xtile = pacman_inputs [11:6];
 wire [5:0] pacman_ytile = pacman_inputs [5:0];
 wire [5:0] blinky_xtile = blinky_inputs [11:6];
@@ -81,7 +82,7 @@ localparam DORL = 3'b011;   // DOoR Left
 localparam DORR = 3'b100;   // DOoR Right
 localparam DOOR = 3'b101;   // DOOR
 
-reg [63:0] maze_walls [0:7] = '{
+reg [63:0] maze_walls [0:7] = '{    // 8 wall styles
     64'h0000000000000000,   // blank
     64'h0f30404788909090,   // outer top-left corner, inner top-left corner
     64'hff0000e010080808,   // outer top straight, inner bottom-left corner
@@ -92,7 +93,7 @@ reg [63:0] maze_walls [0:7] = '{
     64'h00000000ff000000    // inner bottom straight
 };
 
-reg [63:0] house_walls [0:5] = '{
+reg [63:0] house_walls [0:5] = '{   // special wall styles for ghost house
     64'h0000000000000000,   // blank
     64'h000000000f080809,   // corner
     64'h00000000ff0000ff,   // straight
@@ -101,7 +102,6 @@ reg [63:0] house_walls [0:5] = '{
     64'h0000000000ffff00    // house door
 };
 
-// 
 // MAZE DEFINITION
 // 20W x 33H = 660 total tiles
 reg [4:0] maze [0:989] = '{
@@ -156,6 +156,8 @@ wire [5:0] xpixel = xpos[2:0];
 wire [5:0] ypixel = ypos[2:0];
 reg [7:0] wall_color;
 
+// DISPLAY OUTPUT HANDLER
+// uses linear rotations for each wall sprite to determine which pixel to display
 always_comb begin
     if (ytile > (YOFFSET-1) && ytile < (40-YOFFSET)) begin
         wall = maze [(ytile-YOFFSET) * XTILES + xtile];
@@ -199,16 +201,21 @@ always_comb begin
     end
 end
 
-// wire [6:0] pacman_xtile = pacman_xloc >> 3;
-// wire [6:0] pacman_ytile = (pacman_yloc >> 3) - YOFFSET;
+// MAZE DATA
 localparam WALL = 2'b00;    // wall (not walkable)
 localparam PTNP = 2'b01;    // path, no pellet
 localparam PTYP = 2'b10;    // path, yes pellet
 localparam PTGH = 2'b11;    // path, ghost house
 
+// POWER PELLET LOCATIONS
+localparam POWER1_X = 1;    // 1st tile from left
+localparam POWER2_X = 28;   // 28th tile from left
+localparam POWER1_Y = 4;    // 4th tile from top
+localparam POWER2_Y = 25;   // 7th tile from bottom
+
 // TODO: load this into ROM, and have it read every time pellets need to be reset
 // ROM has 1 cycle delay w/ read address
-// nah 
+// nah im lazy
 reg [1:0] pellets [0:989] = '{
 //  0       1       2       3       4       5       6       7       8       9       10      11      12      13      14      15      16      17      18      19      20      21      22      23      24      25      26      27      28      29      
     WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   // 0
@@ -246,11 +253,7 @@ reg [1:0] pellets [0:989] = '{
     WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL,   WALL    // 32    
 };
 
-localparam POWER1_X = 1;    // 1st tile from left
-localparam POWER2_X = 28;   // 28th tile from left
-localparam POWER1_Y = 4;    // 4th tile from top
-localparam POWER2_Y = 25;   // 7th tile from bottom
-
+//  GAME OUTPUT HANDLER
 always @(posedge clk) begin
     pellet_out <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP);
     power_pellet <= (pellets [pacman_ytile * 30 + pacman_xtile] == PTYP) && ( ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER1_Y) && (pacman_xtile == POWER2_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER1_X)) || ((pacman_ytile == POWER2_Y) && (pacman_xtile == POWER2_X)) );
@@ -304,6 +307,8 @@ wire [0:63] pellet_large = 64'h3c7effffffff7e3c;
 
 reg [0:63] pellet_sprite; 
 reg [7:0] pellet_color;
+
+// PELLET DISPLAY
 always_comb begin
     // locations of power pellets
     if ( ((ytile == POWER1_Y + YOFFSET) && (xtile == POWER1_X)) || ((ytile == POWER1_Y + YOFFSET) && (xtile == POWER2_X)) || ((ytile == POWER2_Y + YOFFSET) && (xtile == POWER1_X)) || ((ytile == POWER2_Y + YOFFSET) && (xtile == POWER2_X)) ) begin
@@ -331,6 +336,7 @@ always_comb begin
     end
 end
 
+// SPRITE HIERARCHY 
 always_comb begin
     if (pellet_color != BLK) begin
         color = pellet_color;
@@ -341,6 +347,7 @@ always_comb begin
     end
 end
 
+// OUTPUT PACKING FOR TILE CHECKS
 assign pacman_outputs   = '{pellets [pacman_ytile * 30 + pacman_xtile+1'b1], pellets [(pacman_ytile-1'b1) * 30 + pacman_xtile], pellets [(pacman_ytile+1'b1) * 30 + pacman_xtile], pellets [pacman_ytile * 30 + pacman_xtile-1'b1]};
 assign blinky_outputs   = '{pellets [blinky_ytile * 30 + blinky_xtile+1'b1], pellets [(blinky_ytile-1'b1) * 30 + blinky_xtile], pellets [(blinky_ytile+1'b1) * 30 + blinky_xtile], pellets [blinky_ytile * 30 + blinky_xtile-1'b1]};
 assign pinky_outputs    = '{pellets [pinky_ytile * 30 + pinky_xtile+1'b1], pellets [(pinky_ytile-1'b1) * 30 + pinky_xtile], pellets [(pinky_ytile+1'b1) * 30 + pinky_xtile], pellets [pinky_ytile * 30 + pinky_xtile-1'b1]};

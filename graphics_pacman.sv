@@ -1,16 +1,25 @@
+//  TODO: implement pacman death animation
+
 module graphics_pacman (
     input [8:0] xpos,           // current x position read by vga
     input [8:0] ypos,           // current y position read by vga
 
-    input [8:0] xloc,           // x coordinate of center of pacman location (7,7 in bitfield)
-    input [8:0] yloc,           // y coordinate of center of pacman location (7,7 in bitfield)
+    input [22:0] pacman_inputs,
 
-    input [1:0] pacman_dir,     // RighT, UP, DowN, LefT
-    input pacman_alive,         // alive, dead
-    input [1:0] animation_cycle,  
+    // input [8:0] xloc,           // x coordinate of center of pacman location (7,7 in bitfield)
+    // input [8:0] yloc,           // y coordinate of center of pacman location (7,7 in bitfield)
+    // input [1:0] pacman_dir,     // RighT, UP, DowN, LefT
+    // input [1:0] animation_cycle,  
+    // input pacman_alive,         // alive, dead
 
     output reg [7:0] color
 );
+
+wire [8:0] xloc = pacman_inputs [22:14];
+wire [8:0] yloc = pacman_inputs [13:5];
+wire [1:0] pacman_dir = pacman_inputs [4:3];
+wire [1:0] animation_cycle = pacman_inputs [2:1];
+wire pacman_alive = pacman_inputs [0];
 
 // COLORS
 localparam YLW  = 8'b11111100;

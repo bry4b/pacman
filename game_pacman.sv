@@ -9,15 +9,29 @@ module game_pacman (
 
     input [1:0] tile_info [0:3], // maze info
 
-    output logic [8:0] xloc,
-    output logic [8:0] yloc,
-    output logic [1:0] dir,
-    output logic [1:0] anim_cycle,
+    output [11:0] tile_checks,
+    // output logic [5:0] curr_xtile,
+    // output logic [5:0] curr_ytile,
 
-    output logic [5:0] curr_xtile,
-    output logic [5:0] curr_ytile
+    output [22:0] pacman_outputs
+    // output logic [8:0] xloc,
+    // output logic [8:0] yloc,
+    // output logic [1:0] dir,
+    // output logic [1:0] anim_cycle
 );
-    
+    // output packing
+    wire [5:0] curr_xtile; 
+    wire [5:0] curr_ytile;
+    assign tile_checks = {curr_xtile, curr_ytile};
+
+    wire [8:0] xloc; 
+    wire [8:0] yloc;
+    wire [1:0] dir; 
+    wire [1:0] anim_cycle;
+    wire alive;
+    assign pacman_outputs = {xloc, yloc, dir, anim_cycle, alive};
+    assign alive = 1'b1;
+
     // Game states
     typedef enum logic [1:0] {START, NORMAL, DEATH, PAUSE} State;
     State curr_state, next_state, prev_state;
