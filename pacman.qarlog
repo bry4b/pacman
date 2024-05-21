@@ -1,28 +1,39 @@
 Quartus Prime Archive log --	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qarlog
 
 Archive:	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qar
-Date:		Thu May  2 20:47:28 2024
+Date:		Mon May 20 17:35:20 2024
 Quartus Prime		21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 	=========== Files Selected: ===========
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/assignment_defaults.qdf
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/bongo_tb.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_controller.ppf
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_controller.qip
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_controller.v
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_controller_bb.v
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_controller_inst.v
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga.ppf
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga.qip
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga.v
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga_bb.v
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clk_vga_inst.v
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/clockDivider.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_nes.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_tb.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_top.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_ghost.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_tb.sv
-C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_ghost.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_ghost_LUT.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_scoreboard.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qpf
-C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_tb.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.qsf
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv
@@ -34,7 +45,7 @@ C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_tb.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_top.sv
-	======= Total: 29 files to archive =======
+	======= Total: 40 files to archive =======
 
 	================ Status: ===============
 All files archived successfully.

@@ -73,13 +73,13 @@ wire [11:0] pinky_tiles;
 wire [11:0] inky_tiles;
 wire [11:0] clyde_tiles;
 
-reg ghost_animation;
-wire ghost_animation_d;
+reg ghost_anim;
+wire ghost_anim_d;
 reg [2:0] ghost_anim_counter;
 wire [2:0] ghost_anim_counter_d;
 
-reg pellet_animation;
-wire pellet_animation_d;
+reg pellet_anim;
+wire pellet_anim_d;
 reg [3:0] pellet_anim_counter;
 wire [3:0] pellet_anim_counter_d;
 
@@ -99,7 +99,7 @@ wire [1:0] inky_tile_info [0:3];
 wire [1:0] clyde_tile_info [0:3];
 
 wire [17:0] score;
-assign score[9:0] = switches[9:0];
+// assign score[9:0] = switches[9:0];
 
 clk_controller CLK_CTRL (
     .inclk0 (clk),
@@ -148,7 +148,7 @@ vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
 //     .pinky_inputs (pinky_outputs),
 //     .inky_inputs (inky_outputs),
 //     .clyde_inputs (clyde_outputs),
-//     .ghost_animation (ghost_animation), 
+//     .ghost_anim (ghost_anim), 
 //     .ghosts_eaten (ghosts_eaten),
 //     .maze_color (maze_color), 
 
@@ -171,7 +171,7 @@ graphics_async BOO(
     .pinky_inputs (pinky_outputs),
     .inky_inputs (inky_outputs),
     .clyde_inputs (clyde_outputs),
-    .ghost_animation (ghost_animation), 
+    .ghost_anim (ghost_anim), 
     .ghosts_eaten (ghosts_eaten),
     .score (score),
     .maze_color (maze_color), 
@@ -194,7 +194,7 @@ maze MAZEPIN(
     .pinky_inputs (pinky_tiles), 
     .inky_inputs (inky_tiles),
     .clyde_inputs (clyde_tiles),
-    .pellet_anim (pellet_animation),
+    .pellet_anim (pellet_anim),
 
     .pellet_out (pacman_pellet), 
     .power_pellet (power_pellet), 
@@ -206,120 +206,153 @@ maze MAZEPIN(
     .color (maze_color) 
 );
 
-game_ghost BLINKY (
+game_controller GAME_CTRL (
     .clk (gameclk),
     .rst (~rst),
     .start (start),
-    .pause (pause),
-    .personality (2'b00),
-    .pacman_inputs (pacman_outputs [22:3]),
-    .power_pellet (power_pellet),
-    .tile_info (blinky_tile_info),
-    .blinky_pos (1'b0),
-
-    .eaten (blinky_eaten),
-    .tile_checks (blinky_tiles),
-    .ghost_outputs (blinky_outputs)
-);
-
-game_ghost PINKY ( 
-    .clk (gameclk),
-    .rst (~rst),
-    .start (start),
-    .pause (pause),
-    .personality (2'b01),
-    .pacman_inputs (pacman_outputs [22:3]),
-    .power_pellet (power_pellet),
-    .tile_info (pinky_tile_info), 
-    .blinky_pos (1'b0),
-
-    .eaten (pinky_eaten),
-    .tile_checks (pinky_tiles),
-    .ghost_outputs (pinky_outputs)
-);
-    
-game_ghost INKY ( 
-    .clk (gameclk),
-    .rst (~rst),
-    .start (start),
-    .pause (pause),
-    .personality (2'b10),
-    .pacman_inputs (pacman_outputs [22:3]),
-    .power_pellet (power_pellet),
-    .tile_info (inky_tile_info), 
-    .blinky_pos (blinky_outputs [22:5]), 
-
-    .eaten (inky_eaten),
-    .tile_checks (inky_tiles),
-    .ghost_outputs (inky_outputs)
-);
-
-game_ghost CLYDE (
-    .clk (gameclk),
-    .rst (~rst),
-    .start (start),
-    .pause (pause),
-    .personality (2'b11),
-    .pacman_inputs (pacman_outputs [22:3]),
-    .power_pellet (power_pellet),
-    .tile_info (clyde_tile_info), 
-    .blinky_pos (1'b0),
-
-    .eaten (clyde_eaten),
-    .tile_checks (clyde_tiles),
-    .ghost_outputs (clyde_outputs)
-);
-    
-game_pacman PACMAN ( 
-    .clk60 (gameclk), 
-    .reset (~rst), 
-    .start (start),
-    .pause (pause),
-    .left (lturn),
-    .right (rturn),
+    .lturn  (lturn),
+    .rturn (rturn),
     .uturn (uturn),
-    .tile_info (pacman_tile_info),
+    .pacman_pellet (pacman_pellet),
+    .power_pellet (power_pellet),
+    .pacman_tile_info (pacman_tile_info),
+    .blinky_tile_info (blinky_tile_info),
+    .pinky_tile_info (pinky_tile_info),
+    .inky_tile_info (inky_tile_info),
+    .clyde_tile_info (clyde_tile_info),
 
-    .tile_checks (pacman_tiles),
-    .pacman_outputs (pacman_outputs)
+    .pacman_tiles (pacman_tiles),
+    .blinky_tiles (blinky_tiles),
+    .pinky_tiles (pinky_tiles),
+    .inky_tiles (inky_tiles),
+    .clyde_tiles (clyde_tiles),
+    .pellet_anim (pellet_anim),
+    .pacman_outputs (pacman_outputs),
+    .blinky_outputs (blinky_outputs),
+    .pinky_outputs (pinky_outputs),
+    .inky_outputs (inky_outputs),
+    .clyde_outputs (clyde_outputs),
+    .ghost_anim (ghost_anim),
+
+    .ghosts_eaten (ghosts_eaten),
+    .score (score),
+    .pause (pause)
+
 );
 
+// game_ghost BLINKY (
+//     .clk (gameclk),
+//     .rst (~rst),
+//     .start (start),
+//     .pause (pause),
+//     .personality (2'b00),
+//     .pacman_inputs (pacman_outputs [22:3]),
+//     .power_pellet (power_pellet),
+//     .tile_info (blinky_tile_info),
+//     .blinky_pos (1'b0),
 
-localparam SCOR = 2'b10;
+//     .eaten (blinky_eaten),
+//     .tile_checks (blinky_tiles),
+//     .ghost_outputs (blinky_outputs)
+// );
 
-always_comb begin
-    ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
-    pause = blinky_outputs[2:1] == SCOR || pinky_outputs [2:1] == SCOR || inky_outputs [2:1] == SCOR || clyde_outputs [2:1] == SCOR;
-end
+// game_ghost PINKY ( 
+//     .clk (gameclk),
+//     .rst (~rst),
+//     .start (start),
+//     .pause (pause),
+//     .personality (2'b01),
+//     .pacman_inputs (pacman_outputs [22:3]),
+//     .power_pellet (power_pellet),
+//     .tile_info (pinky_tile_info), 
+//     .blinky_pos (1'b0),
 
-// ghost animation
-always_comb begin
-    if (gameclk && ~pause) begin
-        ghost_anim_counter_d = ghost_anim_counter + 1'b1;
-        pellet_anim_counter_d = pellet_anim_counter + 1'b1;
-    end else begin
-        ghost_anim_counter_d = ghost_anim_counter;
-        pellet_anim_counter_d = pellet_anim_counter;
-    end
+//     .eaten (pinky_eaten),
+//     .tile_checks (pinky_tiles),
+//     .ghost_outputs (pinky_outputs)
+// );
+    
+// game_ghost INKY ( 
+//     .clk (gameclk),
+//     .rst (~rst),
+//     .start (start),
+//     .pause (pause),
+//     .personality (2'b10),
+//     .pacman_inputs (pacman_outputs [22:3]),
+//     .power_pellet (power_pellet),
+//     .tile_info (inky_tile_info), 
+//     .blinky_pos (blinky_outputs [22:5]), 
 
-    if (ghost_anim_counter == 1'b0 && ~pause) begin
-        ghost_animation_d = ~ghost_animation;
-    end else begin
-        ghost_animation_d = ghost_animation;
-    end
+//     .eaten (inky_eaten),
+//     .tile_checks (inky_tiles),
+//     .ghost_outputs (inky_outputs)
+// );
 
-    if (pellet_anim_counter == 1'b0 && ~pause) begin
-        pellet_animation_d = ~pellet_animation;
-    end else begin
-        pellet_animation_d = pellet_animation;
-    end
-end
+// game_ghost CLYDE (
+//     .clk (gameclk),
+//     .rst (~rst),
+//     .start (start),
+//     .pause (pause),
+//     .personality (2'b11),
+//     .pacman_inputs (pacman_outputs [22:3]),
+//     .power_pellet (power_pellet),
+//     .tile_info (clyde_tile_info), 
+//     .blinky_pos (1'b0),
 
-always @(posedge gameclk) begin
-    ghost_anim_counter <= ghost_anim_counter_d;
-    ghost_animation <= ghost_animation_d;
-    pellet_anim_counter <= pellet_anim_counter_d;
-    pellet_animation <= pellet_animation_d;
-end
+//     .eaten (clyde_eaten),
+//     .tile_checks (clyde_tiles),
+//     .ghost_outputs (clyde_outputs)
+// );
+    
+// game_pacman PACMAN ( 
+//     .clk60 (gameclk), 
+//     .reset (~rst), 
+//     .start (start),
+//     .pause (pause),
+//     .left (lturn),
+//     .right (rturn),
+//     .uturn (uturn),
+//     .tile_info (pacman_tile_info),
+
+//     .tile_checks (pacman_tiles),
+//     .pacman_outputs (pacman_outputs)
+// );
+
+// localparam SCOR = 2'b10;
+
+// always_comb begin
+//     ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
+//     pause = blinky_outputs[2:1] == SCOR || pinky_outputs [2:1] == SCOR || inky_outputs [2:1] == SCOR || clyde_outputs [2:1] == SCOR;
+// end
+
+// // ghost animation
+// always_comb begin
+//     if (gameclk && ~pause) begin
+//         ghost_anim_counter_d = ghost_anim_counter + 1'b1;
+//         pellet_anim_counter_d = pellet_anim_counter + 1'b1;
+//     end else begin
+//         ghost_anim_counter_d = ghost_anim_counter;
+//         pellet_anim_counter_d = pellet_anim_counter;
+//     end
+
+//     if (ghost_anim_counter == 1'b0 && ~pause) begin
+//         ghost_anim_d = ~ghost_anim;
+//     end else begin
+//         ghost_anim_d = ghost_anim;
+//     end
+
+//     if (pellet_anim_counter == 1'b0 && ~pause) begin
+//         pellet_anim_d = ~pellet_anim;
+//     end else begin
+//         pellet_anim_d = pellet_anim;
+//     end
+// end
+
+// always @(posedge gameclk) begin
+//     ghost_anim_counter <= ghost_anim_counter_d;
+//     ghost_anim <= ghost_anim_d;
+//     pellet_anim_counter <= pellet_anim_counter_d;
+//     pellet_anim <= pellet_anim_d;
+// end
 
 endmodule

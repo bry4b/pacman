@@ -1,23 +1,24 @@
 module game_pacman (
     input clk60, // input 60 Hz clock
+    input rst,
+    input start,
+    
     input left,
     input right,
     input uturn,
-    input start,
-    input reset,
-    input pause,
 
+    input pause,
     input [1:0] tile_info [0:3], // maze info
 
-    output [11:0] tile_checks,
     // output logic [5:0] curr_xtile,
     // output logic [5:0] curr_ytile,
+    output [11:0] tile_checks,
 
-    output [22:0] pacman_outputs
     // output logic [8:0] xloc,
     // output logic [8:0] yloc,
     // output logic [1:0] dir,
     // output logic [1:0] anim_cycle
+    output [22:0] pacman_outputs
 );
     // output packing
     wire [5:0] curr_xtile; 
@@ -90,7 +91,7 @@ module game_pacman (
             NORMAL : begin
                 if (0 /* DEATH */) begin
                     next_state = DEATH;
-                end else if (reset) begin
+                end else if (rst) begin
                     next_state = START;
                 end else if (pause) begin
                     next_state = PAUSE;
@@ -99,14 +100,14 @@ module game_pacman (
                 end
             end
             DEATH : begin
-                if (reset) begin
+                if (rst) begin
                     next_state = START;
                 end else begin
                     next_state = DEATH;
                 end
             end
             PAUSE : begin
-                if (reset) begin
+                if (rst) begin
                     next_state = START;
                 end else if (pause) begin
                     next_state = PAUSE;

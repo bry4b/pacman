@@ -24,25 +24,23 @@ module game_ghost (
 
     input [1:0] personality,
 
-    input [19:0] pacman_inputs,
     // input [8:0] pacman_xloc,
     // input [8:0] pacman_yloc, 
     // input [1:0] pacman_dir,
+    input [19:0] pacman_inputs,
 
     input power_pellet,             // HIGH when a power pellet gets eaten
     input [1:0] tile_info [0:3], 
 
-    input [17:0] blinky_pos, 
     // input [8:0] blinky_xloc,        // only for inky :/
     // input [8:0] blinky_yloc,        // only for inky :/
+    input [17:0] blinky_pos, 
 
     output eaten, 
 
-    output [11:0] tile_checks,
     // output reg [6:0] xtile_next,
     // output reg [6:0] ytile_next,
-
-    output [22:0] ghost_outputs
+    output [11:0] tile_checks,
 
     // output reg [8:0] xloc,
     // output reg [8:0] yloc,
@@ -50,6 +48,7 @@ module game_ghost (
     // output reg [1:0] dir,
     // output reg [1:0] mode,
     // output reg flash         // controls flashing when frightened mode is ending
+    output [22:0] ghost_outputs
 );
 
 // input unpacking

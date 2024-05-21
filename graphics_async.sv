@@ -42,7 +42,7 @@ module graphics_async (
     // input [1:0] clyde_mode,
     input [22:0] clyde_inputs,
 
-    input ghost_animation,
+    input ghost_anim,
 
     input [1:0] ghosts_eaten,
     input [17:0] score,
@@ -55,19 +55,16 @@ module graphics_async (
     output reg [15:0] address
 );
 
-// reg [8:0] xpos;
-// reg [8:0] ypos;
-
 reg [22:0] pacman_curr, blinky_curr, pinky_curr, inky_curr, clyde_curr;
 reg [22:0] pacman_prev0, blinky_prev0, pinky_prev0, inky_prev0, clyde_prev0;
 reg [22:0] pacman_prev1, blinky_prev1, pinky_prev1, inky_prev1, clyde_prev1;
 wire [22:0] pacman_prev, blinky_prev, pinky_prev, inky_prev, clyde_prev;
 
-wire [8:0] pacman_xloc  = pacman_curr [22:14];
-wire [8:0] pacman_yloc  = pacman_curr [13:5];     
-wire [1:0] pacman_dir   = pacman_curr [4:3]; 
-wire [1:0] pacman_anim  = pacman_curr [2:1];
-wire pacman_alive       = pacman_curr [0];
+// wire [8:0] pacman_xloc  = pacman_curr [22:14];
+// wire [8:0] pacman_yloc  = pacman_curr [13:5];     
+// wire [1:0] pacman_dir   = pacman_curr [4:3]; 
+// wire [1:0] pacman_anim  = pacman_curr [2:1];
+// wire pacman_alive       = pacman_curr [0];
 
 // COLOR DEFINITIONS
 localparam RED  = 8'b11100000;
@@ -125,7 +122,7 @@ wire [9:0] clyde_address;
 wire [2:0] clyde_pixel;
 wire [7:0] clyde_color;
 
-// wire ghost_animation;
+// wire ghost_anim;
 
 graphics_ghost_LUT GLUT (
     .blinky_in (blinky_address), 
@@ -145,7 +142,7 @@ graphics_ghost BLINKY (
     .ypos (ypos),
     .ghost_color (2'b00),
     .ghost_inputs (blinky_curr), 
-    .animation_cycle (ghost_animation),
+    .animation_cycle (ghost_anim),
     .pixel (blinky_pixel),
 
     .pixel_address (blinky_address), 
@@ -157,7 +154,7 @@ graphics_ghost PINKY (
     .ypos (ypos),
     .ghost_color (2'b01),
     .ghost_inputs (pinky_curr), 
-    .animation_cycle (ghost_animation),
+    .animation_cycle (ghost_anim),
     .pixel (pinky_pixel),
 
     .pixel_address (pinky_address), 
@@ -169,7 +166,7 @@ graphics_ghost INKY (
     .ypos (ypos),
     .ghost_color (2'b10),
     .ghost_inputs (inky_curr), 
-    .animation_cycle (ghost_animation),
+    .animation_cycle (ghost_anim),
     .pixel (inky_pixel),
 
     .pixel_address (inky_address), 
@@ -181,7 +178,7 @@ graphics_ghost CLYDE (
     .ypos (ypos),
     .ghost_color (2'b11),
     .ghost_inputs (clyde_curr), 
-    .animation_cycle (ghost_animation),
+    .animation_cycle (ghost_anim),
     .pixel (clyde_pixel),
 
     .pixel_address (clyde_address), 
