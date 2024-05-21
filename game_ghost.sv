@@ -539,7 +539,7 @@ always_comb begin
     endcase
 end
 
-// FRIGHTENED TIMER
+// FRIGHTENED TIMER & EATEN STATUS
 always_comb begin
     if (power_pellet) begin
         eaten_d = 1'b0;
@@ -551,7 +551,7 @@ always_comb begin
         if ( (pacman_xtile == xtile && pacman_ytile == ytile) || eaten ) begin
             eaten_d = 1'b1;
         end else begin
-            eaten_d = 1'b0;
+            eaten_d = eaten;
         end
         timer_frt_d = timer_frt + 1'b1;
     end else begin

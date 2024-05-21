@@ -1,5 +1,4 @@
-// TODO: FIX BUG W/ COMBINATIONALLY ASSIGNING GHOST_EATEN; MAY BE RESET BEFORE FRIGHTENED STATE ENDS
-
+// TODO: SCORING SYSTEM
 module game_controller (
     input clk,      // input 60 Hz clock
     input rst,
@@ -271,8 +270,10 @@ always_comb begin
 
     if (pellet_anim_counter == 1'b0 && ~pause) begin
         pellet_anim_d = ~pellet_anim;
-    end else begin
+    end else if (~pause) begin
         pellet_anim_d = pellet_anim;
+    end else begin
+        pellet_anim_d = 1'b1;
     end
 end
 
