@@ -15,6 +15,7 @@
 //      bug may occur when eating ghost very close to frighten timer ending, ends up showing 1600 as score even if not supposed to, not sure why bc the pause thing should prevent this
 // implement ghost animation
 //      i did it yay it's in the top module 
+// move pacman death check into this module
 
 module game_ghost (
     input clk, 
@@ -37,6 +38,7 @@ module game_ghost (
     input [17:0] blinky_pos, 
 
     output eaten, 
+    output kill,
 
     // output reg [6:0] xtile_next,
     // output reg [6:0] ytile_next,
@@ -235,31 +237,41 @@ always_comb begin
                 CLYDE:  dir_d = LT;
             endcase
 
-            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
+            kill = 1'b0;
         end
 
         STATE_CHASE: begin
-            if (power_pellet) begin
+            if (pacman_xtile == xtile && pacman_ytile == ytile) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = 1'b0;
+                dir_d = dir;
+                kill = 1'b1;
+            end else if (power_pellet) begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
                 dir_d = ~dir;
+                kill = 1'b0;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (pause) begin
                 state_d = STATE_PAUSE;
                 timer_reg_d = timer_reg;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (timer_reg > CHASE_TIME) begin
                 state_d = STATE_SCTTR;
                 timer_reg_d = 1'b0;
                 dir_d = ~dir;
+                kill = 1'b0;
             end else begin
                 state_d = STATE_CHASE;
                 timer_reg_d = timer_reg + 1'b1;
+                kill = 1'b0;
                 case (dir_exit) 
                     RT, LT: begin
                         if (yloc_d[2:0] == 'd3) begin
@@ -278,31 +290,40 @@ always_comb begin
                 endcase
             end
 
-            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
         end
 
         STATE_SCTTR: begin
-            if (power_pellet) begin
+            if (pacman_xtile == xtile && pacman_ytile == ytile) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = 1'b0;
+                dir_d = dir;
+                kill = 1'b1;
+            end else if (power_pellet) begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
                 dir_d = ~dir;
+                kill = 1'b0;
             end else if (rst) begin
                 state_d = STATE_START;
                 timer_reg_d = 1'b0;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (pause) begin
                 state_d = STATE_PAUSE;
                 timer_reg_d = timer_reg;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (timer_reg > SCTTR_TIME) begin
                 state_d = STATE_CHASE;
                 timer_reg_d = 1'b0;
                 dir_d = ~dir;
+                kill = 1'b0;
             end else begin
                 state_d = STATE_SCTTR;
                 timer_reg_d = timer_reg + 1'b1;
+                kill = 1'b0;
                 case (dir_exit) 
                     RT, LT: begin
                         if (yloc_d[2:0] == 'd3) begin
@@ -321,7 +342,6 @@ always_comb begin
                 endcase
             end
 
-            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
         end
@@ -369,12 +389,6 @@ always_comb begin
                 state_d = STATE_FRGHT;
                 timer_reg_d = timer_reg;
 
-                // if (power_pellet) begin
-                //     timer_frt_d = 1'b0;
-                // end else begin
-                //     timer_frt_d = timer_frt + 1'b1;
-                // end
-
                 case (dir_exit) 
                     RT, LT: begin
                         if (yloc_d[2:0] == 'd3) begin
@@ -404,6 +418,8 @@ always_comb begin
 
                 mode_d = FRGT;
             end
+
+            kill = 1'b0;
         end
         
         STATE_SCORE: begin
@@ -418,10 +434,10 @@ always_comb begin
                 timer_reg_d = timer_reg + 1'b1;
             end
 
-            // timer_frt_d = 1'b0;
             dir_d = dir;
             mode_d = SCOR;
             flash_d = 1'b0;
+            kill = 1'b0;
         end
 
         STATE_RSPWN: begin
@@ -451,19 +467,27 @@ always_comb begin
             endcase
 
             timer_reg_d = 1'b0;
-            // timer_frt_d = 1'b0;
             flash_d = 1'b0;
+            kill = 1'b0;
         end
 
         STATE_EXTGH: begin
-            if (rst) begin
+            if (pacman_xtile == xtile && pacman_ytile == ytile) begin
+                state_d = STATE_PAUSE;
+                timer_reg_d = 1'b0;
+                dir_d = dir;
+                kill = 1'b1;
+            end else if (rst) begin
                 state_d = STATE_START;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (pause) begin
                 state_d = STATE_PAUSE;
                 dir_d = dir;
+                kill = 1'b0;
             end else if (xtile > 'd11 && xtile < 'd18 && ytile > 'd14 && ytile < 'd18) begin
                 state_d = STATE_EXTGH;
+                kill = 1'b0;
                 case (dir_exit) 
                     RT, LT: begin
                         if (yloc_d[2:0] == 'd3) begin
@@ -483,13 +507,14 @@ always_comb begin
             end else if (state_prev == STATE_START) begin
                 state_d = STATE_SCTTR;
                 dir_d = dir;
+                kill = 1'b0;
             end else begin
                 state_d = state_exit;
                 dir_d = dir;
+                kill = 1'b0;
             end
 
             timer_reg_d = 1'b0;
-            // timer_frt_d = 1'b0;
             mode_d = NORM;
             flash_d = 1'b0;
         end
@@ -525,15 +550,16 @@ always_comb begin
 
             mode_d = mode;
             flash_d = flash;
+            kill = 1'b0;
         end
 
         default: begin
             state_d = STATE_START;
             timer_reg_d = 1'b0;
-            // timer_frt_d = 1'b0;
             dir_d = RT;
             mode_d = NORM;
             flash_d = 1'b0;
+            kill = 1'b0;
         end
 
     endcase

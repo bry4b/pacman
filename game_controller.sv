@@ -1,4 +1,5 @@
 // TODO: SCORING SYSTEM
+//      done :3
 module game_controller (
     input clk,      // input 60 Hz clock
     input rst,
@@ -32,6 +33,9 @@ module game_controller (
     output [22:0] inky_outputs,
     output [22:0] clyde_outputs,
     output reg ghost_anim,
+    output reg [3:0] pacman_death_frame,
+    output hide_pacman,
+    output reg hide_ghosts,
 
     // game outputs
     output [1:0] ghosts_eaten,
@@ -60,10 +64,31 @@ wire pellet_anim_d;
 reg [3:0] pellet_anim_counter;
 wire [3:0] pellet_anim_counter_d;
 
+wire [3:0] pacman_death_frame_d;
+reg [3:0] pacman_death_counter;
+wire [3:0] pacman_death_counter_d;
+
 wire blinky_eaten; 
 wire pinky_eaten;
 wire inky_eaten;
 wire clyde_eaten;
+reg blinky_eaten_prev;
+reg pinky_eaten_prev;
+reg inky_eaten_prev;
+reg clyde_eaten_prev;
+
+reg [1:0] ghosts_eaten_prev;
+wire [4:0] ghosts_score_d;
+
+wire blinky_kill;
+wire pinky_kill;
+wire inky_kill;
+wire clyde_kill;
+reg pacman_alive;
+wire pacman_alive_d;
+wire hide_ghosts_d;
+
+assign pacman_outputs[0] = pacman_alive;
 
 wire [5:0] pacman_xtile = pacman_outputs [22:14] >> 2'd3;
 wire [5:0] pacman_ytile = pacman_outputs [13:5] >> 2'd3;
@@ -89,7 +114,7 @@ game_pacman PACMAN (
     .tile_info (pacman_tile_info),
 
     .tile_checks (pacman_tiles),
-    .pacman_outputs (pacman_outputs)
+    .pacman_outputs (pacman_outputs[22:1])
 );
 
 game_ghost BLINKY (
@@ -104,6 +129,7 @@ game_ghost BLINKY (
     .blinky_pos (1'b0),
 
     .eaten (blinky_eaten),
+    .kill (blinky_kill),
     .tile_checks (blinky_tiles),
     .ghost_outputs (blinky_outputs)
 );
@@ -120,6 +146,7 @@ game_ghost PINKY (
     .blinky_pos (1'b0),
 
     .eaten (pinky_eaten),
+    .kill (pinky_kill),
     .tile_checks (pinky_tiles),
     .ghost_outputs (pinky_outputs)
 );
@@ -136,6 +163,7 @@ game_ghost INKY (
     .blinky_pos (blinky_outputs [22:5]), 
 
     .eaten (inky_eaten),
+    .kill (inky_kill),
     .tile_checks (inky_tiles),
     .ghost_outputs (inky_outputs)
 );
@@ -152,6 +180,7 @@ game_ghost CLYDE (
     .blinky_pos (1'b0),
 
     .eaten (clyde_eaten),
+    .kill (clyde_kill),
     .tile_checks (clyde_tiles),
     .ghost_outputs (clyde_outputs)
 );
@@ -162,12 +191,28 @@ initial begin
     score = 0;
 end
 
+// GAME STATE MACHINE
+always @(posedge clk) begin
+    state <= state_d;
+    revives <= revives_d;
+    
+    pacman_death_counter <= pacman_death_counter_d;
+    pacman_death_frame <= pacman_death_frame_d;
+    hide_ghosts <= hide_ghosts_d;
+    pacman_alive <= pacman_alive_d;
+end
+
 always_comb begin
+    pacman_alive_d = (state == DEATH || state == LOSE) ? 1'b0 : 1'b1;
+    
     case (state)
         RESET : begin
             revives_d = 'd2;
             reset_players = 1'b1;
+            pacman_death_counter_d = 1'b0;
+            pacman_death_frame_d = 'd12;
             pause = 1'b1;
+
             if (start) begin
                 state_d = PLAY;
             end else begin
@@ -178,8 +223,13 @@ always_comb begin
         START : begin
             revives_d = revives;
             reset_players = 1'b1;
+            pacman_death_counter_d = 1'b0;
+            pacman_death_frame_d = 'd12;
             pause = 1'b1;
-            if (start) begin
+
+            if (rst) begin
+                state_d = RESET;
+            end else if (start) begin
                 state_d = PLAY;
             end else begin
                 state_d = START;
@@ -189,13 +239,12 @@ always_comb begin
         PLAY : begin
             revives_d = revives;
             reset_players = 1'b0;
+            pacman_death_counter_d = 1'b0;
+            pacman_death_frame_d = 'd12;
+
             if (rst) begin
                 state_d = RESET;
-            end else if (   // Pacman hits a ghost and dies
-                (pacman_xtile == blinky_xtile && pacman_ytile == blinky_ytile && blinky_outputs[2:1] == 2'b00) || 
-                (pacman_xtile == pinky_xtile && pacman_ytile == pinky_ytile && pinky_outputs[2:1] == 2'b00) ||
-                (pacman_xtile == inky_xtile && pacman_ytile == inky_ytile && inky_outputs[2:1] == 2'b00) ||
-                (pacman_xtile == clyde_xtile && pacman_ytile == clyde_ytile && clyde_outputs[2:1] == 2'b00) ) begin
+            end else if (blinky_kill || pinky_kill || inky_kill || clyde_kill) begin
                 state_d = DEATH;
             end else if ('b0/* all pellets eaten */) begin
                 state_d = WIN;
@@ -208,21 +257,48 @@ always_comb begin
         end
 
         DEATH : begin
-            reset_players = 1'b0;
-            pause = 1'b0;
-            if (revives == 'b0) begin
+            pause = 1'b1;
+
+            if (rst) begin
+                reset_players = 1'b1;
+                pacman_death_counter_d = 1'b0;
+                pacman_death_frame_d = 'd11;
+                revives_d = 'd2;
+                state_d = RESET;
+            end else if (pacman_death_frame == 'd11 && pacman_death_counter == 'd15) begin
+                pacman_death_counter_d = 1'b0;
+                pacman_death_frame_d = 'd11;
+                if (revives > 0) begin
+                    reset_players = 1'b1;
+                    revives_d = revives - 1'b1;
+                    state_d = START;
+                end else begin
+                    reset_players = 1'b0;
+                    revives_d = revives;
+                    state_d = LOSE;
+                end 
+            end else if (pacman_death_frame != 'd11 && pacman_death_counter == 'd9) begin
+                reset_players = 1'b0;
+                pacman_death_counter_d = 1'b0;
+                pacman_death_frame_d = pacman_death_frame + 1'b1;
                 revives_d = revives;
-                state_d = LOSE;
-            end else begin
-                revives_d = revives - 1'b1; // Use extra life; start again
-                state_d = START;
+                state_d = DEATH;
+            end else begin 
+                reset_players = 1'b0;
+                pacman_death_counter_d = pacman_death_counter + 1'b1;
+                pacman_death_frame_d = pacman_death_frame;
+                revives_d = revives;
+                state_d = DEATH;
             end
         end
 
         LOSE : begin
             revives_d = revives;
             reset_players = 1'b0;
+            pacman_death_counter_d = 1'b0;
+            pacman_death_frame_d = 'd11;
             pause = 1'b1;
+
             if (rst) begin
                 state_d = RESET;
             end else begin
@@ -232,7 +308,10 @@ always_comb begin
         WIN : begin
             revives_d = revives;
             reset_players = 1'b0;
+            pacman_death_counter_d = 1'b0;
+            pacman_death_frame_d = 'd11;
             pause = 1'b1;
+
             if (rst) begin
                 state_d = RESET;
             end else begin
@@ -242,17 +321,65 @@ always_comb begin
     endcase
 end
 
+always_comb begin
+    if (state == DEATH) begin
+        if (pacman_death_frame < 'd12) begin
+            hide_ghosts_d = 1'b1;
+        end else begin
+            hide_ghosts_d = 1'b0;
+        end
+    end else if (state == WIN) begin
+        hide_ghosts_d = 1'b1;
+    end else begin
+        hide_ghosts_d = 1'b0;
+    end
+end
+
+
+// GHOST EATING & SCORING
 always @(posedge clk) begin
-    state <= state_d;
-    revives <= revives_d;
+    blinky_eaten_prev <= blinky_eaten;
+    pinky_eaten_prev <= pinky_eaten;
+    inky_eaten_prev <= inky_eaten;
+    clyde_eaten_prev <= clyde_eaten;
+    ghosts_eaten_prev <= ghosts_eaten;
     score <= score_d;
 end
 
 always_comb begin
     ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
+    if ( {blinky_eaten_prev, blinky_eaten} == 2'b01 || {pinky_eaten_prev, pinky_eaten} == 2'b01 || {inky_eaten_prev, inky_eaten} == 2'b01 || {clyde_eaten_prev, clyde_eaten} == 2'b01 ) begin
+        case (ghosts_eaten - ghosts_eaten_prev) 
+            2'd1: ghosts_score_d = (2 << ghosts_eaten);
+            2'd2: ghosts_score_d = (2 << ghosts_eaten) + (2 << (ghosts_eaten-1));
+            2'd3: ghosts_score_d = (2 << ghosts_eaten) + (2 << (ghosts_eaten-1)) + (2 << (ghosts_eaten-2));
+            2'd0: ghosts_score_d = (2 << ghosts_eaten) + (2 << (ghosts_eaten-1)) + (2 << (ghosts_eaten-2)) + (2 << (ghosts_eaten-3));
+        endcase
+    end else begin
+        ghosts_score_d = 0;
+    end
+
+    if (rst) begin
+        score_d = 0;
+    end else if (power_pellet && pacman_pellet) begin
+        score_d = score + 'd5 + ghosts_score_d*10;
+    end else if (pacman_pellet) begin
+        score_d = score + 'd1 + ghosts_score_d*10;
+    end else begin
+        score_d = score + ghosts_score_d*10;
+    end
+
+    hide_pacman = (blinky_eaten || pinky_eaten || inky_eaten || clyde_eaten) && pause;
 end
 
-// ghost animation
+// GHOST & PELLET ANIMATION
+always @(posedge clk) begin
+    ghost_anim_counter <= ghost_anim_counter_d;
+    ghost_anim <= ghost_anim_d;
+    pellet_anim_counter <= pellet_anim_counter_d;
+    pellet_anim <= pellet_anim_d;
+end
+
 always_comb begin
     if (clk && ~pause) begin
         ghost_anim_counter_d = ghost_anim_counter + 1'b1;
@@ -275,13 +402,6 @@ always_comb begin
     end else begin
         pellet_anim_d = 1'b1;
     end
-end
-
-always @(posedge clk) begin
-    ghost_anim_counter <= ghost_anim_counter_d;
-    ghost_anim <= ghost_anim_d;
-    pellet_anim_counter <= pellet_anim_counter_d;
-    pellet_anim <= pellet_anim_d;
 end
 
 endmodule

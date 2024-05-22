@@ -45,6 +45,9 @@ module graphics_async (
     input ghost_anim,
 
     input [1:0] ghosts_eaten,
+    input [3:0] pacman_death_frame,
+    input hide_pacman,
+    input hide_ghosts,
     input [17:0] score,
 
     input [7:0] maze_color,
@@ -122,14 +125,14 @@ wire [9:0] clyde_address;
 wire [2:0] clyde_pixel;
 wire [7:0] clyde_color;
 
-// wire ghost_anim;
-
+// GHOSTS
 graphics_ghost_LUT GLUT (
     .blinky_in (blinky_address), 
     .pinky_in (pinky_address), 
     .inky_in (inky_address), 
     .clyde_in (clyde_address), 
     .ghosts_eaten (ghosts_eaten), 
+    .hide_ghosts (hide_ghosts),
 
     .blinky_out(blinky_pixel), 
     .pinky_out(pinky_pixel), 
@@ -185,17 +188,19 @@ graphics_ghost CLYDE (
     .color (clyde_color),
 );
 
-// PACMAN INSTANTIATION
+// PACMAN
 wire [7:0] pacman_color;
 graphics_pacman PACMAN  (
     .xpos (xpos), 
     .ypos (ypos), 
     .pacman_inputs (pacman_curr),
+    .pacman_death_frame (pacman_death_frame),
+    .hide_pacman (hide_pacman),
 
     .color (pacman_color)
 );
 
-// SCOREBOARD INSTANTIATION
+// SCOREBOARD
 wire [7:0] scoreboard_color;
 graphics_scoreboard SCOREBOARD (
     .xpos (xpos), 

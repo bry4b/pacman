@@ -8,4 +8,4 @@ Info (10281): Verilog HDL Declaration information at maze.sv(150): object "wall"
 Warning (10273): Verilog HDL warning at vga_ram.sv(87): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 87
 Warning (10273): Verilog HDL warning at vga_ram.sv(98): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 98
 Info (10281): Verilog HDL Declaration information at game_controller.sv(6): object "start" differs only in case from object "START" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv Line: 6
-Info (10281): Verilog HDL Declaration information at game_controller.sv(51): object "State" differs only in case from object "state" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv Line: 51
+Info (10281): Verilog HDL Declaration information at game_controller.sv(54): object "State" differs only in case from object "state" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv Line: 54

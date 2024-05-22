@@ -36,6 +36,10 @@ wire lturn;
 wire rturn;
 wire uturn;
 
+wire ctrl_select;   // HIGH to use gamecube controller, LOW to use NES controller
+assign ctrl_select = switches[0];
+assign leds[0] = switches[0];
+
 // GRAPHICS
 reg [9:0] xpos; 
 reg [9:0] ypos;
@@ -89,6 +93,9 @@ wire blinky_eaten;
 wire pinky_eaten;
 wire inky_eaten;
 wire clyde_eaten;
+wire hide_pacman;
+wire hide_ghosts;
+wire [3:0] pacman_death_frame;
 
 wire pacman_pellet;
 wire power_pellet;
@@ -99,7 +106,9 @@ wire [1:0] inky_tile_info [0:3];
 wire [1:0] clyde_tile_info [0:3];
 
 wire [17:0] score;
-// assign score[9:0] = switches[9:0];
+
+assign leds[4:1] = pacman_death_frame;
+assign leds[6] = pacman_outputs[0];
 
 clk_controller CLK_CTRL (
     .inclk0 (clk),
@@ -107,10 +116,25 @@ clk_controller CLK_CTRL (
     .c1 (gamecubeclk)
 );
 
-assign start = nes_btns[3];
-assign lturn = nes_btns[1];
-assign rturn = nes_btns[0];
-assign uturn = nes_btns[2];
+always_comb begin
+    if (ctrl_select) begin
+        start = bongo_btns[3];
+        lturn = bongo_btns[4] | bongo_btns[6];
+        rturn = bongo_btns[5] | bongo_btns[7];
+        uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
+    end else begin
+        start = nes_btns[3];
+        lturn = nes_btns[1];
+        rturn = nes_btns[0];
+        // uturn = nes_btns[2];
+        uturn = nes_btns[5];
+    end
+end
+
+// assign start = nes_btns[3];
+// assign lturn = nes_btns[1];
+// assign rturn = nes_btns[0];
+// assign uturn = nes_btns[2];
 
 // assign start = bongo_btns[3];
 // assign lturn = bongo_btns[4] | bongo_btns[6];
@@ -173,6 +197,9 @@ graphics_async BOO(
     .clyde_inputs (clyde_outputs),
     .ghost_anim (ghost_anim), 
     .ghosts_eaten (ghosts_eaten),
+    .pacman_death_frame (pacman_death_frame),
+    .hide_pacman (hide_pacman),
+    .hide_ghosts (hide_ghosts),
     .score (score),
     .maze_color (maze_color), 
 
@@ -233,6 +260,9 @@ game_controller GAME_CTRL (
     .inky_outputs (inky_outputs),
     .clyde_outputs (clyde_outputs),
     .ghost_anim (ghost_anim),
+    .pacman_death_frame (pacman_death_frame),
+    .hide_pacman (hide_pacman),
+    .hide_ghosts (hide_ghosts),
 
     .ghosts_eaten (ghosts_eaten),
     .score (score),

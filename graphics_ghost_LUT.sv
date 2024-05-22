@@ -4,6 +4,8 @@ module graphics_ghost_LUT (
     input [9:0] inky_in, 
     input [9:0] clyde_in, 
     input [1:0] ghosts_eaten,
+    input hide_ghosts,
+
     output [2:0] blinky_out,
     output [2:0] pinky_out,
     output [2:0] inky_out, 
@@ -163,25 +165,32 @@ reg score_LUT [0:1023] = '{
     BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK,   BLNK   // 15
 };
 always_comb begin
-    if (blinky_in < 'd768) begin
-        blinky_out = ghost_LUT [blinky_in];
+    if (~hide_ghosts) begin
+        if (blinky_in < 'd768) begin
+            blinky_out = ghost_LUT [blinky_in];
+        end else begin
+            blinky_out = score_LUT [(blinky_in - 'd768) + (ghosts_eaten << 'd8)];
+        end
+        if (pinky_in < 'd768) begin
+            pinky_out = ghost_LUT [pinky_in];
+        end else begin
+            pinky_out = score_LUT [(pinky_in - 'd768) + (ghosts_eaten << 'd8)];
+        end
+        if (inky_in < 'd768) begin
+            inky_out = ghost_LUT [inky_in];
+        end else begin
+            inky_out = score_LUT [(inky_in - 'd768) + (ghosts_eaten << 'd8)];
+        end
+        if (clyde_in < 'd768) begin
+            clyde_out = ghost_LUT [clyde_in];
+        end else begin
+            clyde_out = score_LUT [(clyde_in - 'd768) + (ghosts_eaten << 'd8)];
+        end
     end else begin
-        blinky_out = score_LUT [(blinky_in - 'd768) + (ghosts_eaten << 'd8)];
-    end
-    if (pinky_in < 'd768) begin
-        pinky_out = ghost_LUT [pinky_in];
-    end else begin
-        pinky_out = score_LUT [(pinky_in - 'd768) + (ghosts_eaten << 'd8)];
-    end
-    if (inky_in < 'd768) begin
-        inky_out = ghost_LUT [inky_in];
-    end else begin
-        inky_out = score_LUT [(inky_in - 'd768) + (ghosts_eaten << 'd8)];
-    end
-    if (clyde_in < 'd768) begin
-        clyde_out = ghost_LUT [clyde_in];
-    end else begin
-        clyde_out = score_LUT [(clyde_in - 'd768) + (ghosts_eaten << 'd8)];
+        blinky_out = BLNK;
+        pinky_out = BLNK;
+        inky_out = BLNK;
+        clyde_out = BLNK;
     end
 end
 

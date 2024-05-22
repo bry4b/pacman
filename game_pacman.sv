@@ -18,7 +18,7 @@ module game_pacman (
     // output logic [8:0] yloc,
     // output logic [1:0] dir,
     // output logic [1:0] anim_cycle
-    output [22:0] pacman_outputs
+    output [21:0] pacman_outputs
 );
     // output packing
     wire [5:0] curr_xtile; 
@@ -29,9 +29,7 @@ module game_pacman (
     wire [8:0] yloc;
     wire [1:0] dir; 
     wire [1:0] anim_cycle;
-    wire alive;
-    assign pacman_outputs = {xloc, yloc, dir, anim_cycle, alive};
-    assign alive = 1'b1;
+    assign pacman_outputs = {xloc, yloc, dir, anim_cycle};
 
     // Game states
     typedef enum logic [1:0] {START, NORMAL, DEATH, PAUSE} State;
