@@ -60,19 +60,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "leds[2]",
+					"name" : "leds[7]",
 					"strict" : false
 				},
 				{
-					"name" : "leds[3]",
+					"name" : "leds[8]",
 					"strict" : false
 				},
 				{
-					"name" : "leds[4]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[6]",
+					"name" : "leds[9]",
 					"strict" : false
 				},
 				{
@@ -85,6 +81,10 @@
 				},
 				{
 					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "switches[1]",
 					"strict" : false
 				},
 				{

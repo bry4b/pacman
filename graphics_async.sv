@@ -48,6 +48,8 @@ module graphics_async (
     input [3:0] pacman_death_frame,
     input hide_pacman,
     input hide_ghosts,
+
+    input [2:0] game_state,
     input [17:0] score,
 
     input [7:0] maze_color,
@@ -210,13 +212,19 @@ graphics_scoreboard SCOREBOARD (
     .color (scoreboard_color)
 );
 
+// TEXT
+wire [7:0] text_color;
+graphics_text TEXT (
+    .xpos (xpos), 
+    .ypos (ypos), 
+    .game_state (game_state),
+
+    .color (text_color)
+);
+
 // LOGIC FOR SPRITE HIERARCHY
 // allows sprites to show through "below" other sprites 
 always_comb begin
-    // instantiate blinky, pinky, etc. with like 'ghost1color', 'ghost2color', etc. for outputs instead of just 'color' (so they're split on different wires)
-    // in comb block determine which wire (ghost1color, ghost2color, etc) has priority, and set that to drive color
-    //      red > pink > blue > orange
-
     if (blinky_color != BLK) begin
         color = blinky_color;
     end else if (pinky_color != BLK) begin
@@ -231,6 +239,8 @@ always_comb begin
         color = maze_color;
     end else if (scoreboard_color != BLK) begin
         color = scoreboard_color;
+    end else if (text_color != BLK) begin
+        color = text_color;
     end else begin
         color = BLK;
     end
@@ -239,6 +249,16 @@ end
 // SCANNING AREA MAGIC
 localparam XMAX = 240;      // horizontal pixels (480/2)
 localparam YMAX = 320;      // vertical pixels (640/2)
+
+localparam MAZE_Y_OFFSET = 24;  // vertical maze offset (3 tiles * 8)
+localparam MAZE_Y_HEIGHT = 264; // vertical maze height (33 tiles * 8)
+localparam SCORE_X_OFFSET = 8;
+localparam SCORE_Y_OFFSET = 8;
+localparam SCORE_X_WIDTH = 56;  // 7 digits * 8 pixels per digit
+localparam SCORE_Y_HEIGHT = 8;
+localparam TEXT_X_OFFSET = 80; 
+localparam TEXT_Y_OFFSET = 176; 
+localparam TEXT_X_WIDTH = 80;   // 10 letters * 8 pixels per letter
 
 localparam START_0      = 4'b0000;  // load entire screen to ram0
 localparam START_1      = 4'b0001;  // load entire screen to ram1
@@ -254,13 +274,14 @@ localparam CLYDE_OLD    = 4'b1010;  // load clyde prev area
 localparam CLYDE_NEW    = 4'b1011;  // load clyde curr area
 localparam MAZE_SCAN    = 4'b1100;  // load power pellets
 localparam SCORE_SCAN   = 4'b1101;  // load scoreboard
-localparam SCAN_IDLE    = 4'b1111;
+localparam TEXT_SCAN    = 4'b1110;  // load text
+localparam SCAN_IDLE    = 4'b1111;  // idle after all scan
 
 reg [3:0] scan_state;
 wire [3:0] scan_state_d;
 
-reg [8:0] scan_counter;
-wire [8:0] scan_counter_d;
+reg [9:0] scan_counter;
+wire [9:0] scan_counter_d;
 
 always @(posedge vgaclk) begin
     scan_state <= scan_state_d;
@@ -555,17 +576,33 @@ always_comb begin
         end
 
         SCORE_SCAN: begin
-            xpos = 'd8 + (scan_counter % 'd56);
-            ypos = 'd8 + (scan_counter / 'd56);
+            xpos = SCORE_X_OFFSET + (scan_counter % SCORE_X_WIDTH);
+            ypos = SCORE_Y_OFFSET + (scan_counter / SCORE_X_WIDTH);
 
             if (rst) begin
                 scan_state_d = START_0;
                 scan_counter_d = 1'b0;
             end else if (scan_counter == 'd448) begin
-                scan_state_d = SCAN_IDLE; 
+                scan_state_d = TEXT_SCAN; 
                 scan_counter_d = 1'b0;
             end else begin
                 scan_state_d = SCORE_SCAN;
+                scan_counter_d = scan_counter + 1'b1;
+            end
+        end
+
+        TEXT_SCAN: begin
+            xpos = TEXT_X_OFFSET + (scan_counter % TEXT_X_WIDTH);
+            ypos = TEXT_Y_OFFSET + (scan_counter / TEXT_X_WIDTH);
+
+            if (rst) begin
+                scan_state_d = START_0;
+                scan_counter_d = 1'b0;
+            end else if (scan_counter == 'd640) begin
+                scan_state_d = SCAN_IDLE;
+                scan_counter_d = 1'b0;
+            end else begin
+                scan_state_d = TEXT_SCAN;
                 scan_counter_d = scan_counter + 1'b1;
             end
         end
@@ -599,13 +636,6 @@ localparam X_MAX = 240;         // horizontal pixels (480/2)
 localparam Y_MAX = 320;         // vertical pixels (640/2)
 localparam ADDRESS_MAX = 65535; // max RAM address
 
-localparam MAZE_Y_OFFSET = 24;  // vertical maze offset (3 tiles * 8)
-localparam MAZE_Y_HEIGHT = 264; // vertical maze height (33 tiles * 8)
-
-localparam SCORE_X_OFFSET = 8;  // horizontal score offset
-localparam SCORE_Y_OFFSET = 8;  // vertical score offset
-localparam SCORE_X_WIDTH = 56;  // 7 digits * 8 pixels per digit
-localparam SCORE_Y_HEIGHT = 8;  // 8 pixels per digit
 localparam SCORE_ADDR0 = 63360; // start of score area
 
 always_comb begin

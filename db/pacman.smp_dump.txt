@@ -1,13 +1,4 @@
 
-State Machine - |pacman_top|game_controller:GAME_CTRL|state
-Name state.WIN state.LOSE state.DEATH state.PLAY state.START state.RESET 
-state.RESET 0 0 0 0 0 0 
-state.START 0 0 0 0 1 1 
-state.PLAY 0 0 0 1 0 1 
-state.DEATH 0 0 1 0 0 1 
-state.LOSE 0 1 0 0 0 1 
-state.WIN 1 0 0 0 0 1 
-
 State Machine - |pacman_top|game_controller:GAME_CTRL|game_ghost:CLYDE|state_cont
 Name state_cont.STATE_PAUSE state_cont.STATE_EXTGH state_cont.STATE_RSPWN state_cont.STATE_SCORE state_cont.STATE_FRGHT state_cont.STATE_SCTTR state_cont.STATE_CHASE state_cont.STATE_START 
 state_cont.STATE_START 0 0 0 0 0 0 0 0 
@@ -199,22 +190,23 @@ curr_state.DEATH 0 1 0 1
 curr_state.PAUSE 1 0 0 1 
 
 State Machine - |pacman_top|graphics_async:BOO|scan_state
-Name scan_state.SCAN_IDLE scan_state.SCORE_SCAN scan_state.MAZE_SCAN scan_state.CLYDE_NEW scan_state.CLYDE_OLD scan_state.INKY_NEW scan_state.INKY_OLD scan_state.PINKY_NEW scan_state.PINKY_OLD scan_state.BLINKY_NEW scan_state.BLINKY_OLD scan_state.PACMAN_NEW scan_state.PACMAN_OLD scan_state.START_1 scan_state.START_0 
-scan_state.START_0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
-scan_state.START_1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
-scan_state.PACMAN_OLD 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
-scan_state.PACMAN_NEW 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
-scan_state.BLINKY_OLD 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
-scan_state.BLINKY_NEW 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
-scan_state.PINKY_OLD 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
-scan_state.PINKY_NEW 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
-scan_state.INKY_OLD 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
-scan_state.INKY_NEW 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
-scan_state.CLYDE_OLD 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
-scan_state.CLYDE_NEW 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
-scan_state.MAZE_SCAN 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
-scan_state.SCORE_SCAN 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
-scan_state.SCAN_IDLE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+Name scan_state.SCAN_IDLE scan_state.TEXT_SCAN scan_state.SCORE_SCAN scan_state.MAZE_SCAN scan_state.CLYDE_NEW scan_state.CLYDE_OLD scan_state.INKY_NEW scan_state.INKY_OLD scan_state.PINKY_NEW scan_state.PINKY_OLD scan_state.BLINKY_NEW scan_state.BLINKY_OLD scan_state.PACMAN_NEW scan_state.PACMAN_OLD scan_state.START_1 scan_state.START_0 
+scan_state.START_0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+scan_state.START_1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+scan_state.PACMAN_OLD 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+scan_state.PACMAN_NEW 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+scan_state.BLINKY_OLD 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+scan_state.BLINKY_NEW 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+scan_state.PINKY_OLD 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+scan_state.PINKY_NEW 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+scan_state.INKY_OLD 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+scan_state.INKY_NEW 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+scan_state.CLYDE_OLD 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+scan_state.CLYDE_NEW 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.MAZE_SCAN 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.SCORE_SCAN 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.TEXT_SCAN 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+scan_state.SCAN_IDLE 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 
 State Machine - |pacman_top|controller_bongo:BONGOCTRL|state
 Name state.00 state.10 state.01 

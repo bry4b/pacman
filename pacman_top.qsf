@@ -141,6 +141,7 @@ set_location_assignment PIN_AB7 -to nes_pulse
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to nes_data
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to nes_latch
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to nes_pulse
+set_global_assignment -name SYSTEMVERILOG_FILE graphics_text.sv
 set_global_assignment -name SYSTEMVERILOG_FILE graphics_scoreboard.sv
 set_global_assignment -name SYSTEMVERILOG_FILE graphics_async.sv
 set_global_assignment -name SYSTEMVERILOG_FILE bongo_tb.sv

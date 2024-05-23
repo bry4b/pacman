@@ -28,6 +28,7 @@ module maze (
     // input [5:0] clyde_ytile,
 
     input pellet_anim,
+    input flash_maze,
 
     output reg pellet_out,
     output reg power_pellet,
@@ -195,7 +196,11 @@ always_comb begin
     if (pixel && ytile == (15+YOFFSET-1) && xtile > 12 && xtile < 17) begin
         wall_color = WHT;
     end else if (pixel) begin
-        wall_color = BLU;
+        if (flash_maze) begin
+            wall_color = WHT;
+        end else begin
+            wall_color = BLU;
+        end
     end else begin
         wall_color = BLK;
     end

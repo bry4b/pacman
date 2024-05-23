@@ -71,24 +71,24 @@ wire [22:0] pinky_outputs;
 wire [22:0] inky_outputs;
 wire [22:0] clyde_outputs;
 
+localparam RT   = 2'b00;
+localparam UP   = 2'b01;
+localparam DN   = 2'b10;
+localparam LT   = 2'b11;
+wire [1:0] pacman_dir = pacman_outputs [4:3];
+
 wire [11:0] pacman_tiles;
 wire [11:0] blinky_tiles;
 wire [11:0] pinky_tiles;
 wire [11:0] inky_tiles;
 wire [11:0] clyde_tiles;
 
-reg ghost_anim;
-wire ghost_anim_d;
-reg [2:0] ghost_anim_counter;
-wire [2:0] ghost_anim_counter_d;
-
-reg pellet_anim;
-wire pellet_anim_d;
-reg [3:0] pellet_anim_counter;
-wire [3:0] pellet_anim_counter_d;
+wire ghost_anim;
+wire pellet_anim;
+wire flash_maze;
 
 wire pause;
-reg [1:0] ghosts_eaten;
+wire [1:0] ghosts_eaten;
 wire blinky_eaten; 
 wire pinky_eaten;
 wire inky_eaten;
@@ -105,10 +105,21 @@ wire [1:0] pinky_tile_info [0:3];
 wire [1:0] inky_tile_info [0:3];
 wire [1:0] clyde_tile_info [0:3];
 
+localparam RESET = 3'b000;
+localparam START = 3'b001;
+localparam PLAY = 3'b010;
+localparam DEATH = 3'b011;
+localparam LOSE = 3'b100;
+localparam WIN = 3'b101;
+
+wire [2:0] state;
 wire [17:0] score;
 
-assign leds[4:1] = pacman_death_frame;
-assign leds[6] = pacman_outputs[0];
+assign leds[1] = flash_maze;
+assign leds[9:7] = state[2:0];
+
+wire win;
+assign win = switches[1];
 
 clk_controller CLK_CTRL (
     .inclk0 (clk),
@@ -117,17 +128,43 @@ clk_controller CLK_CTRL (
 );
 
 always_comb begin
-    if (ctrl_select) begin
+    if (ctrl_select) begin      // gamecube controller
         start = bongo_btns[3];
         lturn = bongo_btns[4] | bongo_btns[6];
         rturn = bongo_btns[5] | bongo_btns[7];
         uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
-    end else begin
+    end else begin              // nes controller
         start = nes_btns[3];
-        lturn = nes_btns[1];
-        rturn = nes_btns[0];
-        // uturn = nes_btns[2];
-        uturn = nes_btns[5];
+   
+        case (pacman_dir) 
+            RT: begin
+                lturn = nes_btns[4];
+                rturn = nes_btns[5];
+                uturn = nes_btns[6];
+            end 
+
+            UP: begin
+                lturn = nes_btns[6];
+                rturn = nes_btns[7];
+                uturn = nes_btns[5];
+            end
+
+            DN: begin
+                lturn = nes_btns[7];
+                rturn = nes_btns[6];
+                uturn = nes_btns[4];
+            end
+
+            LT: begin
+                lturn = nes_btns[5];
+                rturn = nes_btns[4];
+                uturn = nes_btns[7];
+            end
+        endcase       
+        // lturn = nes_btns[1];
+        // rturn = nes_btns[0];
+        // // uturn = nes_btns[2];
+        // uturn = nes_btns[5];
     end
 end
 
@@ -186,7 +223,7 @@ graphics_async BOO(
     .vgaclk (vgaclk), 
     .gameclk (gameclk),
     .rst (~rst), 
-    .scanall (1'b0), 
+    .scanall (state == WIN || state == START || state == RESET), 
     .hc (hc), 
     .vc (vc), 
     .writeEnable (writeEnable),
@@ -200,6 +237,7 @@ graphics_async BOO(
     .pacman_death_frame (pacman_death_frame),
     .hide_pacman (hide_pacman),
     .hide_ghosts (hide_ghosts),
+    .game_state (state),
     .score (score),
     .maze_color (maze_color), 
 
@@ -213,7 +251,7 @@ clockDivider CLK_GAME(clk, 'd60, 1'b0, gameclk);
 
 maze MAZEPIN(
     .clk (gameclk),
-    .rst (~rst),
+    .rst (state == RESET),
     .xpos (xpos), 
     .ypos (ypos),
     .pacman_inputs (pacman_tiles),
@@ -222,6 +260,7 @@ maze MAZEPIN(
     .inky_inputs (inky_tiles),
     .clyde_inputs (clyde_tiles),
     .pellet_anim (pellet_anim),
+    .flash_maze (flash_maze),
 
     .pellet_out (pacman_pellet), 
     .power_pellet (power_pellet), 
@@ -237,6 +276,7 @@ game_controller GAME_CTRL (
     .clk (gameclk),
     .rst (~rst),
     .start (start),
+    .win (win),
     .lturn  (lturn),
     .rturn (rturn),
     .uturn (uturn),
@@ -254,6 +294,7 @@ game_controller GAME_CTRL (
     .inky_tiles (inky_tiles),
     .clyde_tiles (clyde_tiles),
     .pellet_anim (pellet_anim),
+    .flash_maze (flash_maze),
     .pacman_outputs (pacman_outputs),
     .blinky_outputs (blinky_outputs),
     .pinky_outputs (pinky_outputs),
@@ -265,6 +306,7 @@ game_controller GAME_CTRL (
     .hide_ghosts (hide_ghosts),
 
     .ghosts_eaten (ghosts_eaten),
+    .state (state),
     .score (score),
     .pause (pause)
 

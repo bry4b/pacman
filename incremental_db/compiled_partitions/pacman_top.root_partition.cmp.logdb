@@ -1,2 +1,2 @@
 v1
-PORT_SWAPPING,PORT_SWAPPING_FINISHED,game_controller:GAME_CTRL|game_ghost:INKY|lpm_mult:Mult6|mult_tds:auto_generated|mac_mult1,
+PORT_SWAPPING,PORT_SWAPPING_FINISHED,game_controller:GAME_CTRL|game_ghost:BLINKY|lpm_mult:Mult6|mult_tds:auto_generated|mac_mult1,
