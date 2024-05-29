@@ -1,12 +1,12 @@
-Analysis & Synthesis Status : Successful - Wed May 22 21:34:28 2024
+Analysis & Synthesis Status : Successful - Tue May 28 15:55:27 2024
 Quartus Prime Version : 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 Revision Name : pacman_top
 Top-level Entity Name : pacman_top
 Family : MAX 10
-Total logic elements : 25,317
-    Total combinational functions : 24,938
-    Dedicated logic registers : 1,843
-Total registers : 1843
+Total logic elements : 26,827
+    Total combinational functions : 26,448
+    Dedicated logic registers : 2,138
+Total registers : 2138
 Total pins : 41
 Total virtual pins : 0
 Total memory bits : 1,048,576

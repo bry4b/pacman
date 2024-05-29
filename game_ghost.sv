@@ -37,6 +37,7 @@ module game_ghost (
     // input [8:0] blinky_yloc,        // only for inky :/
     input [17:0] blinky_pos, 
 
+    input any_frightened,
     output eaten, 
     output kill,
 
@@ -567,7 +568,7 @@ end
 
 // FRIGHTENED TIMER & EATEN STATUS
 always_comb begin
-    if (power_pellet) begin
+    if (power_pellet || rst) begin
         eaten_d = 1'b0;
         timer_frt_d = 1'b1;
     end else if (state == STATE_PAUSE || state == STATE_SCORE) begin
@@ -580,8 +581,11 @@ always_comb begin
             eaten_d = eaten;
         end
         timer_frt_d = timer_frt + 1'b1;
-    end else begin
+    end else if (~any_frightened) begin
         eaten_d = 1'b0;
+        timer_frt_d = 1'b0;
+    end else begin
+        eaten_d = eaten;
         timer_frt_d = 1'b0;
     end
 end

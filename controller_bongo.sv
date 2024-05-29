@@ -1,7 +1,7 @@
 module controller_bongo (
     input clk, 
     input start,
-    output reg [0:15] buttons_out,
+    output reg [0:15] buttons_out,      // 0, 0, 1, Start, Y, X, B, A, 1, L, R, Z, Up, Down, Right, Left
     output reg [7:0] joystick_xout,
     output reg [7:0] joystick_yout,
     output reg [7:0] cstick_xout,

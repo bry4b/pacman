@@ -1,7 +1,7 @@
 Quartus Prime Archive log --	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qarlog
 
 Archive:	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qar
-Date:		Mon May 20 17:35:20 2024
+Date:		Wed May 22 21:38:02 2024
 Quartus Prime		21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 	=========== Files Selected: ===========
@@ -31,6 +31,7 @@ C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_ghost.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_ghost_LUT.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_pacman.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_scoreboard.sv
+C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_text.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze_tb.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qpf
@@ -45,7 +46,7 @@ C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_tb.sv
 C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_top.sv
-	======= Total: 40 files to archive =======
+	======= Total: 41 files to archive =======
 
 	================ Status: ===============
 All files archived successfully.

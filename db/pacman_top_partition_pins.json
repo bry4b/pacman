@@ -60,18 +60,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "leds[7]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[8]",
-					"strict" : false
-				},
-				{
-					"name" : "leds[9]",
-					"strict" : false
-				},
-				{
 					"name" : "gamecube_data",
 					"strict" : false
 				},
@@ -80,11 +68,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "rst",
+					"name" : "switches[1]",
 					"strict" : false
 				},
 				{
-					"name" : "switches[1]",
+					"name" : "rst",
 					"strict" : false
 				},
 				{

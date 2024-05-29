@@ -37,7 +37,10 @@ wire rturn;
 wire uturn;
 
 wire ctrl_select;   // HIGH to use gamecube controller, LOW to use NES controller
+wire ctrl_mode;     // HIGH to use direction controls, LOW to use rotation controls
 assign ctrl_select = switches[0];
+assign ctrl_mode = switches[1];
+assign leds[1] = switches[1];
 assign leds[0] = switches[0];
 
 // GRAPHICS
@@ -86,6 +89,7 @@ wire [11:0] clyde_tiles;
 wire ghost_anim;
 wire pellet_anim;
 wire flash_maze;
+wire reset_maze;
 
 wire pause;
 wire [1:0] ghosts_eaten;
@@ -114,12 +118,7 @@ localparam WIN = 3'b101;
 
 wire [2:0] state;
 wire [17:0] score;
-
-assign leds[1] = flash_maze;
-assign leds[9:7] = state[2:0];
-
-wire win;
-assign win = switches[1];
+wire [2:0] lives;
 
 clk_controller CLK_CTRL (
     .inclk0 (clk),
@@ -130,41 +129,71 @@ clk_controller CLK_CTRL (
 always_comb begin
     if (ctrl_select) begin      // gamecube controller
         start = bongo_btns[3];
-        lturn = bongo_btns[4] | bongo_btns[6];
-        rturn = bongo_btns[5] | bongo_btns[7];
-        uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
+        if (ctrl_mode) begin    // direction controls FIX THIS            
+            case (pacman_dir) 
+                RT: begin
+                    lturn = bongo_btns[12];
+                    rturn = bongo_btns[13];
+                    uturn = bongo_btns[15];
+                end 
+
+                UP: begin
+                    lturn = bongo_btns[15];
+                    rturn = bongo_btns[14];
+                    uturn = bongo_btns[13];
+                end
+
+                DN: begin
+                    lturn = bongo_btns[14];
+                    rturn = bongo_btns[15];
+                    uturn = bongo_btns[12];
+                end
+
+                LT: begin
+                    lturn = bongo_btns[13];
+                    rturn = bongo_btns[12];
+                    uturn = bongo_btns[14];
+                end
+            endcase
+        end else begin
+            lturn = bongo_btns[4] | bongo_btns[6];
+            rturn = bongo_btns[5] | bongo_btns[7];
+            uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
+        end
     end else begin              // nes controller
         start = nes_btns[3];
-   
-        case (pacman_dir) 
-            RT: begin
-                lturn = nes_btns[4];
-                rturn = nes_btns[5];
-                uturn = nes_btns[6];
-            end 
+        if (ctrl_mode) begin    
+            case (pacman_dir) 
+                RT: begin
+                    lturn = nes_btns[4];
+                    rturn = nes_btns[5];
+                    uturn = nes_btns[6];
+                end 
 
-            UP: begin
-                lturn = nes_btns[6];
-                rturn = nes_btns[7];
-                uturn = nes_btns[5];
-            end
+                UP: begin
+                    lturn = nes_btns[6];
+                    rturn = nes_btns[7];
+                    uturn = nes_btns[5];
+                end
 
-            DN: begin
-                lturn = nes_btns[7];
-                rturn = nes_btns[6];
-                uturn = nes_btns[4];
-            end
+                DN: begin
+                    lturn = nes_btns[7];
+                    rturn = nes_btns[6];
+                    uturn = nes_btns[4];
+                end
 
-            LT: begin
-                lturn = nes_btns[5];
-                rturn = nes_btns[4];
-                uturn = nes_btns[7];
-            end
-        endcase       
-        // lturn = nes_btns[1];
-        // rturn = nes_btns[0];
-        // // uturn = nes_btns[2];
-        // uturn = nes_btns[5];
+                LT: begin
+                    lturn = nes_btns[5];
+                    rturn = nes_btns[4];
+                    uturn = nes_btns[7];
+                end
+            endcase       
+        end else begin
+            lturn = nes_btns[1];
+            rturn = nes_btns[0];
+            // uturn = nes_btns[2];
+            uturn = nes_btns[5];
+        end
     end
 end
 
@@ -239,6 +268,7 @@ graphics_async BOO(
     .hide_ghosts (hide_ghosts),
     .game_state (state),
     .score (score),
+    .lives (lives),
     .maze_color (maze_color), 
 
     .color (color), 
@@ -251,7 +281,7 @@ clockDivider CLK_GAME(clk, 'd60, 1'b0, gameclk);
 
 maze MAZEPIN(
     .clk (gameclk),
-    .rst (state == RESET),
+    .rst (state == RESET || reset_maze),
     .xpos (xpos), 
     .ypos (ypos),
     .pacman_inputs (pacman_tiles),
@@ -276,10 +306,10 @@ game_controller GAME_CTRL (
     .clk (gameclk),
     .rst (~rst),
     .start (start),
-    .win (win),
     .lturn  (lturn),
     .rturn (rturn),
     .uturn (uturn),
+
     .pacman_pellet (pacman_pellet),
     .power_pellet (power_pellet),
     .pacman_tile_info (pacman_tile_info),
@@ -295,6 +325,8 @@ game_controller GAME_CTRL (
     .clyde_tiles (clyde_tiles),
     .pellet_anim (pellet_anim),
     .flash_maze (flash_maze),
+    .reset_maze (reset_maze),
+
     .pacman_outputs (pacman_outputs),
     .blinky_outputs (blinky_outputs),
     .pinky_outputs (pinky_outputs),
@@ -308,8 +340,8 @@ game_controller GAME_CTRL (
     .ghosts_eaten (ghosts_eaten),
     .state (state),
     .score (score),
+    .lives (lives),
     .pause (pause)
-
 );
 
 // game_ghost BLINKY (

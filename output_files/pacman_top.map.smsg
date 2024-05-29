@@ -1,3 +1,4 @@
+Info (10281): Verilog HDL Declaration information at graphics_async.sv(54): object "lives" differs only in case from object "LIVES" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/graphics_async.sv Line: 54
 Warning (10273): Verilog HDL warning at controller_bongo.sv(74): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv Line: 74
 Warning (10273): Verilog HDL warning at controller_bongo.sv(92): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/controller_bongo.sv Line: 92
 Info (10281): Verilog HDL Declaration information at game_pacman.sv(4): object "start" differs only in case from object "START" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv Line: 4
@@ -5,9 +6,7 @@ Info (10281): Verilog HDL Declaration information at game_pacman.sv(10): object 
 Info (10281): Verilog HDL Declaration information at game_pacman.sv(7): object "right" differs only in case from object "RIGHT" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv Line: 7
 Info (10281): Verilog HDL Declaration information at game_pacman.sv(6): object "left" differs only in case from object "LEFT" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_pacman.sv Line: 6
 Info (10281): Verilog HDL Declaration information at maze.sv(151): object "wall" differs only in case from object "WALL" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/maze.sv Line: 151
-Warning (10273): Verilog HDL warning at vga_ram.sv(87): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 87
-Warning (10273): Verilog HDL warning at vga_ram.sv(98): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 98
+Warning (10273): Verilog HDL warning at vga_ram.sv(93): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 93
+Warning (10273): Verilog HDL warning at vga_ram.sv(106): extended using "x" or "z" File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_ram.sv Line: 106
 Info (10281): Verilog HDL Declaration information at pacman_top.sv(34): object "start" differs only in case from object "START" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 34
-Info (10281): Verilog HDL Declaration information at pacman_top.sv(113): object "WIN" differs only in case from object "win" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman_top.sv Line: 113
 Info (10281): Verilog HDL Declaration information at game_controller.sv(6): object "start" differs only in case from object "START" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv Line: 6
-Info (10281): Verilog HDL Declaration information at game_controller.sv(7): object "win" differs only in case from object "WIN" in the same scope File: C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/game_controller.sv Line: 7

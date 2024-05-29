@@ -50,11 +50,15 @@ localparam ADDRESS_MAX = 65535; // max RAM address
 
 localparam MAZE_Y_OFFSET = 24;  // vertical maze offset (3 tiles * 8)
 localparam MAZE_Y_HEIGHT = 264; // vertical maze height (33 tiles * 8)
-
 localparam SCORE_X_OFFSET = 8;  // horizontal score offset
 localparam SCORE_Y_OFFSET = 8;  // vertical score offset
 localparam SCORE_X_WIDTH = 56;  // 7 digits * 8 pixels per digit
 localparam SCORE_Y_HEIGHT = 8;  // 8 pixels per digit
+localparam LIVES_X_OFFSET = 8;
+localparam LIVES_Y_OFFSET = 296;
+localparam LIVES_X_WIDTH = 80;  // max 5 lives * 16 pixels per life
+localparam LIVES_Y_HEIGHT = 16;     
+
 localparam SCORE_ADDR0 = 63360; // start of score area
 
 always_comb begin
@@ -80,6 +84,8 @@ always_comb begin
             ram1_addr = xpos + (ypos-MAZE_Y_OFFSET)*X_MAX;
         end else if (ypos >= SCORE_Y_OFFSET && ypos < (SCORE_Y_HEIGHT + SCORE_Y_OFFSET) && xpos >= SCORE_X_OFFSET && xpos < (SCORE_X_WIDTH+SCORE_X_OFFSET)) begin          // score area
             ram1_addr = SCORE_ADDR0 + xpos + (ypos-SCORE_Y_OFFSET)*SCORE_X_WIDTH;
+        end else if (ypos >= LIVES_Y_OFFSET && ypos < (LIVES_Y_HEIGHT + LIVES_Y_OFFSET) && xpos >= LIVES_X_OFFSET && xpos < (LIVES_X_WIDTH+LIVES_X_OFFSET)) begin          // lives area
+            ram1_addr = SCORE_ADDR0 + 448 + xpos + (ypos-LIVES_Y_OFFSET)*LIVES_X_WIDTH;
         end else begin
             ram1_addr = ADDRESS_MAX;
         end        
@@ -91,6 +97,8 @@ always_comb begin
             ram0_addr = xpos + (ypos-MAZE_Y_OFFSET)*X_MAX;
         end else if (ypos >= SCORE_Y_OFFSET && ypos < (SCORE_Y_HEIGHT + SCORE_Y_OFFSET) && xpos >= SCORE_X_OFFSET && xpos < (SCORE_X_WIDTH+SCORE_X_OFFSET)) begin          // score area
             ram0_addr = SCORE_ADDR0 + xpos + (ypos-SCORE_Y_OFFSET)*SCORE_X_WIDTH;
+        end else if (ypos >= LIVES_Y_OFFSET && ypos < (LIVES_Y_HEIGHT + LIVES_Y_OFFSET) && xpos >= LIVES_X_OFFSET && xpos < (LIVES_X_WIDTH+LIVES_X_OFFSET)) begin          // lives area
+            ram0_addr = SCORE_ADDR0 + 448 + xpos + (ypos-LIVES_Y_OFFSET)*LIVES_X_WIDTH;
         end else begin
             ram0_addr = ADDRESS_MAX;
         end        

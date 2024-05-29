@@ -1,5 +1,5 @@
 Archive Project report for pacman_top
-Mon May 20 17:35:20 2024
+Wed May 22 21:38:02 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -36,7 +36,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------+
 ; Archive Project Summary                                        ;
 +------------------------+---------------------------------------+
-; Archive Project Status ; Successful - Mon May 20 17:35:20 2024 ;
+; Archive Project Status ; Successful - Wed May 22 21:38:02 2024 ;
 ; Revision Name          ; pacman_top                            ;
 ; Top-level Entity Name  ; pacman_top                            ;
 ; Family                 ; MAX 10                                ;
@@ -60,8 +60,8 @@ Info: ----------------------------------------------------------
 Info: Generated report 'pacman_top.archive.rpt'
 Info (23030): Evaluation of Tcl script c:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4844 megabytes
-    Info: Processing ended: Mon May 20 17:35:20 2024
+    Info: Peak virtual memory: 4860 megabytes
+    Info: Processing ended: Wed May 22 21:38:02 2024
     Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:00
 
@@ -97,6 +97,7 @@ Info: Quartus Prime Shell was successful. 0 errors, 1 warning
 ; graphics_ghost_LUT.sv   ;
 ; graphics_pacman.sv      ;
 ; graphics_scoreboard.sv  ;
+; graphics_text.sv        ;
 ; maze.sv                 ;
 ; maze_tb.sv              ;
 ; pacman.qpf              ;

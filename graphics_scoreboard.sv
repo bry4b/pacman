@@ -8,11 +8,12 @@ module graphics_scoreboard (
 );
 
 // scoreboard displays up to 7 digits, but least significant digit is always 0 due to how scoring works
-// "score" input only defines the 6 most significant digits
+// "score" input defines the 6 most significant digits
 
 localparam SCORE_X_OFFSET = 8;
 localparam SCORE_Y_OFFSET = 8;
 localparam SCORE_X_WIDTH = 56;  // 7 digits * 8 pixels per digit
+localparam SCORE_Y_HEIGHT = 8;
 
 // COLORS
 localparam WHT  = 8'b11111111;
@@ -65,7 +66,7 @@ wire [2:0] ypixel = ypos - SCORE_Y_OFFSET;
 wire [0:63] display = scoreboard_digits[digit[display_digit]];
 
 always_comb begin
-    if ( xpos >= SCORE_X_OFFSET && xpos < (SCORE_X_OFFSET + SCORE_X_WIDTH) && ypos >= SCORE_Y_OFFSET && ypos < (SCORE_Y_OFFSET + 8) ) begin
+    if ( xpos >= SCORE_X_OFFSET && xpos < (SCORE_X_OFFSET + SCORE_X_WIDTH) && ypos >= SCORE_Y_OFFSET && ypos < (SCORE_Y_OFFSET + SCORE_Y_HEIGHT) ) begin
         // if (scoreboard_digits [digit[(SCORE_X_WIDTH - 1'b1 - (xpos-SCORE_X_OFFSET)) >> 'd3]] [xpos[2:0] + (ypos[2:0] << 'd3)]) begin
         if (display[xpixel + (ypixel*'d8)] && display_digit <= first_display_digit) begin
             color = WHT;

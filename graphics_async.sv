@@ -51,6 +51,7 @@ module graphics_async (
 
     input [2:0] game_state,
     input [17:0] score,
+    input [2:0] lives,
 
     input [7:0] maze_color,
     
@@ -212,6 +213,15 @@ graphics_scoreboard SCOREBOARD (
     .color (scoreboard_color)
 );
 
+wire [7:0] lives_color;
+graphics_lives LIVES (
+    .xpos (xpos), 
+    .ypos (ypos), 
+    .lives (lives),
+
+    .color (lives_color)
+);
+
 // TEXT
 wire [7:0] text_color;
 graphics_text TEXT (
@@ -241,6 +251,8 @@ always_comb begin
         color = scoreboard_color;
     end else if (text_color != BLK) begin
         color = text_color;
+    end else if (lives_color != BLK) begin
+        color = lives_color;
     end else begin
         color = BLK;
     end
@@ -252,36 +264,58 @@ localparam YMAX = 320;      // vertical pixels (640/2)
 
 localparam MAZE_Y_OFFSET = 24;  // vertical maze offset (3 tiles * 8)
 localparam MAZE_Y_HEIGHT = 264; // vertical maze height (33 tiles * 8)
-localparam SCORE_X_OFFSET = 8;
-localparam SCORE_Y_OFFSET = 8;
+localparam SCORE_X_OFFSET = 8;  // 1 tile * 8
+localparam SCORE_Y_OFFSET = 8;  // 1 tile * 8
 localparam SCORE_X_WIDTH = 56;  // 7 digits * 8 pixels per digit
-localparam SCORE_Y_HEIGHT = 8;
-localparam TEXT_X_OFFSET = 80; 
-localparam TEXT_Y_OFFSET = 176; 
+localparam SCORE_Y_HEIGHT = 8;  // 1 tile * 8
+localparam TEXT_X_OFFSET = 80;  // 10 tiles * 8
+localparam TEXT_Y_OFFSET = 176; // 22 tiles * 8
 localparam TEXT_X_WIDTH = 80;   // 10 letters * 8 pixels per letter
+localparam LIVES_X_OFFSET = 8;
+localparam LIVES_Y_OFFSET = 296;
+localparam LIVES_X_WIDTH = 80;      // max 5 lives * 16 pixels per life
+localparam LIVES_Y_HEIGHT = 16;     
 
-localparam START_0      = 4'b0000;  // load entire screen to ram0
-localparam START_1      = 4'b0001;  // load entire screen to ram1
-localparam PACMAN_OLD   = 4'b0010;  // load pacman prev area
-localparam PACMAN_NEW   = 4'b0011;  // load pacman curr area
-localparam BLINKY_OLD   = 4'b0100;  // load blinky prev area
-localparam BLINKY_NEW   = 4'b0101;  // load blinky curr area
-localparam PINKY_OLD    = 4'b0110;  // load pinky prev area
-localparam PINKY_NEW    = 4'b0111;  // load pinky curr area
-localparam INKY_OLD     = 4'b1000;  // load inky prev area
-localparam INKY_NEW     = 4'b1001;  // load inky curr area
-localparam CLYDE_OLD    = 4'b1010;  // load clyde prev area
-localparam CLYDE_NEW    = 4'b1011;  // load clyde curr area
-localparam MAZE_SCAN    = 4'b1100;  // load power pellets
-localparam SCORE_SCAN   = 4'b1101;  // load scoreboard
-localparam TEXT_SCAN    = 4'b1110;  // load text
-localparam SCAN_IDLE    = 4'b1111;  // idle after all scan
+// localparam START_0      = 4'b0000;  // load entire screen to ram0
+// localparam START_1      = 4'b0001;  // load entire screen to ram1
+// localparam PACMAN_OLD   = 4'b0010;  // load pacman prev area
+// localparam PACMAN_NEW   = 4'b0011;  // load pacman curr area
+// localparam BLINKY_OLD   = 4'b0100;  // load blinky prev area
+// localparam BLINKY_NEW   = 4'b0101;  // load blinky curr area
+// localparam PINKY_OLD    = 4'b0110;  // load pinky prev area
+// localparam PINKY_NEW    = 4'b0111;  // load pinky curr area
+// localparam INKY_OLD     = 4'b1000;  // load inky prev area
+// localparam INKY_NEW     = 4'b1001;  // load inky curr area
+// localparam CLYDE_OLD    = 4'b1010;  // load clyde prev area
+// localparam CLYDE_NEW    = 4'b1011;  // load clyde curr area
+// localparam MAZE_SCAN    = 4'b1100;  // load power pellets
+// localparam SCORE_SCAN   = 4'b1101;  // load scoreboard & revives
+// localparam TEXT_SCAN    = 4'b1110;  // load text
+// localparam SCAN_IDLE    = 4'b1111;  // idle after all scan
 
-reg [3:0] scan_state;
-wire [3:0] scan_state_d;
+localparam START_0      = 5'b00000;     // load entire screen to ram0
+localparam START_1      = 5'b00001;     // load entire screen to ram1
+localparam PACMAN_OLD   = 5'b00010;     // load pacman prev area
+localparam PACMAN_NEW   = 5'b00011;     // load pacman curr area
+localparam BLINKY_OLD   = 5'b00100;     // load blinky prev area
+localparam BLINKY_NEW   = 5'b00101;     // load blinky curr area
+localparam PINKY_OLD    = 5'b00110;     // load pinky prev area
+localparam PINKY_NEW    = 5'b00111;     // load pinky curr area
+localparam INKY_OLD     = 5'b01000;     // load inky prev area
+localparam INKY_NEW     = 5'b01001;     // load inky curr area
+localparam CLYDE_OLD    = 5'b01010;     // load clyde prev area
+localparam CLYDE_NEW    = 5'b01011;     // load clyde curr area
+localparam MAZE_SCAN    = 5'b01100;     // load power pellets
+localparam SCORE_SCAN   = 5'b01101;     // load scoreboard
+localparam TEXT_SCAN    = 5'b01110;     // load text
+localparam LIVES_SCAN   = 5'b01111;     // load lives
+localparam SCAN_IDLE    = 5'b11111;     // idle after all scan
 
-reg [9:0] scan_counter;
-wire [9:0] scan_counter_d;
+reg [4:0] scan_state;
+wire [4:0] scan_state_d;
+
+reg [10:0] scan_counter;
+wire [10:0] scan_counter_d;
 
 always @(posedge vgaclk) begin
     scan_state <= scan_state_d;
@@ -576,13 +610,20 @@ always_comb begin
         end
 
         SCORE_SCAN: begin
-            xpos = SCORE_X_OFFSET + (scan_counter % SCORE_X_WIDTH);
-            ypos = SCORE_Y_OFFSET + (scan_counter / SCORE_X_WIDTH);
+            if (scan_counter < 448) begin
+                xpos = SCORE_X_OFFSET + (scan_counter % SCORE_X_WIDTH);
+                ypos = SCORE_Y_OFFSET + (scan_counter / SCORE_X_WIDTH);
+            end else begin
+                xpos = LIVES_X_OFFSET + ((scan_counter-'d448) % LIVES_X_WIDTH);
+                ypos = LIVES_Y_OFFSET + ((scan_counter-'d448) / LIVES_X_WIDTH);
+            end
+            // xpos = SCORE_X_OFFSET + (scan_counter % SCORE_X_WIDTH);
+            // ypos = SCORE_Y_OFFSET + (scan_counter / SCORE_X_WIDTH);
 
             if (rst) begin
                 scan_state_d = START_0;
                 scan_counter_d = 1'b0;
-            end else if (scan_counter == 'd448) begin
+            end else if (scan_counter == 'd1728) begin
                 scan_state_d = TEXT_SCAN; 
                 scan_counter_d = 1'b0;
             end else begin
@@ -606,6 +647,22 @@ always_comb begin
                 scan_counter_d = scan_counter + 1'b1;
             end
         end
+
+        // LIVES_SCAN: begin
+        //     xpos = LIVES_X_OFFSET + (scan_counter % LIVES_X_WIDTH);
+        //     ypos = LIVES_Y_OFFSET + (scan_counter / LIVES_X_WIDTH);
+
+        //     if (rst) begin
+        //         scan_state_d = START_0;
+        //         scan_counter_d = 1'b0;
+        //     end else if (scan_counter == 'd1280) begin
+        //         scan_state_d = SCAN_IDLE;
+        //         scan_counter_d = 1'b0;
+        //     end else begin
+        //         scan_state_d = LIVES_SCAN;
+        //         scan_counter_d = scan_counter + 1'b1;
+        //     end
+        // end
 
         SCAN_IDLE: begin
             scan_counter_d = 1'b0;
@@ -643,6 +700,8 @@ always_comb begin
         address = xpos + (ypos-MAZE_Y_OFFSET)*X_MAX;
     end else if (ypos >= SCORE_Y_OFFSET && ypos < (SCORE_Y_HEIGHT + SCORE_Y_OFFSET) && xpos >= SCORE_X_OFFSET && xpos < (SCORE_X_WIDTH+SCORE_X_OFFSET)) begin          // score area
         address = SCORE_ADDR0 + xpos + (ypos-SCORE_Y_OFFSET)*SCORE_X_WIDTH;
+    end else if (ypos >= LIVES_Y_OFFSET && ypos < (LIVES_Y_HEIGHT + LIVES_Y_OFFSET) && xpos >= LIVES_X_OFFSET && xpos < (LIVES_X_WIDTH+LIVES_X_OFFSET)) begin          // lives area
+        address = SCORE_ADDR0 + 448 + xpos + (ypos-LIVES_Y_OFFSET)*LIVES_X_WIDTH;
     end else begin
         address = ADDRESS_MAX;
     end
