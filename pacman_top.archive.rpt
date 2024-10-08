@@ -1,5 +1,5 @@
 Archive Project report for pacman_top
-Wed May 22 21:38:02 2024
+Thu May  2 12:55:33 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -36,7 +36,7 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------------------------------------+
 ; Archive Project Summary                                        ;
 +------------------------+---------------------------------------+
-; Archive Project Status ; Successful - Wed May 22 21:38:02 2024 ;
+; Archive Project Status ; Successful - Thu May  2 12:55:33 2024 ;
 ; Revision Name          ; pacman_top                            ;
 ; Top-level Entity Name  ; pacman_top                            ;
 ; Family                 ; MAX 10                                ;
@@ -51,19 +51,19 @@ Info: File Set 'Source control' contains:
     Info: Automatically detected source files
 Warning: Hierarchical Platform Designer systems and custom IP components(_hw.tcl and associated files) are not archived by the Quartus Archiver
 Info: Archive will store files relative to the closest common parent directory
-Info (13213): Using common directory C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/
+Info (13213): Using common directory F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/
 Info: ----------------------------------------------------------
 Info: ----------------------------------------------------------
-Info: Generated archive 'C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qar'
+Info: Generated archive 'F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qar'
 Info: ----------------------------------------------------------
 Info: ----------------------------------------------------------
 Info: Generated report 'pacman_top.archive.rpt'
-Info (23030): Evaluation of Tcl script c:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info (23030): Evaluation of Tcl script f:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4860 megabytes
-    Info: Processing ended: Wed May 22 21:38:02 2024
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:00
+    Info: Peak virtual memory: 4850 megabytes
+    Info: Processing ended: Thu May  2 12:55:33 2024
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:01
 
 
 +-------------------------+
@@ -72,36 +72,22 @@ Info: Quartus Prime Shell was successful. 0 errors, 1 warning
 ; File Name               ;
 +-------------------------+
 ; assignment_defaults.qdf ;
-; bongo_tb.sv             ;
-; clk_controller.ppf      ;
-; clk_controller.qip      ;
-; clk_controller.v        ;
-; clk_controller_bb.v     ;
-; clk_controller_inst.v   ;
 ; clk_vga.ppf             ;
 ; clk_vga.qip             ;
 ; clk_vga.v               ;
 ; clk_vga_bb.v            ;
 ; clk_vga_inst.v          ;
 ; clockDivider.sv         ;
-; controller_bongo.sv     ;
-; controller_nes.sv       ;
-; controller_tb.sv        ;
-; controller_top.sv       ;
 ; game_controller.sv      ;
 ; game_ghost.sv           ;
-; game_pacman.sv          ;
 ; game_tb.sv              ;
-; graphics_async.sv       ;
+; graphics.sv             ;
 ; graphics_ghost.sv       ;
 ; graphics_ghost_LUT.sv   ;
 ; graphics_pacman.sv      ;
-; graphics_scoreboard.sv  ;
-; graphics_text.sv        ;
 ; maze.sv                 ;
 ; maze_tb.sv              ;
 ; pacman.qpf              ;
-; pacman_tb.sv            ;
 ; pacman_top.qsf          ;
 ; pacman_top.sv           ;
 ; ram_ip.qip              ;

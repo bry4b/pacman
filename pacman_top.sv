@@ -1,4 +1,4 @@
-module pacman_top ( 
+module pacman_top (
     input clk, 
     input rst,
     input btn,
@@ -120,6 +120,8 @@ wire [2:0] state;
 wire [17:0] score;
 wire [2:0] lives;
 
+assign leds [9:2] = bongo_btns [0:7];
+
 clk_controller CLK_CTRL (
     .inclk0 (clk),
     .c0 (nesclk),
@@ -129,7 +131,7 @@ clk_controller CLK_CTRL (
 always_comb begin
     if (ctrl_select) begin      // gamecube controller
         start = bongo_btns[3];
-        if (ctrl_mode) begin    // direction controls FIX THIS            
+        if (ctrl_mode) begin    // direction controls         
             case (pacman_dir) 
                 RT: begin
                     lturn = bongo_btns[12];
@@ -197,16 +199,6 @@ always_comb begin
     end
 end
 
-// assign start = nes_btns[3];
-// assign lturn = nes_btns[1];
-// assign rturn = nes_btns[0];
-// assign uturn = nes_btns[2];
-
-// assign start = bongo_btns[3];
-// assign lturn = bongo_btns[4] | bongo_btns[6];
-// assign rturn = bongo_btns[5] | bongo_btns[7];
-// assign uturn = (bongo_mic > 8'b01000000) && ~(lturn | rturn);
-
 controller_nes NESCTRL (
     .clk (nesclk),
     .start (gameclk),
@@ -227,26 +219,6 @@ controller_bongo BONGOCTRL (
 clk_vga CLK_VGA(clk, vgaclk);
 vga DISPLAY(vgaclk, input_red, input_green, input_blue, ~rst, hc, vc, hsync, vsync, red, green, blue);
 vga_ram RAM_VGA(vgaclk, address, hc, vc, color, writeEnable, vga_data);
-
-// graphics_old BOO(
-//     .clk (vgaclk), 
-//     .rst (~rst), 
-//     .hc (hc), 
-//     .vc (vc), 
-//     .pacman_inputs (pacman_outputs),
-//     .blinky_inputs (blinky_outputs), 
-//     .pinky_inputs (pinky_outputs),
-//     .inky_inputs (inky_outputs),
-//     .clyde_inputs (clyde_outputs),
-//     .ghost_anim (ghost_anim), 
-//     .ghosts_eaten (ghosts_eaten),
-//     .maze_color (maze_color), 
-
-//     .color (color), 
-//     .xpos (xpos), 
-//     .ypos (ypos),
-//     .address (address)
-// );
 
 graphics_async BOO(
     .vgaclk (vgaclk), 
@@ -277,11 +249,11 @@ graphics_async BOO(
     .address (address)
 );
 
-clockDivider CLK_GAME(clk, 'd60, 1'b0, gameclk);
+clockDivider CLK_GAME(clk, 'd60, ~rst, gameclk);
 
 maze MAZEPIN(
     .clk (gameclk),
-    .rst (state == RESET || reset_maze),
+    .rst (~btn | ~rst | state == RESET | reset_maze),
     .xpos (xpos), 
     .ypos (ypos),
     .pacman_inputs (pacman_tiles),
@@ -304,7 +276,7 @@ maze MAZEPIN(
 
 game_controller GAME_CTRL (
     .clk (gameclk),
-    .rst (~rst),
+    .rst (~btn),
     .start (start),
     .lturn  (lturn),
     .rturn (rturn),
@@ -343,120 +315,5 @@ game_controller GAME_CTRL (
     .lives (lives),
     .pause (pause)
 );
-
-// game_ghost BLINKY (
-//     .clk (gameclk),
-//     .rst (~rst),
-//     .start (start),
-//     .pause (pause),
-//     .personality (2'b00),
-//     .pacman_inputs (pacman_outputs [22:3]),
-//     .power_pellet (power_pellet),
-//     .tile_info (blinky_tile_info),
-//     .blinky_pos (1'b0),
-
-//     .eaten (blinky_eaten),
-//     .tile_checks (blinky_tiles),
-//     .ghost_outputs (blinky_outputs)
-// );
-
-// game_ghost PINKY ( 
-//     .clk (gameclk),
-//     .rst (~rst),
-//     .start (start),
-//     .pause (pause),
-//     .personality (2'b01),
-//     .pacman_inputs (pacman_outputs [22:3]),
-//     .power_pellet (power_pellet),
-//     .tile_info (pinky_tile_info), 
-//     .blinky_pos (1'b0),
-
-//     .eaten (pinky_eaten),
-//     .tile_checks (pinky_tiles),
-//     .ghost_outputs (pinky_outputs)
-// );
-    
-// game_ghost INKY ( 
-//     .clk (gameclk),
-//     .rst (~rst),
-//     .start (start),
-//     .pause (pause),
-//     .personality (2'b10),
-//     .pacman_inputs (pacman_outputs [22:3]),
-//     .power_pellet (power_pellet),
-//     .tile_info (inky_tile_info), 
-//     .blinky_pos (blinky_outputs [22:5]), 
-
-//     .eaten (inky_eaten),
-//     .tile_checks (inky_tiles),
-//     .ghost_outputs (inky_outputs)
-// );
-
-// game_ghost CLYDE (
-//     .clk (gameclk),
-//     .rst (~rst),
-//     .start (start),
-//     .pause (pause),
-//     .personality (2'b11),
-//     .pacman_inputs (pacman_outputs [22:3]),
-//     .power_pellet (power_pellet),
-//     .tile_info (clyde_tile_info), 
-//     .blinky_pos (1'b0),
-
-//     .eaten (clyde_eaten),
-//     .tile_checks (clyde_tiles),
-//     .ghost_outputs (clyde_outputs)
-// );
-    
-// game_pacman PACMAN ( 
-//     .clk60 (gameclk), 
-//     .reset (~rst), 
-//     .start (start),
-//     .pause (pause),
-//     .left (lturn),
-//     .right (rturn),
-//     .uturn (uturn),
-//     .tile_info (pacman_tile_info),
-
-//     .tile_checks (pacman_tiles),
-//     .pacman_outputs (pacman_outputs)
-// );
-
-// localparam SCOR = 2'b10;
-
-// always_comb begin
-//     ghosts_eaten = blinky_eaten + pinky_eaten + inky_eaten + clyde_eaten - 1'b1;
-//     pause = blinky_outputs[2:1] == SCOR || pinky_outputs [2:1] == SCOR || inky_outputs [2:1] == SCOR || clyde_outputs [2:1] == SCOR;
-// end
-
-// // ghost animation
-// always_comb begin
-//     if (gameclk && ~pause) begin
-//         ghost_anim_counter_d = ghost_anim_counter + 1'b1;
-//         pellet_anim_counter_d = pellet_anim_counter + 1'b1;
-//     end else begin
-//         ghost_anim_counter_d = ghost_anim_counter;
-//         pellet_anim_counter_d = pellet_anim_counter;
-//     end
-
-//     if (ghost_anim_counter == 1'b0 && ~pause) begin
-//         ghost_anim_d = ~ghost_anim;
-//     end else begin
-//         ghost_anim_d = ghost_anim;
-//     end
-
-//     if (pellet_anim_counter == 1'b0 && ~pause) begin
-//         pellet_anim_d = ~pellet_anim;
-//     end else begin
-//         pellet_anim_d = pellet_anim;
-//     end
-// end
-
-// always @(posedge gameclk) begin
-//     ghost_anim_counter <= ghost_anim_counter_d;
-//     ghost_anim <= ghost_anim_d;
-//     pellet_anim_counter <= pellet_anim_counter_d;
-//     pellet_anim <= pellet_anim_d;
-// end
 
 endmodule
