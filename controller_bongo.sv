@@ -27,7 +27,7 @@ module controller_bongo (
     blue -> GND
     black -> GND
     red -> DATA -> Arduino IO6
-    green -> 3V3 (4th one from the left bc the other ones are fucking brokEn)
+    green -> 3V3 (4th one from the left bc the other ones are fucking brokEn);u
     pull up DATA to 3v3
 */
 

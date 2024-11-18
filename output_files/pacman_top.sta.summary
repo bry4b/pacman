@@ -2,112 +2,184 @@
 Timing Analyzer Summary
 ------------------------------------------------------------
 
-Type  : Slow 1200mV 85C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : -19.058
-TNS   : -2366.213
+Type  : Slow 1200mV 85C Model Setup 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -51.002
+TNS   : -7007.341
 
-Type  : Slow 1200mV 85C Model Setup 'clockDivider:TOCK|outClock'
-Slack : -17.390
-TNS   : -1373.170
+Type  : Slow 1200mV 85C Model Setup 'clockDivider:CLK_GAME|outClock'
+Slack : -26.521
+TNS   : -31670.808
 
 Type  : Slow 1200mV 85C Model Setup 'clk'
-Slack : -1.845
-TNS   : -1.845
+Slack : -1.738
+TNS   : -1.738
 
-Type  : Slow 1200mV 85C Model Hold 'clockDivider:TOCK|outClock'
-Slack : 0.341
+Type  : Slow 1200mV 85C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : -0.326
+TNS   : -0.326
+
+Type  : Slow 1200mV 85C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -0.278
+TNS   : -0.278
+
+Type  : Slow 1200mV 85C Model Hold 'clockDivider:CLK_GAME|outClock'
+Slack : 0.321
 TNS   : 0.000
 
-Type  : Slow 1200mV 85C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.413
+Type  : Slow 1200mV 85C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 0.357
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.381
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.432
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'clk'
-Slack : 0.645
+Slack : 0.638
 TNS   : 0.000
 
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clockDivider:CLK_GAME|outClock'
 Slack : -1.403
-TNS   : -239.913
+TNS   : -2390.712
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
-Slack : 9.638
+Slack : 9.649
 TNS   : 0.000
 
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 19.663
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 19.667
 TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : -17.123
-TNS   : -2121.844
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 499.720
+TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Setup 'clockDivider:TOCK|outClock'
-Slack : -15.823
-TNS   : -1251.391
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 2999.723
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Setup 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -46.287
+TNS   : -6231.017
+
+Type  : Slow 1200mV 0C Model Setup 'clockDivider:CLK_GAME|outClock'
+Slack : -24.393
+TNS   : -29183.361
 
 Type  : Slow 1200mV 0C Model Setup 'clk'
-Slack : -1.645
-TNS   : -1.645
+Slack : -1.537
+TNS   : -1.537
 
-Type  : Slow 1200mV 0C Model Hold 'clockDivider:TOCK|outClock'
-Slack : 0.306
+Type  : Slow 1200mV 0C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : -0.018
+TNS   : -0.018
+
+Type  : Slow 1200mV 0C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.033
 TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.333
+Type  : Slow 1200mV 0C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 0.042
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.077
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clockDivider:CLK_GAME|outClock'
+Slack : 0.288
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.351
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'clk'
-Slack : 0.596
+Slack : 0.591
 TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clockDivider:CLK_GAME|outClock'
 Slack : -1.403
-TNS   : -239.913
+TNS   : -2390.712
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : 9.647
+Slack : 9.655
 TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 19.683
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 19.685
 TNS   : 0.000
 
-Type  : Fast 1200mV 0C Model Setup 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : -7.672
-TNS   : -941.621
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 499.710
+TNS   : 0.000
 
-Type  : Fast 1200mV 0C Model Setup 'clockDivider:TOCK|outClock'
-Slack : -6.791
-TNS   : -498.185
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 2999.713
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Setup 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : -20.496
+TNS   : -2750.527
+
+Type  : Fast 1200mV 0C Model Setup 'clockDivider:CLK_GAME|outClock'
+Slack : -10.868
+TNS   : -13292.245
 
 Type  : Fast 1200mV 0C Model Setup 'clk'
-Slack : -0.674
-TNS   : -0.674
+Slack : -0.609
+TNS   : -0.609
 
-Type  : Fast 1200mV 0C Model Hold 'clockDivider:TOCK|outClock'
-Slack : 0.148
+Type  : Fast 1200mV 0C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.147
 TNS   : 0.000
 
-Type  : Fast 1200mV 0C Model Hold 'TICK|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.207
+Type  : Fast 1200mV 0C Model Setup 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 0.152
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 0.062
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.076
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'clockDivider:CLK_GAME|outClock'
+Slack : 0.139
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.217
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'clk'
-Slack : 0.249
+Slack : 0.245
 TNS   : 0.000
 
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clockDivider:TOCK|outClock'
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clockDivider:CLK_GAME|outClock'
 Slack : -1.000
-TNS   : -171.000
+TNS   : -1704.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : 9.330
+Slack : 9.332
 TNS   : 0.000
 
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'TICK|altpll_component|auto_generated|pll1|clk[0]'
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLK_VGA|altpll_component|auto_generated|pll1|clk[0]'
 Slack : 19.710
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[1]'
+Slack : 499.796
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLK_CTRL|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 2999.803
 TNS   : 0.000
 
 ------------------------------------------------------------
