@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Archive Project report for pacman_top
 Wed Sep  4 00:16:52 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
@@ -116,3 +117,108 @@ Info: Quartus Prime Shell was successful. 0 errors, 1 warning
 +-------------------------+
 
 
+=======
+Archive Project report for pacman_top
+Thu May  2 12:55:33 2024
+Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Archive Project Summary
+  3. Archive Project Messages
+  4. Files Archived
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2021  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------+
+; Archive Project Summary                                        ;
++------------------------+---------------------------------------+
+; Archive Project Status ; Successful - Thu May  2 12:55:33 2024 ;
+; Revision Name          ; pacman_top                            ;
+; Top-level Entity Name  ; pacman_top                            ;
+; Family                 ; MAX 10                                ;
++------------------------+---------------------------------------+
+
+
++--------------------------+
+; Archive Project Messages ;
++--------------------------+
+Info: File Set 'Source control' contains:
+    Info: Project source and settings files
+    Info: Automatically detected source files
+Warning: Hierarchical Platform Designer systems and custom IP components(_hw.tcl and associated files) are not archived by the Quartus Archiver
+Info: Archive will store files relative to the closest common parent directory
+Info (13213): Using common directory F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated archive 'F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qar'
+Info: ----------------------------------------------------------
+Info: ----------------------------------------------------------
+Info: Generated report 'pacman_top.archive.rpt'
+Info (23030): Evaluation of Tcl script f:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus Prime Shell was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 4850 megabytes
+    Info: Processing ended: Thu May  2 12:55:33 2024
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:01
+
+
++-------------------------+
+; Files Archived          ;
++-------------------------+
+; File Name               ;
++-------------------------+
+; assignment_defaults.qdf ;
+; clk_vga.ppf             ;
+; clk_vga.qip             ;
+; clk_vga.v               ;
+; clk_vga_bb.v            ;
+; clk_vga_inst.v          ;
+; clockDivider.sv         ;
+; game_controller.sv      ;
+; game_ghost.sv           ;
+; game_tb.sv              ;
+; graphics.sv             ;
+; graphics_ghost.sv       ;
+; graphics_ghost_LUT.sv   ;
+; graphics_pacman.sv      ;
+; maze.sv                 ;
+; maze_tb.sv              ;
+; pacman.qpf              ;
+; pacman_top.qsf          ;
+; pacman_top.sv           ;
+; ram_ip.qip              ;
+; ram_ip.v                ;
+; ram_ip_bb.v             ;
+; ram_ip_inst.v           ;
+; vga.sv                  ;
+; vga_ram.sv              ;
+; vga_tb.sv               ;
+; vga_top.sv              ;
++-------------------------+
+
+
+>>>>>>> c73374c11b852264e5eb6e8d08ae70edc7704dc3

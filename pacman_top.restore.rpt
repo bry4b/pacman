@@ -1,5 +1,5 @@
 Restore Archived Project report for pacman_top
-Thu May  2 12:51:42 2024
+Mon Oct  7 17:59:24 2024
 Quartus Prime Version 21.1.0 Build 842 10/21/2021 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------+
 ; Restore Archived Project Summary                                        ;
 +---------------------------------+---------------------------------------+
-; Restore Archived Project Status ; Successful - Thu May  2 12:51:42 2024 ;
+; Restore Archived Project Status ; Successful - Mon Oct  7 17:59:24 2024 ;
 ; Revision Name                   ; pacman_top                            ;
 ; Top-level Entity Name           ; pacman_top                            ;
 ; Family                          ; MAX 10                                ;
@@ -47,14 +47,14 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------+
 ; Restore Archived Project Messages ;
 +-----------------------------------+
-Info: Successfully restored 'C:/Users/bryan/Downloads/pacman.qar' into the 'C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/' directory
+Info: Successfully restored 'F:/bryan/Downloads/pacman (2).qar' into the 'F:/bryan/Downloads/pacman (2)_restored/' directory
 Info: Generated report 'pacman_top.restore.rpt'
-Info (23030): Evaluation of Tcl script c:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info (23030): Evaluation of Tcl script f:/intelfpga_lite/21.1/quartus/common/tcl/apps/qpm/qar.tcl was successful
 Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4846 megabytes
-    Info: Processing ended: Thu May  2 12:51:42 2024
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:00
+    Info: Peak virtual memory: 4832 megabytes
+    Info: Processing ended: Mon Oct  7 17:59:24 2024
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:01
 
 
 +-------------------------+
@@ -63,22 +63,38 @@ Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
 ; File Name               ;
 +-------------------------+
 ; qar_info.json           ;
+; assignment_defaults.qdf ;
+; bongo_tb.sv             ;
+; clk_controller.ppf      ;
+; clk_controller.qip      ;
+; clk_controller.v        ;
+; clk_controller_bb.v     ;
+; clk_controller_inst.v   ;
 ; clk_vga.ppf             ;
 ; clk_vga.qip             ;
 ; clk_vga.v               ;
 ; clk_vga_bb.v            ;
 ; clk_vga_inst.v          ;
 ; clockDivider.sv         ;
+; controller_bongo.sv     ;
+; controller_nes.sv       ;
+; controller_tb.sv        ;
+; controller_top.sv       ;
 ; game_controller.sv      ;
 ; game_ghost.sv           ;
+; game_pacman.sv          ;
 ; game_tb.sv              ;
-; graphics.sv             ;
+; graphics_async.sv       ;
 ; graphics_ghost.sv       ;
 ; graphics_ghost_LUT.sv   ;
+; graphics_lives.sv       ;
 ; graphics_pacman.sv      ;
+; graphics_scoreboard.sv  ;
+; graphics_text.sv        ;
 ; maze.sv                 ;
 ; maze_tb.sv              ;
 ; pacman.qpf              ;
+; pacman_tb.sv            ;
 ; pacman_top.qsf          ;
 ; pacman_top.sv           ;
 ; ram_ip.qip              ;
@@ -89,7 +105,6 @@ Info: Quartus Prime Shell was successful. 0 errors, 0 warnings
 ; vga_ram.sv              ;
 ; vga_tb.sv               ;
 ; vga_top.sv              ;
-; assignment_defaults.qdf ;
 +-------------------------+
 
 

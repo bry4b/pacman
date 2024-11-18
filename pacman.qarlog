@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Quartus Prime Archive log --	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qarlog
 
 Archive:	C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/pacman.qar
@@ -51,3 +52,49 @@ C:/Users/bryan/Documents/school/ucla/ieee dav 2023/pacman/vga_top.sv
 
 	================ Status: ===============
 All files archived successfully.
+=======
+Quartus Prime Archive log --	F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qarlog
+
+Archive:	F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qar
+Date:		Thu May  2 12:55:33 2024
+Quartus Prime		21.1.0 Build 842 10/21/2021 SJ Lite Edition
+
+	=========== Files Selected: ===========
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/assignment_defaults.qdf
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clk_vga.ppf
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clk_vga.qip
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clk_vga.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clk_vga_bb.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clk_vga_inst.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/clockDivider.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/game_controller.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/game_ghost.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/game_tb.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/graphics.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/graphics_ghost.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/graphics_ghost_LUT.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/graphics_pacman.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/maze.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/maze_tb.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qpf
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman_top.qsf
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman_top.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/ram_ip.qip
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/ram_ip.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/ram_ip_bb.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/ram_ip_inst.v
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/vga.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/vga_ram.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/vga_tb.sv
+F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/vga_top.sv
+	======= Total: 27 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Thu May  2 12:58:08 2024
+Source archive file:	F:/bryan/Documents/school yuck/ucla/ieee dav/quartus projects/pacman/pacman.qar
+Archive was extracted into	F:/bryan/Downloads/pacman_restored/
+		 - successfully.
+>>>>>>> c73374c11b852264e5eb6e8d08ae70edc7704dc3
